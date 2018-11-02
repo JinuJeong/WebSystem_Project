@@ -1,0 +1,31 @@
+<html>
+<head>
+	 <title>A-Dong Signup</title>
+	 <meta charset="utf-8">
+	 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	 <link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
+<body>
+	 <header><%= title %></header>
+
+	 <form>
+		  <input type='text' id='ID' name ='ID' placeholder="ID"/></br>
+		  <input type='passwrod' id='PW' name ='PW' placeholder='PW'/></br>
+		  <div class="email">
+				<input type='text' id='email_front' name='email_front' placeholder='Email ID'/> @ <input type='text' id='email_back' name ='email_back' placeholder='Email Address'/>
+				<select class="email_select">
+					 <option selected value=''>direct input</option>
+					 <option value='naver.com'>naver.com</option>
+					 <option value='gmail.com'>gmail.com</option>
+				</select>
+		  </div></br>
+	 </form>
+</body>
+<script>
+	 //Email Select
+	 $("select.email_select").on("change", ()=>{
+		  let str=$("select.email_select").val();
+		  $('#email_back').val(str);
+	 });
+</script>
+</html>
