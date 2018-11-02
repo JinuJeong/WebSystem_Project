@@ -8,14 +8,20 @@
             }
         </style>
 		  <link rel="stylesheet" type="text/css" href="css/style.css">
+		  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     </head>
     <body>
         <header><%= title %></header>
-        <form>
-            <input type='text'  id = 'ID' name = 'ID' placeholder='ID' size='25'/><br/>
-            <input type='password' id ='PW' name ='PW' placeholder='PW' size='25'/><br/>
-            <input type='submit' id ='submit' value='SIGNIN' style="width:100px"/><br/>
-				<a href='signup'>SIGNUP</a>
-        </form>
+		  <nav><a href='signup'>SIGNUP</a></nav>
+		  <section>
+				<form>
+					 <input type='text'  id = 'ID' name = 'ID' placeholder='ID' size='25'/><br/>
+					 <input type='password' id ='PW' name ='PW' placeholder='PW' size='25'/><br/>
+					 <input type='submit' id ='submit' value='SIGNIN' style="width:100px"/><br/>
+				</form>
+		  </section>
     </body>
+	 <script>
+		  $("input").attr("autocomplete","off");
+	 </script>
 </html>

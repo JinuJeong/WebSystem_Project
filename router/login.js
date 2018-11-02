@@ -17,14 +17,16 @@ router.use('/',(req,res,next)=>{
 
 router.get('/',(req,res)=>{
 		  res.render('login',{
-					 title : "SIGNIN"
+					 title : "SIGN IN"
 					 });
 		  });
 
 router.get('/signup',(req,res)=>{
 		  res.render('signup',{
-					 title : "SIGNUP"
+					 title : "SIGN UP"
 					 });
 		  });
-
+router.get('/search_address',(req,res)=>{
+		  res.render('search_address');
+		  });
 module.exports = router;
