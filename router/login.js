@@ -11,22 +11,23 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 router.use(express.static('public'));
 
-router.use('/',(req,res,next)=>{
+router.use('/', (req, res, next) => {
 		  next();
 		  });
 
-router.get('/',(req,res)=>{
+router.get('/', (req, res) => {
 		  res.render('login',{
-					 title : "SIGN IN"
+					 title : 'SIGN IN'
 					 });
 		  });
 
-router.get('/signup',(req,res)=>{
+router.get('/signup', (req, res) => {
 		  res.render('signup',{
-					 title : "SIGN UP"
+					 title : 'SIGN UP'
 					 });
 		  });
-router.get('/search_address',(req,res)=>{
+router.get('/search_address', (req, res) => {
 		  res.render('search_address');
 		  });
+
 module.exports = router;
