@@ -9,4 +9,10 @@
 * 황범철 - 201420870
 * 정진우 - 201620913
 * 소현섭 - 201720762
+<hr/>
 
+#### 2018.11.03
+* 로그인과 회원가입을 위한 view engine(login.js & signup.js) 및 Router 생성
+
+#### 2018.11.04
+* 동아리 등록을 위한 view engine(register.ejs) 및 Router 생성
