@@ -1,15 +1,16 @@
+<!DOCTYPE html>
 <html>
 <head>
-	 <title>A-Dong Signup</title>
-	 <meta charset="utf-8">
-	 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-	 <link rel="stylesheet" type="text/css" href="css/style.css"/>
+	 <title>A-Dong Sign up</title>
+	 <meta charset='utf-8'>
+	 <script src='https://code.jquery.com/jquery-1.10.2.js'></script>
+	 <link rel='stylesheet' type='text/css' href='css/style.css'/>
 </head>
 <body>
 	 <header><%= title %></header>
-	 
+
 	 <nav>
-		  <a href="/login">Sign in</a>
+		  <a href='/login'>Sign in</a>
 	 </nav>
 	 
 	 <section>
@@ -44,24 +45,24 @@
 				<input type="text" name="reference_address" id="reference_address" class="postcodify_extra_info" placeholder="REFERENCE ADDRESS" /><br />
 
 				<input type="submit" value="Submit" style="color:green"/>
+
 		  </form>
-	 <section>
+	 </section>
 </body>
 <script>
 	 //Email Select
-	 $("select.email_select").on("change", ()=>{
-		  let str=$("select.email_select").val();
+	 $('select.email_select').on('change', ()=>{
+		  let str=$('select.email_select').val();
 
 		  $('#email_back').val(str);
 	 });
-	 $("input").attr("autocomplete","off");
+	 $('input').attr('autocomplete','off');
 </script>
 
 <!-- jQuery와 Postcodify를 로딩한다 -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+<script src='//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'></script>
+<script src='//d1p7wdleee1q2z.cloudfront.net/post/search.min.js'></script>
 
-<!-- "검색" 단추를 누르면 팝업 레이어가 열리도록 설정한다 -->
-<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
-
+<!-- '검색' 단추를 누르면 팝업 레이어가 열리도록 설정한다 -->
+<script> $(function() { $('#postcodify_search_button').postcodifyPopUp(); }); </script>
 </html>

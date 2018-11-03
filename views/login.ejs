@@ -1,27 +1,23 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title><%= title %></title>
-        <style> 
-            input{
-                width : 300px;
-                height : 30px;
-            }
-        </style>
-		  <link rel="stylesheet" type="text/css" href="css/style.css">
-		  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		<link rel='stylesheet' type='text/css' href='css/style.css'>
+		<script src='https://code.jquery.com/jquery-1.10.2.js'></script>
     </head>
     <body>
-        <header><%= title %></header>
-		  <nav><a href='signup'>SIGNUP</a></nav>
+          <header><%= title %></header>
+		  <nav><a href='signup'>SIGN UP</a></nav>
 		  <section>
-				<form>
-					 <input type='text'  id = 'ID' name = 'ID' placeholder='ID' size='25'/><br/>
-					 <input type='password' id ='PW' name ='PW' placeholder='PW' size='25'/><br/>
-					 <input type='submit' id ='submit' value='SIGNIN' style="width:100px"/><br/>
-				</form>
+			  <form>
+				  <input type='text' id='ID' class='login_form' name='ID' placeholder ='ID' style='size : 25px'/><br/>
+				  <input type='password' class='login_form' id='PW' name='PW' placeholder ='PW' style='size : 25px'/><br/>
+				  <input type='submit' class='login_form' id='submit' value='SIGN IN' style ='width : 300px'/><br/>
+				  <input type='button' class='login_form' id='button' value='Forget Password?' style='width : 300px'/><br/>
+			  </form>
 		  </section>
     </body>
 	 <script>
-		  $("input").attr("autocomplete","off");
+		  $('input').attr('autocomplete','off');
 	 </script>
 </html>

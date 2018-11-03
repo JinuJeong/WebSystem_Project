@@ -8,6 +8,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 router.use(express.static('public'));
 
+<<<<<<< HEAD
 //Set User Schema
 const UserSchema = mongoose.Schema({
                 ID : {type: String, unique: true},
@@ -18,18 +19,21 @@ const UserSchema = mongoose.Schema({
 const User = mongoose.model("User",UserSchema);
 
 router.use('/',(req,res,next)=>{
+=======
+router.use('/', (req, res, next) => {
+>>>>>>> 5954517d6d95c02d4d5fc390e0bd7eb3e8889cac
 		  next();
 		  });
 
-router.get('/',(req,res)=>{
+router.get('/', (req, res) => {
 		  res.render('login',{
-					 title : "SIGN IN"
+					 title : 'SIGN IN'
 					 });
 		  });
 
-router.get('/signup',(req,res)=>{
+router.get('/signup', (req, res) => {
 		  res.render('signup',{
-					 title : "SIGN UP"
+					 title : 'SIGN UP'
 					 });
 		  });
 
@@ -58,4 +62,5 @@ router.post('/signup/create',(req,res)=>{
 router.get('/search_address',(req,res)=>{
 		  res.render('search_address');
 		  });
+
 module.exports = router;
