@@ -1,6 +1,6 @@
-const express = require('express')
-const app = express()
-const router_login = require('./router/login')
+const express = require('express');
+const app = express();
+const router_login = require('./router/login');
 
 app.set('views',__dirname +"/views");
 app.set('view engine','ejs');
