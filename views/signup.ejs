@@ -13,12 +13,12 @@
 	 </nav>
 	 
 	 <section>
-		  <form class="sign_info">
+		  <form class="sign_info" action="signup/create" method="POST">
 				<label>ID</label></br>
 				<input type='text' id='ID' name ='ID' placeholder="ID"/></br>
 
 				<label>Password</label></br>
-				<input type='passwrod' id='PW' name ='PW' placeholder='PW'/></br>
+				<input type='password' id='PW' name ='PW' placeholder='PW'/></br>
 
 				<label>Department</label></br>
 				<input type='text' id='department' name ='department' placeholder='DEPARTMENT'/></br>
@@ -35,20 +35,15 @@
 						  <option value='gmail.com'>gmail.com</option>
 					 </select>
 				</div>
-
 				<!-- 주소와 우편번호를 입력할 <input>들을 생성하고 적당한 name과 class를 부여한다 -->
-				<form class ="address" action="">
-					 <label>Address</label></br>
-					 <input type="text" name="post_num" id="post_num" class="postcodify_postcode5" placeholder="POST NUM" />
-					 <button type='button' id="postcodify_search_button">Search</button><br />
-					 <input type="text" name="road_name" id="road_name" class="postcodify_address" placeholder="ROAD NAME" size="35"/><br />
-					 <input type="text" name="detail_address" id="detail_address" class="postcodify_details" placeholder="DETAIL ADDRESS" /><br />
-					 <input type="text" name="reference_address" id="reference_address" class="postcodify_extra_info" placeholder="REFERENCE ADDRESS" /><br />
-				</form>
-				
-		  
-				<input type='submit' value = 'Submit' style="color:green;"/>
+				<label>Address</label></br>
+				<input type="text" name="post_num" id="post_num" class="postcodify_postcode5" placeholder="POST NUM" />
+				<button type='button' id="postcodify_search_button">Search</button><br />
+				<input type="text" name="road_name" id="road_name" class="postcodify_address" placeholder="ROAD NAME" size="35"/><br />
+				<input type="text" name="detail_address" id="detail_address" class="postcodify_details" placeholder="DETAIL ADDRESS" /><br />
+				<input type="text" name="reference_address" id="reference_address" class="postcodify_extra_info" placeholder="REFERENCE ADDRESS" /><br />
 
+				<input type="submit" value="Submit" style="color:green"/>
 		  </form>
 	 <section>
 </body>
