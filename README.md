@@ -26,7 +26,7 @@ const User = mongoose.model("User",UserSchema);
 exports.dbUrl = ()=>{
     return "mongodb://localhost:27017/user";
 };
-</pre><code>
+</code></pre>
 
 #### 3. Save
 <pre><code>
@@ -51,9 +51,8 @@ router.post('/signup/create',(req,res)=>{
             })
 
 });
-</pre><code>
+</code></pre>
 
-</pre><code>
 ### Developers
 * 안우일 - 201420907
 * 황범철 - 201420870

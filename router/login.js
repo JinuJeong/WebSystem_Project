@@ -8,7 +8,6 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 router.use(express.static('public'));
 
-<<<<<<< HEAD
 //Set User Schema
 const UserSchema = mongoose.Schema({
                 ID : {type: String, unique: true},
@@ -19,9 +18,6 @@ const UserSchema = mongoose.Schema({
 const User = mongoose.model("User",UserSchema);
 
 router.use('/',(req,res,next)=>{
-=======
-router.use('/', (req, res, next) => {
->>>>>>> 5954517d6d95c02d4d5fc390e0bd7eb3e8889cac
 		  next();
 		  });
 
