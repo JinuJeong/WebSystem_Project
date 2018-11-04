@@ -73,6 +73,10 @@ router.post('/signin',(req,res)=>{
 });
 </code></pre>
 
+### Reference
+
+* __mongoose__ : http://html5around.com/wordpress/tutorials/node-js%EC%97%90%EC%84%9C-mongodb%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0mongoose/
+
 ### Developers
 * 안우일 - 201420907
 * 황범철 - 201420870
@@ -85,3 +89,5 @@ router.post('/signin',(req,res)=>{
 
 #### 2018.11.04
 * 동아리 등록을 위한 view engine(register.ejs) 및 Router 생성
+
+
