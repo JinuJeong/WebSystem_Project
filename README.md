@@ -53,6 +53,26 @@ router.post('/signup/create',(req,res)=>{
 });
 </code></pre>
 
+#### 4. Find
+<pre><code>
+//request login
+router.post('/signin',(req,res)=>{
+        mongoose.connect(config.dbUrl());
+        const db = mongoose.connection;
+        db.on('error',console.error.bind(console,'connection error:'));
+        db.once('open',()=>{
+                console.log("connect success!!");
+                });
+
+        User.find({"ID":req.body.ID,"password":req.body.PW},(err,doc)=>{
+                console.log(doc);
+                if(doc.length==0) res.redirect('/login');
+                else res.redirect('/');
+        });
+
+});
+</code></pre>
+
 ### Developers
 * 안우일 - 201420907
 * 황범철 - 201420870

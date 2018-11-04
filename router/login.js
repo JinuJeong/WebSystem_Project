@@ -33,8 +33,8 @@ router.get('/signup', (req, res) => {
 					 });
 		  });
 
+//request user info
 router.post('/signup/create',(req,res)=>{
-				//requset user info
 				const info = {"ID":req.body.ID,"password":req.body.PW};
 				console.log(info);
 				mongoose.connect(config.dbUrl());
@@ -55,8 +55,21 @@ router.post('/signup/create',(req,res)=>{
 								
 });
 
-router.get('/search_address',(req,res)=>{
-		  res.render('search_address');
+//request login
+router.post('/signin',(req,res)=>{
+		  mongoose.connect(config.dbUrl());
+		  const db = mongoose.connection;
+		  db.on('error',console.error.bind(console,'connection error:'));
+		  db.once('open',()=>{
+					 console.log("connect success!!");
+					 });
+
+		  User.find({"ID":req.body.ID,"password":req.body.PW},(err,doc)=>{
+					 console.log(doc);
+					 if(doc.length==0) res.redirect('/login'); 
+					 else	res.redirect('/'); 
 		  });
+		  				
+});
 
 module.exports = router;
