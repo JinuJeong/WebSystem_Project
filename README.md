@@ -8,12 +8,12 @@
 npm install
 ```
 
-> Test 방법은 두 가지가 있습니다.
+> Test 방법은 두 가지가 있습니다. (둘 중 하나 선택)
 ``` bash
 # 로컬 서버로 페이지 실행 (코드 수정 시 변경된 부분만 hot-reload)
 npm run dev
 
-# 코드 번들링 축소화 (아래 코드 실행 완료 후 웹에서 index.html 실행)
+# 코드 번들링 & 축소화 (아래 코드 실행 완료 후 웹에서 index.html 실행)
 npm run build
 ```
 
