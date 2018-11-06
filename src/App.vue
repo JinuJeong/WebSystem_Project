@@ -47,7 +47,6 @@
       <md-list>
         <md-list-item>
           <span class="md-list-item-text">Eric So</span>
-
           <md-button class="md-icon-button md-list-action">
             <md-icon class="md-primary">chat_bubble</md-icon>
           </md-button>
@@ -55,7 +54,6 @@
 
         <md-list-item>
           <span class="md-list-item-text">Jinu Jeong</span>
-
           <md-button class="md-icon-button md-list-action">
             <md-icon>chat_bubble</md-icon>
           </md-button>

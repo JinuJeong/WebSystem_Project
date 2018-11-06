@@ -3,17 +3,25 @@
 > Front-end 브랜치 입니다.
 
 ## Test 방법
-
 ``` bash
-# install dependencies
+# 최초 한번만 실행! (install dependencies)
 npm install
+```
 
-# serve with hot reload at localhost:8080
+> Test 방법은 두 가지가 있습니다.
+``` bash
+# 로컬 서버로 페이지 실행 (코드 수정 시 변경된 부분만 hot-reload)
 npm run dev
+
+# 코드 번들링 축소화 (아래 코드 실행 완료 후 웹에서 index.html 실행)
+npm run build
 ```
 
 ## Git 사용법
 ``` bash
+# github에서 front-end 브랜치 clone 받는 방법
+git clone -b front-end https://github.com/jjw8967/WebSystem_Project.git
+
 # 내 local의 front-end 브랜치에서 remote(Github)의 front-end 브랜치에 push 하는 방법
 git push origin front-end:front-end
 ```
