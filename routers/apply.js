@@ -16,8 +16,15 @@ router.get('/', (req, res) => {
 });
 
 router.post('/user/create', (req, res) => {
+
     console.log('it is /user/create');
-    //model instance = document
+    
+    User.create(req.body)
+        .then(res.redirect('/'))
+        .catch(err => res.send(err));
+    //.then(user => res.send(user)); schema 함수에서 만든 document가 then handler로!
+      
+    /* User model을 통해 document를 생성할 필요가 없다!
     var user = new User();
 
     user.name = req.body.name;
@@ -30,8 +37,8 @@ router.post('/user/create', (req, res) => {
             console.log('save');
         }
     });
-
-    res.redirect('/');
+    
+    res.redirect('/');.*/
 });
 
 router.get('/user/read', (req, res) => {
