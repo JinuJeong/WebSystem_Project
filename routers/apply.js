@@ -3,7 +3,6 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const User = require('../models/user'); //상대경로..  ㅅㅂ
-var user = new User();
 
 router.use(bodyParser.urlencoded({
     extended: false
@@ -12,13 +11,11 @@ router.use(bodyParser.json());
 
 router.get('/', (req, res) => {
     console.log('it is /');
-    res.render('apply');
+    res.render('apply', {name : name});
 });
 
 router.post('/user/create', (req, res) => {
-
     console.log('it is /user/create');
-    
     User.create(req.body)
         .then(res.redirect('/'))
         .catch(err => res.send(err));
@@ -41,17 +38,24 @@ router.post('/user/create', (req, res) => {
     res.redirect('/');.*/
 });
 
-router.get('/user/read', (req, res) => {
-    console.log('this is /user/read');
+router.get('/user/read/:name', (req, res) => {
+    console.log('this is /user/read/:name');
+    User.findOneByName(req.params.name)
+        .then((user) => { //무조건 user를 input으로 받아야 한다.
+            res.render('oneuser', {title: user}); // ejs에서 사용될 object 전달
+        });
+});
+
+router.get('/user/readall', (req, res) => {
+    /*
     async function readAll(){
         var value = await User.find({});
         console.log(value);
     }
-
     readAll();
+    */
+})
 
-    res.redirect('/');
-});
 router.delete('/user/delete', (req, res) => {
 
 });

@@ -17,8 +17,12 @@ userSchema.statics.create = function(payload) {
     console.log("The user is saved successfully!");
 
     return user.save();
-}
+};
 
+userSchema.statics.findOneByName = function (name) {
+    console.log("Find One is acted successfully!");
+    return this.findOne({ name });
+};
 //user은 document가 사용할 collection의 단수 표현
 //실제로는 'users' collection이다.
 //model(name, schema, collection name)
