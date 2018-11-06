@@ -61,35 +61,45 @@
       </md-list>
     </md-drawer>
 
+    <md-tabs class="md-accent" md-alignment="centered">
+      <md-tab id="tab-home" md-label="공지사항"></md-tab>
+      <md-tab id="tab-pages" md-label="Hot Issue"></md-tab>
+      <md-tab id="tab-posts" md-label="최근 활동 내역"></md-tab>
+    </md-tabs>
+
     <md-content>
-      Vue Project 입니다.
+      <md-avatar class="md-large">
+        <img src="./assets/logo.png" alt="People">
+      </md-avatar>
+      아주대학교 동아리 관리 시스템
+      <md-dialog :md-active.sync="showDialog">
+        <md-dialog-title>Dialog 연습</md-dialog-title>
+
+        <md-tabs md-dynamic-height>
+          <md-tab md-label="Tab 1">
+            <p>aaabbb</p>
+            <p>cccddd</p>
+            <p>eeefff</p>
+          </md-tab>
+          <md-tab md-label="Tab 2">
+            <p>Hello World</p>
+            <p>Hello Vue</p>
+          </md-tab>
+        </md-tabs>
+        <md-dialog-actions>
+          <md-button class="md-primary" @click="showDialog = false">종료</md-button>
+          <md-button class="md-primary" @click="showDialog = false">계속</md-button>
+        </md-dialog-actions>
+      </md-dialog>
+      <md-button class="md-accent md-raised" @click="showDialog = true">Dialog 연습</md-button>
     </md-content>
-    <md-button class="md-raised md-primary">파랑 버튼</md-button>
-    <md-button class="md-raised md-accent">빨강 버튼</md-button>
-    <div>
-    <md-dialog :md-active.sync="showDialog">
-      <md-dialog-title>Dialog 연습</md-dialog-title>
 
-      <md-tabs md-dynamic-height>
-        <md-tab md-label="Tab 1">
-          <p>aaabbb</p>
-          <p>cccddd</p>
-          <p>eeefff</p>
-        </md-tab>
-        <md-tab md-label="Tab 2">
-          <p>Hello World</p>
-          <p>Hello Vue</p>
-        </md-tab>
-      </md-tabs>
-
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showDialog = false">종료</md-button>
-        <md-button class="md-primary" @click="showDialog = false">계속</md-button>
-      </md-dialog-actions>
-    </md-dialog>
-
-    <md-button class="md-primary md-raised" @click="showDialog = true">Dialog 버튼</md-button>
-    </div>
+    <md-empty-state
+      md-icon="devices_other"
+      md-label="게시물이 없습니다"
+      md-description="게시글을 올려 동아리 활동을 업데이트하세요.">
+      <md-button class="md-primary md-raised">게시물 올리기</md-button>
+    </md-empty-state>
   </div>
 </template>
 

@@ -27,6 +27,6 @@ git push origin front-end:front-end
 ```
 
 ## 추가 자료
-Webpack에 대한 동작 방식이 궁금하면 참고하세요. [docs for vue-loader](https://vue-loader-v14.vuejs.org/kr/).
+> Webpack에 대한 동작 방식이 궁금하면 참고하세요. [docs for vue-loader](https://vue-loader-v14.vuejs.org/kr/).
 
-Vue Material 홈페이지 [docs for vue-material](https://vuematerial.io/).
+> Vue Material 홈페이지 [docs for vue-material](https://vuematerial.io/).
