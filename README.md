@@ -73,6 +73,10 @@ router.post('/signin',(req,res)=>{
 });
 </code></pre>
 
+### File Information
+
+* __router/module/mongo.js__ : mongodb operation을 간편하게 사용할 수 있도록 모듈화한 File
+
 ### Reference
 
 * __mongoose__ : http://html5around.com/wordpress/tutorials/node-js%EC%97%90%EC%84%9C-mongodb%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0mongoose/
