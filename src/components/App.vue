@@ -69,7 +69,7 @@
 
     <md-content>
       <md-avatar class="md-large">
-        <img src="./assets/logo.png" alt="People">
+        <img src="../assets/logo.png" alt="People">
       </md-avatar>
       아주대학교 동아리 관리 시스템
       <md-dialog :md-active.sync="showDialog">
