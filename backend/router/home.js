@@ -8,10 +8,8 @@ router.use('/',(req,res,next)=>{
 		  });
 
 router.get('/',(req,res)=>{
-		  res.render('home',{
-				title : "HOME"
-				});
-		  });
+		res.sendFile(path.join(__dirname,"../public","index.html"))
+});
 
 
 module.exports = router
