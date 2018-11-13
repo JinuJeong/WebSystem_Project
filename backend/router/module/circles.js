@@ -22,18 +22,18 @@ function connect () {
     })
 };
 
-circleSchema.statics.create = function(payload) {
+circleSchema.statics.create = async function(payload) {
     // circle === document, this === Model
-    const circle = new this(payload);
+    const circle = await new this(payload);
+    await connect();
+    await console.log("The circle is saved successfully!");
 
-    console.log("The circle is saved successfully!");
-
-    return circle.save();
+    return await circle.save();
 };
 
-circleSchema.statics.findOneByName = function(name) {
-    console.log("Find One is acted successfully!");
-    return this.findOne({name});
+circleSchema.statics.findOneByName = async function(name) {
+    await connect();
+    return await this.findOne({name});
 };
 
 module.exports = mongoose.model('circle', circleSchema);
