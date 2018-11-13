@@ -7,7 +7,7 @@
       <span class="md-title">A Dong</span>
 
       <div class="md-toolbar-section-end">
-        <md-button @click="showSidepanel = true">Login 연습</md-button>
+        <md-button @click="showSidepanel = true">Drawer 연습</md-button>
       </div>
     </md-toolbar>
 
@@ -60,6 +60,12 @@
         </md-list-item>
       </md-list>
     </md-drawer>
+
+    <md-empty-state
+      md-icon="devices_other"
+      md-label="404_Not_Found"
+      md-description="없는 페이지입니다.">=
+    </md-empty-state>
   </div>
 </template>
 
