@@ -1,94 +1,141 @@
 <template>
-  <div class="page-container md-layout-column">
-    <md-toolbar class="md-primary">
-      <md-button class="md-icon-button" @click="showNavigation = true">
-        <md-icon>menu</md-icon>
-      </md-button>
-      <span class="md-title">A Dong</span>
+    <div class="signup">
+        <!--항상 상단에 떠있는 bar-->
+        <header-bar></header-bar>
 
-      <div class="md-toolbar-section-end">
-        <md-button @click="showSidepanel = true">Login 연습</md-button>
-      </div>
-    </md-toolbar>
+        <!--바탕이 되는 container-->
+        <div class="centered-container">
+            <!--그 위에 올려지는 Login form box (elevation : 10)-->
 
-    <md-drawer :md-active.sync="showNavigation">
-      <md-toolbar class="md-transparent" md-elevation="0">
-        <span class="md-title">A Dong</span>
-      </md-toolbar>
+            <md-content class="md-elevation-10">
+                <!--Title 이미지 + 설명 -->
+                <div class="title">
+                    <img src="https://vuematerial.io/assets/logo-color.png">
+                    <div class="md-title">A-Dong</div>
+                    <h2>Login</h2>
+                </div>
 
-      <md-list>
-        <md-list-item>
-          <md-icon>move_to_inbox</md-icon>
-          <span class="md-list-item-text">Inbox</span>
-        </md-list-item>
+                <div class="form">
+                    <!--ID 입력-->
+                    <md-field>
+                        <label>ID</label>
+                        <md-input v-model="login.ID" autofocus></md-input>
+                    </md-field>
+                    <!--password 입력-->
+                    <md-field md-has-password>
+                        <label>Password</label>
+                        <md-input v-model="login.password" type="password" ></md-input>
+                    </md-field>
+                </div>
 
-        <md-list-item>
-          <md-icon>send</md-icon>
-          <span class="md-list-item-text">Sent Mail</span>
-        </md-list-item>
+                <div class="actions md-layout md-alignment-center-space-around">
+                    <a href="/">아이디 찾기</a>
+                    <a href="/">비밀번호 찾기</a>
+                </div>
 
-        <md-list-item>
-          <md-icon>delete</md-icon>
-          <span class="md-list-item-text">Trash</span>
-        </md-list-item>
+                <div class="actions md-layout md-alignment-center-space-around">
+                    <md-button class="md-raised md-primary" @click="auth">로그인</md-button>
+                </div>
 
-        <md-list-item>
-          <md-icon>error</md-icon>
-          <span class="md-list-item-text">Spam</span>
-        </md-list-item>
-      </md-list>
-    </md-drawer>
+                <div class="actions md-layout md-alignment-center-space-around">
+                    <md-button class="md-raised md-primary" href="/">계정 생성</md-button>
+                </div>
 
-    <md-drawer class="md-right" :md-active.sync="showSidepanel">
-      <md-toolbar class="md-transparent" md-elevation="0">
-        <span class="md-title">Favorites</span>
-      </md-toolbar>
+                <div class="loading-overlay" v-if="loading">
+                    <md-progress-spinner md-mode="indeterminate" :md-stroke="2"></md-progress-spinner>
+                </div>
+            </md-content>
 
-      <md-list>
-        <md-list-item>
-          <span class="md-list-item-text">Eric So</span>
-          <md-button class="md-icon-button md-list-action">
-            <md-icon class="md-primary">chat_bubble</md-icon>
-          </md-button>
-        </md-list-item>
+        </div>
 
-        <md-list-item>
-          <span class="md-list-item-text">Jinu Jeong</span>
-          <md-button class="md-icon-button md-list-action">
-            <md-icon>chat_bubble</md-icon>
-          </md-button>
-        </md-list-item>
-      </md-list>
-    </md-drawer>
-  </div>
+        <md-divider></md-divider>
+    </div>
 </template>
 
 <script>
-  export default {
-    name: 'Temporary',
-    data: () => ({
-      showNavigation: false,
-      showSidepanel: false,
-      showDialog: false
-    })
-  }
+    import headerBar from './header.vue'
+
+    export default {
+        name: "login",
+        data() {
+            return {
+                loading: false,
+                login: {
+                    ID: "",
+                    password: ""
+                }
+            };
+        },
+        components: {
+            headerBar
+        },
+        methods: {
+            auth() {
+                // your code to login user
+                // this is only for example of loading
+                this.loading = true;
+                setTimeout(() => {
+                    this.loading = false;
+                }, 5000);
+            }
+        }
+    };
 </script>
 
-<style lang="scss" scoped>
-  .page-container {
-    min-height: 700px;
-    overflow: hidden;
-    position: relative;
-    border: 1px solid rgba(#000, .12);
-  }
+<style lang="scss">
+    .centered-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        height: 100vh;
 
-   // Demo purposes only
-  .md-drawer {
-    width: 230px;
-    max-width: calc(100vw - 125px);
-  }
+        .title { // A-Dong + img
+            text-align: center;
+            margin-bottom: 30px;
+            img {
+                margin-bottom: 16px;
+                max-width: 80px;
+            }
+            .md-title{ // A-Dong
+                font-size : 50px;
+            }
+        }
 
-  .md-content {
-    padding: 16px;
-  }
+        .actions {
+
+            margin-bottom : 10px;
+
+            .md-button {
+                margin-bottom : 10px;
+                width : 500px;
+            }
+        }
+        .form {
+            margin-bottom: 60px;
+        }
+
+        .md-content {
+            z-index: 0;
+            padding: 40px;
+            width: 100%;
+            height : 200%;
+            max-width: 400px;
+            max-height : 550px;
+            position: relative;
+        }
+        .loading-overlay {
+            z-index: 10;
+            top: 0;
+            left: 0;
+            right: 0;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
 </style>
