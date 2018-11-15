@@ -13,12 +13,12 @@ const circleSchema = new Schema({
     subject: {type: String},
 });
 
-function connect () {
-    mongoose.connect(config.dbUrl());
-    var db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error: '));
-    db.once('open', () => {
-        console.log("mongoose is connected successfully.");
+async function connect () {
+    await mongoose.connect(config.dbUrl());
+    var db = await mongoose.connection;
+    await db.on('error', console.error.bind(console, 'connection error: '));
+    await db.once('open', async () => {
+        await console.log("mongoose is connected successfully.");
     })
 };
 
@@ -34,6 +34,11 @@ circleSchema.statics.create = async function(payload) {
 circleSchema.statics.findOneByName = async function(name) {
     await connect();
     return await this.findOne({name});
+};
+
+circleSchema.statics.sendAll = async function () {
+    await connect();
+    return await this.find();
 };
 
 module.exports = mongoose.model('circle', circleSchema);

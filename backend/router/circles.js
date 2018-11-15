@@ -17,6 +17,16 @@ router.get('/', (req, res) => {
     res.render('main');
 });
 
+router.get('/send', (req, res) => {
+    var ary = new Array();
+    const hi = async () => {
+        ary = await Circle.sendAll();
+        await res.send(ary)
+    }
+    
+    hi();
+})
+
 router.post('/create', (req, res) => {
     Circle.create(req.body)
     .then(mongoose.disconnect())
@@ -26,6 +36,7 @@ router.post('/create', (req, res) => {
 
 router.get('/:name', (req, res) => {
     console.log('this is /circle/:name');
+    console.log('name is ' + req.params.name);
     Circle.findOneByName(req.params.name)
         .then((circle) => { //무조건 user를 input으로 받아야 한다.
             mongoose.disconnect()
