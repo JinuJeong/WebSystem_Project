@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 
 router.get('/send', (req, res) => {
     var ary = new Array();
-    const hi = async () => {
+    const hi = async () => { // this is essential for connect MongoDB sequentially
         ary = await Circle.sendAll();
         await res.send(ary)
     }
@@ -33,7 +33,7 @@ router.post('/create', (req, res) => {
     .then(res.redirect('/'))
     .catch(err => res.send(err));
 });
-
+/*
 router.get('/:name', (req, res) => {
     console.log('this is /circle/:name');
     console.log('name is ' + req.params.name);
@@ -43,7 +43,7 @@ router.get('/:name', (req, res) => {
             .then(res.render('onecircle', {title: circle})); // ejs에서 사용될 object 전달
         });
 });
-
+*/
 router.use('/', (req, res, next) => {
           next();
           });
