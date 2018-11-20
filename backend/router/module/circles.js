@@ -13,22 +13,22 @@ const circleSchema = new Schema({
     subject: {type: String},
 });
 
-async function connect () {
-    await mongoose.connect(config.dbUrl());
-    var db = await mongoose.connection;
-    await db.on('error', console.error.bind(console, 'connection error: '));
-    await db.once('open', async () => {
-        await console.log("mongoose is connected successfully.");
+function connect () {
+    mongoose.connect(config.dbUrl());
+    var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error: '));
+    db.once('open', () => {
+        console.log("mongoose is connected successfully.");
     })
 };
 
-circleSchema.statics.create = async function(payload) {
+circleSchema.statics.create = async function(payload, res) {
     // circle === document, this === Model
     const circle = await new this(payload);
     await connect();
-    await console.log("The circle is saved successfully!");
+    console.log("The circle is saved successfully!");
 
-    return await circle.save();
+    return circle.save();
 };
 
 circleSchema.statics.findOneByName = async function(name) {

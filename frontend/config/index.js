@@ -6,29 +6,18 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-
-    proxyTable: [
-      {
+    proxyTable: {
       '/circle' : { //http://localhost:8080/circle로 요청이 왔을 때 아래로 proxy
         target: 'http://localhost:8000/', //http://localhost:8000/circle로 proxy?
         changeOrigin: true,
         PathRewrite: {
           '^/circle': ''
         }
-      },
-      '/api': {
-        target: 'http://localhost:8000/api',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
       }
-      }
-    ],
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -63,10 +52,9 @@ module.exports = {
 
   build: {
     // Template for index.html
-    //index: path.resolve(__dirname, '../../backend/public/index.html'),
     index: path.resolve(__dirname, '../dist/index.html'),
+
     // Paths
-    //assetsRoot: path.resolve(__dirname, '../../backend/public'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',

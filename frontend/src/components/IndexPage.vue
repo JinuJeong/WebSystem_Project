@@ -1,5 +1,10 @@
 <template>
 <div id="app">
+    <form>
+      NAME <input v-model="findin" type="text">
+      <input v-on:click="sendOne()" type="submit" value="FIND">
+    </form>
+    {{findcircle}}
     <form v-on:submit.prevent="onSubmit">
       NAME <input v-model="namein" type="text">
       PARTY <input v-model="partyin" type="text">
@@ -26,13 +31,19 @@ export default {
   data () {
     return {
       circles: [],
-      object: {name: String, party: String, roomExistence: Boolean}
+      object: {name: String, party: String, roomExistence: Boolean},
+      findcircle: {name: String, party: String, roomExistence: Boolean}
     }
   },
   methods: {
     sendCircle: function () {
       this.object = {name: this.namein, party: this.partyin, roomExistence: this.roomin}
       this.$http.post('/circle/create', this.object)
+    },
+    sendOne: function () {
+      this.$http.get('/circle/' + this.findin).then((res) => {
+        this.findcircle = res.data
+      })
     }
   }
 }

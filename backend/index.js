@@ -8,8 +8,8 @@ app.set('views', __dirname + '/views');
 app.set('view engine','ejs');
 app.engine('html', require('ejs').renderFile);
 
-app.use('/login',router_login);
 app.use('/',router_home);
+app.use('/login',router_login);
 app.use('/circle', router_circle);
 
 app.listen(8000,()=>{
