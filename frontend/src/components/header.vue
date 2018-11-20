@@ -50,7 +50,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 import search from './search.vue'
 export default {
   name: 'headerBar',
@@ -63,22 +62,10 @@ export default {
     search
   }
 }
-=======
-    export default {
-        name: 'headerBar',
-
-        data: () => ({
-            showNavigation: false,
-        })
-    }
->>>>>>> c3854110605ad385dd6c6952cb78712e1c3d1578
 
 </script>
 
 <style>
-<<<<<<< HEAD
-</style>
-=======
     .tab-list{
         color : white;
     }
@@ -93,4 +80,3 @@ export default {
         font-size : 23px;
     }
 </style>
->>>>>>> c3854110605ad385dd6c6952cb78712e1c3d1578
