@@ -15,8 +15,8 @@
                     <md-tab id="tab-posts" md-label="최근 활동 내역"></md-tab>
                 </md-tabs>
             </div>
-
             <div class="md-toolbar-section-end">
+                <search/>
                 <md-button href="/login">Log in</md-button>
             </div>
         </md-toolbar>
@@ -70,17 +70,20 @@
 </template>
 
 <script>
+import search from './search.vue'
 export default {
   name: 'headerBar',
 
   data: () => ({
     showNavigation: false,
     showSidepanel: false
-  })
+  }),
+  components: {
+    search
+  }
 }
 
 </script>
 
 <style>
-
 </style>
