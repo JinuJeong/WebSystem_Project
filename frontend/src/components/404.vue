@@ -1,7 +1,7 @@
 <template>
   <div class="not-found">
     <!--항상 상단에 떠있는 bar-->
-    <header-bar/>
+    <header-bar></header-bar>
 
     <md-empty-state
       md-icon="devices_other"
@@ -12,15 +12,15 @@
 </template>
 
 <script>
-import headerBar from './header.vue'
+    import headerBar from './header.vue'
 
-export default {
-  name: '404',
+    export default {
+        name: '404',
 
-  components: {
-    headerBar
-  }
-}
+        components: {
+            headerBar
+        },
+    }
 </script>
 
 <style lang="scss" scoped>
