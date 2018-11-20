@@ -1,7 +1,7 @@
 <template>
     <div class="signup">
         <!--항상 상단에 떠있는 bar-->
-        <header-bar/>
+        <header-bar></header-bar>
 
         <!--바탕이 되는 container-->
         <div class="centered-container">
@@ -38,11 +38,7 @@
                 </div>
 
                 <div class="actions md-layout md-alignment-center-space-around">
-                    <md-button class="md-raised md-primary" href="/">계정 생성</md-button>
-                </div>
-
-                <div class="loading-overlay" v-if="loading">
-                    <md-progress-spinner md-mode="indeterminate" :md-stroke="2"></md-progress-spinner>
+                    <md-button class="md-raised md-primary" href="/signup">계정 생성</md-button>
                 </div>
             </md-content>
 
@@ -53,86 +49,75 @@
 </template>
 
 <script>
-import headerBar from './header.vue'
+    import headerBar from './header.vue'
 
-export default {
-  name: 'login',
-  data () {
-    return {
-      loading: false,
-      login: {
-        ID: '',
-        password: ''
-      }
-    }
-  },
-  components: {
-    headerBar
-  },
-  methods: {
-    auth () {
-      // your code to login user
-      // this is only for example of loading
-      this.loading = true
-      setTimeout(() => {
-        this.loading = false
-      }, 5000)
-    }
-  }
-}
+    export default {
+        name: "login",
+        data() {
+            return {
+                loading: false,
+                login: {
+                    ID: "",
+                    password: ""
+                }
+            };
+        },
+        components: {
+            headerBar
+        },
+        methods: {
+            auth() {
+                // your code to login user
+                // this is only for example of loading
+                this.loading = true;
+                setTimeout(() => {
+                    this.loading = false;
+                }, 5000);
+            }
+        }
+    };
 </script>
 
 <style lang="scss">
-.centered-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    height: 100vh;
-    .title { // A-Dong + img
-        text-align: center;
-        margin-bottom: 30px;
-        img {
-            margin-bottom: 16px;
-            max-width: 80px;
-        }
-        .md-title{ // A-Dong
-            font-size : 50px;
-        }
-    }
-    .actions {
-         margin-bottom : 10px;
-
-        .md-button {
-            margin-bottom : 10px;
-            width : 500px;
-        }
-    }
-    .form {
-        margin-bottom: 60px;
-    }
-
-    .md-content {
-        z-index: 0;
-        padding: 40px;
-        width: 100%;
-        height : 200%;
-        max-width: 400px;
-        max-height : 550px;
-        position: relative;
-    }
-    .loading-overlay {
-        z-index: 10;
-        top: 0;
-        left: 0;
-        right: 0;
-        position: relative;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.9);
+    .centered-container {
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
+        height: 100vh;
+
+        .title { // A-Dong + img
+            text-align: center;
+            margin-bottom: 30px;
+            img {
+                margin-bottom: 16px;
+                max-width: 80px;
+            }
+            .md-title{ // A-Dong
+                font-size : 50px;
+            }
+        }
+
+        .actions {
+            margin-bottom : 10px;
+
+            .md-button {
+                margin-bottom : 10px;
+                width : 500px;
+            }
+        }
+        .form {
+            margin-bottom: 60px;
+        }
+
+        .md-content {
+            z-index: 0;
+            padding: 40px;
+            width: 100%;
+            height : 200%;
+            max-width: 400px;
+            max-height : 550px;
+            position: relative;
+        }
     }
-}
 </style>

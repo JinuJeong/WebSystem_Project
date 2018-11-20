@@ -1,7 +1,7 @@
 <template>
     <div id="home">
         <!--항상 상단에 떠있는 bar-->
-        <header-bar/>
+        <header-bar></header-bar>
 
         <md-empty-state
                 md-icon="devices_other"
@@ -9,7 +9,7 @@
                 md-description="게시글을 올려 동아리 활동을 업데이트하세요.">
             <md-button class="md-primary md-raised">게시물 올리기</md-button>
         </md-empty-state>
-        <md-divider></md-divider>
+        <md-divider/>
         <md-empty-state
                 md-icon="thumb_up"
                 md-label="이달의 동아리"
@@ -20,15 +20,15 @@
 </template>
 
 <script>
-import headerBar from './header.vue'
+    import headerBar from './header.vue'
 
-export default {
-  name: 'home',
+    export default {
+        name: 'home',
 
-  components: {
-    headerBar
-  }
-}
+        components: {
+            headerBar
+        },
+    }
 </script>
 
 <style>
