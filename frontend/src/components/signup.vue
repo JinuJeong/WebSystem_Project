@@ -38,24 +38,6 @@
 
 <script>
     import headerBar from './header.vue'
-
-    export default {
-        name: 'signup',
-
-        components: {
-            headerBar
-        },
-
-        data : () => ({
-            id: null,
-            password: null,
-            inline: null,
-            name: null,
-            textarea: null,
-            autogrow: null,
-            disabled: null,
-            department : null,
-
 export default {
   name: 'signup',
   created () {
