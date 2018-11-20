@@ -2,78 +2,68 @@ const mongoose = require('mongoose');
 const config = require('./config');
 
 //Set User Schema
-const UserSchema = mongoose.Schema({
-                ID : {type: String, unique: true},
-                password : String,
-            });
+const userSchema = mongoose.Schema({
+                id : {type: String, unique: true},
+                password : {String},
+});
 
 const circleSchema = mongoose.Schema({
     name: {type: String, unique: true},
     party: {type: String},
     roomExistence: {type: Boolean},
     roomLocation: {type: Number},
-    //president: {type: mongoose.Schema.Types.ObjectId},
-    //vicePresident: {type: mongoose.Schema.Types.ObjectId},
+    president: {type: mongoose.Schema.Types.ObjectId},
+    vicePresident: {type: mongoose.Schema.Types.ObjectId},
     memberNumber: {type: Number},
     subject: {type: String},
 });
 
-//Set User Colletion
-const User = mongoose.model("User",UserSchema);
-const Circle = mongoose.model("Circle",circleSchema);
-
 //Set mongoose connect
-function con(){
-	             mongoose.connect(config.dbUrl());
-            const db =mongoose.connection;
-            db.on('error',console.error.bind(console,'connection error:'));
-            db.once('open',()=>{
-                    console.log("connect success!!");
-                    });
-}
+function connect () {
+    mongoose.connect(config.dbUrl());
+    var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error: '));
+    db.once('open', () => {
+        console.log("mongoose is connected successfully.");
+    })
+};
 
 //Create Student
-exports.std_save = function(info){
-	 
-	 con();
-	 //creat student Object
-	 const student = new User(info);
+userSchema.statics.usercreate = async function(payload, res) {
+    console.log("userSchema create " + payload)
+    
+    const user = await new this(payload);
+    await connect();
 
-	 student.save((err)=>{
-				if(err) console.log(err);
-				mongoose.disconnect();
-				return 1;
-	 })
-
-}
+    return user.save();
+};
 
 //Find Student
-exports.std_find = function(info){
-	 con();
-	 User.find(info, (err,doc)=>{
-					 console.log(doc);
-					 mongoose.disconnect();
-					 if(doc.length==0) return -1;
+userSchema.statics.userfind = async function(name) {
+    await connect();
+    if(name.length==0) return -1;
+    else return await this.findOne({name});
+};
 
-					 else return doc;
-	 });
-					 
-}
+//Send all students
+userSchema.statics.usersendAll = async function () {
+    await connect();
+    return await this.find();
+};
 
 //Delete Student
 exports.std_delete = function(info){
-	 con();
+	 connect();
 	 User.remove(info,(err,doc)=>{
 					 console.log(doc);
 					 mongoose.disconnect();
 					 return 1;
 	 });
-
 }
 
 //Update student
 exports.std_update = function(info,set){
-	 con();
+	 connect();
 	 User.update(info,set,(err,doc)=>{
 					 console.log(doc);
 					 mongoose.disconnect();
@@ -81,25 +71,27 @@ exports.std_update = function(info,set){
 	 });
 }
 
-exports.cir_save = function(payload) {
-    // circle === document, this === Model
-    const circle = new Circle(payload);
-    con();
-    circle.save((err)=>{
-        if(err) console.log(err);
-        else console.log("The circle is saved successfully!");
-        mongoose.disconnect();
-        return 1;
-    })
+//Create circle
+circleSchema.statics.circlecreate = async function(payload, res) {
+    const circle = await new this(payload);
+    await connect();
+
+    return circle.save();
 };
 
-exports.cir_findOne = function(name) {
-    con();
-    Circle.find(info, (err,doc)=>{
-        console.log(doc);
-        mongoose.disconnect();
-        if(doc.length==0) return -1;
-
-        else return doc;
-    });
+//Find a circle by name
+circleSchema.statics.circlefind = async function(name) {
+    await connect();
+    return await this.findOne({name});
 };
+
+//Send all circles
+circleSchema.statics.circlesendAll = async function () {
+    await connect();
+    return await this.find();
+};
+
+//module exports to Routers ★★★★★★★★★★★★
+var Circle = mongoose.model("circle", circleSchema);
+var User = mongoose.model("user", userSchema);
+
