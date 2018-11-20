@@ -17,7 +17,7 @@
             </div>
 
             <div class="md-toolbar-section-end">
-                <md-button href="/signup">Log in</md-button>
+                <md-button href="/login">Log in</md-button>
             </div>
         </md-toolbar>
 
