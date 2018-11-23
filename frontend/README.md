@@ -17,15 +17,6 @@ npm run dev
 npm run build
 ```
 
-## Git 사용법
-``` bash
-# github에서 front-end 브랜치 clone 받는 방법
-git clone -b simplewebpack https://github.com/jjw8967/WebSystem_Project.git
-
-# 내 local의 front-end 브랜치에서 remote(Github)의 front-end 브랜치에 push 하는 방법
-git push origin simplewebpack:simplewebpack
-```
-
 ## 추가 자료
 > Webpack에 대한 동작 방식이 궁금하면 참고하세요. [docs for vue-loader](https://vue-loader-v14.vuejs.org/kr/).
 
