@@ -41,8 +41,13 @@
                     <md-button class="md-raised md-primary" href="/signup">계정 생성</md-button>
                 </div>
             </md-content>
-
+            
         </div>
+        <!--alert operation -->
+        <md-dialog-alert
+            :md-active.sync="active"
+            md-content="Login Failed"
+            md-confirm-text="DONE" />
 
         <md-divider></md-divider>
     </div>
@@ -59,7 +64,8 @@
                 login: {
                     ID: "",
                     password: ""
-                }
+                },
+                active: false
             };
         },
         components: {
@@ -68,7 +74,14 @@
         methods: {
             auth() {
                 this.$http.post("http://localhost:8000/user/signin",{"ID":this.login.ID,"password":this.login.password}).then((res)=>{
-                    alert(res.data.ID)
+                    if(res.data.ID==null){
+                        this.active=true
+                        return;
+                    }
+                    this.$session.start()
+                    this.$session.set('username', res.data.name)
+                    console.log(this.$session.getAll());
+                    this.$router.push('/')
                 })
             }
         }

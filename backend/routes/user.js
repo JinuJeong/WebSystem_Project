@@ -28,10 +28,11 @@ router.get('/find/:name', (req, res) => {
 });
 
 router.post('/signin',(req,res)=>{
+    var session
     console.log("this is /signin")
     console.log(req.body)
     userModel.findOne(req.body).then((user)=>{
-        console.log(user)
+        
         res.send(user)
     })
 })

@@ -14,7 +14,8 @@
     "vue": "^2.5.11",
     "vue-material": "^1.0.0-beta-10.2",
     "vue-resource": "^1.5.1",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-session": "^1.0.0"
   },
   "browserslist": [
     "> 1%",
