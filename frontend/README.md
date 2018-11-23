@@ -1,6 +1,6 @@
 # **A-Dong 아주대학교 동아리 관리 웹시스템**
 
-> Front-end 브랜치 입니다.
+> FrontEnd
 
 ## Test 방법
 ``` bash
