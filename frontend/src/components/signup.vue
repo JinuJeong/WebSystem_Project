@@ -98,11 +98,27 @@
                 </md-field>
 
                 <div class="actions md-layout md-alignment-center">
-                    <md-button class="md-raised md-primary md-alignment-center">가입하기</md-button>
+                    <md-button class="md-raised md-primary md-alignment-center" v-on:click="check=true">가입하기</md-button>
                     <md-button class="md-raised md-primary" href="/">홈으로</md-button>
                 </div>
             </div>
         </md-content>
+        <!--alert operation -->
+        <md-dialog-alert
+            :md-active.sync="fail"
+            md-title="ALERT"
+            md-content="SignUp Failed"
+            md-confirm-text="DONE" />
+
+        <md-dialog-confirm
+      :md-active.sync="check"
+      md-title="Check"
+      md-content="I will send you an email after click Check button. And verify your email."
+      md-confirm-text="Check"
+      md-cancel-text="Cancle"
+      @md-cancel="onCancel"
+      @md-confirm="onCheck" />
+      
         </div>
     </div>
 </template>
@@ -126,9 +142,30 @@
             autogrow: null,
             disabled: null,
             department : null,
-
+            fail: false,
+            check: false,
             selectedInterest: []
-        })
+        }),
+        methods:{
+            signup:function(){
+                this.$http.post("http://localhost:8000/user/signup",{"ID":this.id,"password":this.password,"name":this.name,"department":this.department}).then((res)=>{
+                    console.log(res)
+                    if(res.data.errmsg){
+                        this.fail=true
+                        return
+                    }
+                    else{
+                        this.$router.push('/login');
+                    }
+                })
+            },
+            onCheck: function() {
+                this.signup()
+            },
+            onCancle: function(){
+                return;
+            }
+        }
 
     }
 </script>

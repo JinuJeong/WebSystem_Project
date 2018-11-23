@@ -19,7 +19,7 @@
             </div>
             <div class="md-toolbar-section-end">
                 <search/>
-                <md-button v-if="beforeLogin" href="/login">Log in</md-button>
+                <md-button v-if="beforeLogin" href="/login">Login</md-button>
                 <md-body-1 v-if="!beforeLogin">{{userName}} 님</md-body-1>
             </div>
         </md-toolbar>
@@ -41,13 +41,14 @@
                     <span class="md-list-item-text">내 정보</span>
                 </md-list-item>
                 <md-list-item v-if="!beforeLogin" v-on:click="logout">
-                    <md-icon>move_to_inbox</md-icon>
+                    <md-icon>cached</md-icon>
                     <span class="md-list-item-text">Logout</span>
                 </md-list-item>
                 <md-list-item>
                     <md-icon>error</md-icon>
                     <span class="md-list-item-text">오류 신고</span>
                 </md-list-item>
+             
             </md-list>
         </md-drawer>
     </div>

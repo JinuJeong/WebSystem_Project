@@ -78,6 +78,10 @@
                         this.active=true
                         return;
                     }
+                    else if(res.data.auth==false){
+                        this.active=true
+                        return;
+                    }
                     this.$session.start()
                     this.$session.set('username', res.data.name)
                     console.log(this.$session.getAll());
