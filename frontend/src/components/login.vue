@@ -66,6 +66,7 @@
                     password: ""
                 },
                 active: false
+
             };
         },
         components: {
@@ -78,7 +79,7 @@
                         this.active=true
                         return;
                     }
-                    else if(res.data.auth==false){
+                    else if(res.data.auth===false){
                         this.active=true
                         return;
                     }

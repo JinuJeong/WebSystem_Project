@@ -83,7 +83,6 @@
 
             <div class="md-layout-item">
 
-
                 <md-field>
                     <label>관심분야</label>
                     <md-select v-model="selectedInterest" name="Interest" id="Interest" multiple>
@@ -172,7 +171,6 @@
 
 <style lang="scss" scoped>
     .centered-container {
-
         display : flex;
         align-items: center;
         justify-content: center;

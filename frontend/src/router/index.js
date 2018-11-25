@@ -9,7 +9,6 @@ import Notice from '../components/notice'
 import Circles from '../components/circles'
 import Board from '../components/board'
 
-
 Vue.use(Router);
 
 export default new Router({
