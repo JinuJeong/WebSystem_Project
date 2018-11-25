@@ -56,6 +56,7 @@ export default new Router({
             path: '/circle',
             component: Circle
         },
+        {
             path: '/timeline',
             component: Timeline
         }
