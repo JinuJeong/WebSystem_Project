@@ -3,41 +3,168 @@
         <!--항상 상단에 떠있는 bar-->
         <header-bar></header-bar>
 
-        <div id='all_notice'> </div>
-        <md-divider/>
-        <md-table>
-            <md-table-row id="first_row">
-                <md-table-head md-numeric>ID</md-table-head>
-                <md-table-head>Name</md-table-head>
-                <md-table-head>Email</md-table-head>
-                <md-table-head>Gender</md-table-head>
-                <md-table-head>Job Title</md-table-head>
-            </md-table-row>
+        <!--바탕이 되는 container-->
+        <div class="centered-container">
 
-            <md-table-row>
-                <md-table-cell md-numeric>1</md-table-cell>
-                <md-table-cell>Shawna Dubbin</md-table-cell>
-                <md-table-cell>sdubbin0@geocities.com</md-table-cell>
-                <md-table-cell>Male</md-table-cell>
-                <md-table-cell>Assistant Media Planner</md-table-cell>
-            </md-table-row>
+            <h1 class="hn ajou_title"> 아주대학교 동아리 정보 </h1>
 
-            <md-table-row>
-                <md-table-cell md-numeric>2</md-table-cell>
-                <md-table-cell>Odette Demageard</md-table-cell>
-                <md-table-cell>odemageard1@spotify.com</md-table-cell>
-                <md-table-cell>Female</md-table-cell>
-                <md-table-cell>Account Coordinator</md-table-cell>
-            </md-table-row>
+            <!--그 위에 올려지는 Login form box (elevation : 10)-->
+            <md-content class="md-elevation-15">
 
-            <md-table-row>
-                <md-table-cell md-numeric>3</md-table-cell>
-                <md-table-cell>Vera Taleworth</md-table-cell>
-                <md-table-cell>vtaleworth2@google.ca</md-table-cell>
-                <md-table-cell>Male</md-table-cell>
-                <md-table-cell>Community Outreach Specialist</md-table-cell>
-            </md-table-row>
-        </md-table>
+                <md-card>
+                    <md-card-header>
+                        <div class="md-title">ANSI</div>
+                    </md-card-header>
+
+                    <md-card-content>
+                        <p>분류 : 소학회</p>
+                        <p>소속 : 소프트웨어학과</p>
+                        <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                        <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                        <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                        <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+
+                    </md-card-content>
+
+                    <v-card-actions>
+                        <v-btn color="blue" bottom style="width : 270px;">
+                            <p class="circle_button">더 자세히</p>
+                        </v-btn>
+                        <v-btn color="blue" bottom style="width : 270px;">
+                            <p class="circle_button">가입 신청</p>
+                        </v-btn>
+                    </v-card-actions>
+                </md-card>
+
+                <md-card>
+                        <md-card-header>
+                             <div class="md-title jg">HANTOR</div>
+                        </md-card-header>
+
+                        <md-card-content>
+                            <p class="jg">분류 : 소학회</p>
+                            <p class="jg">소속 : 소프트웨어학과</p>
+                            <p class="jg">소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                            <p class="jg">소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                            <p class="jg">소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                            <p class="jg">소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                        </md-card-content>
+
+                        <md-card-actions>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">더 자세히</p>
+                            </v-btn>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">가입 신청</p>
+                            </v-btn>
+                        </md-card-actions>
+                    </md-card>
+
+                    <md-card>
+                        <md-card-header>
+                            <div class="md-title">HANTOR</div>
+                        </md-card-header>
+
+                        <md-card-content>
+                            <p>분류 : 소학회</p>
+                            <p>소속 : 소프트웨어학과</p>
+                            <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                            <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                            <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                            <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                        </md-card-content>
+
+                        <md-card-actions>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">더 자세히</p>
+                            </v-btn>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">가입 신청</p>
+                            </v-btn>
+
+                        </md-card-actions>
+                    </md-card>
+
+                    <md-card>
+                        <md-card-header>
+                            <div class="md-title">HANTOR</div>
+                        </md-card-header>
+
+                        <md-card-content>
+                            <p>분류 : 소학회</p>
+                            <p>소속 : 소프트웨어학과</p>
+                            <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                            <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                            <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                            <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                        </md-card-content>
+
+                        <md-card-actions>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">더 자세히</p>
+                            </v-btn>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">가입 신청</p>
+                            </v-btn>
+                        </md-card-actions>
+                    </md-card>
+
+                    <md-card>
+                         <md-card-header>
+                            <div class="md-title">HANTOR</div>
+                        </md-card-header>
+
+                         <md-card-content>
+                             <p>분류 : 소학회</p>
+                             <p>소속 : 소프트웨어학과</p>
+                             <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                             <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                             <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                             <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                        </md-card-content>
+
+                        <md-card-actions>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">더 자세히</p>
+                            </v-btn>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">가입 신청</p>
+                            </v-btn>
+                         </md-card-actions>
+                    </md-card>
+
+                    <md-card>
+                        <md-card-header>
+                            <div class="md-title">HANTOR</div>
+                        </md-card-header>
+
+                        <md-card-content>
+                            <p>분류 : 소학회</p>
+                            <p>소속 : 소프트웨어학과</p>
+                            <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                            <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                            <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                            <p>소개 : 소프트웨어학과 소속 학술 소학회입니다. 주로 알고리즘을 푸는 시간을 갖습니다. </p>
+                        </md-card-content>
+
+                        <md-card-actions>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">더 자세히</p>
+                            </v-btn>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">가입 신청</p>
+                            </v-btn>
+                        </md-card-actions>
+                    </md-card>
+
+                <v-pagination
+                        v-model="page"
+                        :length="6"
+                        color="blue"
+                ></v-pagination>
+            </md-content>
+
+        </div>
     </div>
 </template>
 
@@ -47,6 +174,12 @@
     export default {
         name: 'circles',
 
+        data() {
+            return {
+                page : 1
+            }
+        },
+
         components: {
             headerBar
         },
@@ -54,6 +187,57 @@
 </script>
 
 <style lang="scss" scoped>
+
+    .centered-container {
+        display: flex;
+        align-items: center;
+        flex-direction : column;
+        justify-content: center;
+        position: relative;
+        height: 180vh;
+
+        .v-card{
+            width : 500px;
+            height : 500px;
+        }
+
+        .md-card {
+            width : 600px;
+            height : 400px;
+
+            margin-left : 50px;
+            vertical-align: top;
+
+
+            .md-button{
+                margin-bottom : 10px;
+                width : 500px;
+
+            }
+        }
+
+        .md-content {
+            padding: 40px;
+            width: 100%;
+            height : 200%;
+            max-width: 1700px;
+            max-height : 1500px;
+            position: relative;
+            display : flex;
+            justify-content : center;
+            flex-wrap: wrap;
+        }
+    }
+
+    .circle_button{
+        color : white;
+        margin-top : 10px;
+    }
+
+    .ajou_title{
+        margin-bottom : 30px;
+        font-size : 40px;
+    }
 
     #first_row {
 
@@ -64,4 +248,5 @@
         margin-bottom : 100px;
 
     }
+
 </style>
