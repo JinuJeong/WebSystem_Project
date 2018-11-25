@@ -5,7 +5,6 @@ import Login from '../components/login'
 import Home from '../components/home'
 import NotFound from '../components/404'
 import SignUp from '../components/signup'
-import Search from '../components/search'
 import Notice from '../components/notice'
 import Circles from '../components/circles'
 import Board from '../components/board'
@@ -20,8 +19,7 @@ Vue.use(Vuetify, {
 
 export default new Router({
     // '#' tag를 없애줌.
-    mode : "history",
-
+  //  mode : "history",
     //router's list
     routes : [
         {
@@ -33,7 +31,7 @@ export default new Router({
             component: Login
         },
         {
-            path: '/404',
+            path: '*',
             component: NotFound
         },
         {
@@ -53,8 +51,8 @@ export default new Router({
             component: Board
         },
         {
-            path: '/circle',
-            component: Circle
+            path: '/circle/:name',
+            component: Circle,
         },
         {
             path: '/timeline',

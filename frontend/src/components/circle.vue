@@ -3,107 +3,28 @@
         <!--항상 상단에 떠있는 bar-->
         <header-bar></header-bar>
         <div id='title'>
-           <span class="md-display-3">HANTOR</span>
-           </div>
-     <div class="centered-container">
+           <span class="md-display-3">{{ $route.params.name }}</span>
+        </div>
+          <v-container fluid grid-list-md>
+          <v-flex
+        xs12
+        sm6
+        md4
+        lg3
+      >
+      <v-card>
+          <v-card-title class="subheading font-weight-bold">일정</v-card-title>
+          <v-divider></v-divider>
+          <v-list dense>
+            <v-list-tile>
+              <v-list-tile-content>MT</v-list-tile-content>
+              <v-list-tile-content class="align-end">11일</v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+      </v-card>
+    </v-flex>
 
-    <div class="viewport">
-      <md-toolbar :md-elevation="1">
-        <span class="md-title">동아리 공지사항</span>
-      </md-toolbar>
-
-      <md-list>
-        <md-list-item>
-          <md-icon>arrow_right</md-icon>
-          <span class="md-list-item-text">Inbox</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>arrow_right</md-icon>
-          <span class="md-list-item-text">Sent Mail</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>arrow_right</md-icon>
-          <span class="md-list-item-text">Trash</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>arrow_right</md-icon>
-          <span class="md-list-item-text">Spam</span>
-        </md-list-item>
-
-        <md-divider class="md-inset"></md-divider>
-  
-      </md-list>
-    </div>
-
-    <div class="viewport">
-      <md-toolbar :md-elevation="1">
-        <span class="md-title">활동 내역</span>
-      </md-toolbar> 
-      <md-list>
-        <md-list-item>
-          <md-icon>arrow_right</md-icon>
-          <span class="md-list-item-text">Inbox</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>arrow_right</md-icon>
-          <span class="md-list-item-text">Sent Mail</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>arrow_right</md-icon>
-          <span class="md-list-item-text">Trash</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>arrow_right</md-icon>
-          <span class="md-list-item-text">Spam</span>
-        </md-list-item>
-
-        <md-divider class="md-inset"></md-divider>
-  
-      </md-list>
-    </div>
-
-    <div class="viewport">
-      <md-toolbar :md-elevation="1">
-        <span class="md-title">일정</span>
-      </md-toolbar>
-          <md-tabs md-sync-route>
-      <md-tab id="tab-home" md-label="1월" ></md-tab>
-      <md-tab id="tab-pages" md-label="2월" ></md-tab>
-      <md-tab id="tab-posts" md-label="3월" ></md-tab>
-      <md-tab id="tab-settings" md-label="4월"></md-tab>
-    </md-tabs>  
-      <md-list>
-        <md-list-item>
-          <md-icon>arrow_right</md-icon>
-          <span class="md-list-item-text">Inbox</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>arrow_right</md-icon>
-          <span class="md-list-item-text">Sent Mail</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>arrow_right</md-icon>
-          <span class="md-list-item-text">Trash</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>arrow_right</md-icon>
-          <span class="md-list-item-text">Spam</span>
-        </md-list-item>
-
-        <md-divider class="md-inset"></md-divider>
-  
-      </md-list>
-    </div>
-    </div>
+  </v-container>
     </div>
 </template>
 
@@ -112,7 +33,12 @@
 
     export default {
         name: 'home',
+        data(){
+          return{
 
+                items:[{name:"jinu"}]
+          }  
+        },
         components: {
             headerBar
         },
@@ -131,7 +57,7 @@
         align-items: center;
         justify-content: center;
         position: relative;
-        height: 50vh;
+
   }
   .viewport {
     width: 320px;
