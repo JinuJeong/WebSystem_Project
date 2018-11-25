@@ -92,7 +92,7 @@ export default {
     }
 
     #md-a{
-        background-color : #F52985;
+        background-color : cornflowerblue;
     }
 
     #header_title {
