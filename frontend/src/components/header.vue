@@ -13,7 +13,7 @@
                     <md-tab class="tab-list" to="/circles" md-label="동아리 정보"></md-tab>
                     <md-tab class="tab-list" to="/board" md-label="자유 게시판"></md-tab>
                     <md-tab class="tab-list" md-label="이달의 동아리"></md-tab>
-                    <md-tab class="tab-list" md-label="최근 활동 내역"></md-tab>
+                    <md-tab class="tab-list" to="/timeline" md-label="최근 활동 내역"></md-tab>
                 </md-tabs>
                 </div>
             </div>

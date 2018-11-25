@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Vuetify from 'vuetify'
 import Router from 'vue-router'
 import Login from '../components/login'
 import Home from '../components/home'
@@ -8,9 +9,13 @@ import Search from '../components/search'
 import Notice from '../components/notice'
 import Circles from '../components/circles'
 import Board from '../components/board'
-
+import Timeline from '../components/timeline'
 
 Vue.use(Router);
+
+Vue.use(Vuetify, {
+    iconfont: 'mdi' // 'md' || 'mdi' || 'fa' || 'fa4'
+});
 
 export default new Router({
     // '#' tag를 없애줌.
@@ -45,6 +50,10 @@ export default new Router({
         {
             path: '/board',
             component: Board
+        },
+        {
+            path: '/timeline',
+            component: Timeline
         }
     ]
 })
