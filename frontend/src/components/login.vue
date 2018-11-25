@@ -57,13 +57,13 @@
     import headerBar from './header.vue'
 
     export default {
-        name: "login",
-        data() {
+        name: 'login',
+        data: function(){
             return {
                 loading: false,
                 login: {
-                    ID: "",
-                    password: ""
+                    ID: '',
+                    password: ''
                 },
                 active: false
 
@@ -73,7 +73,7 @@
             headerBar
         },
         methods: {
-            auth() {
+            auth: function() {
                 this.$http.post("http://localhost:8000/user/signin",{"ID":this.login.ID,"password":this.login.password}).then((res)=>{
                     if(res.data.ID==null){
                         this.active=true
