@@ -6,6 +6,8 @@
         <!--바탕이 되는 container-->
         <div class="centered-container">
 
+            <h1 class="hn ajou_title"> 아주대학교 동아리 정보 </h1>
+
             <!--그 위에 올려지는 Login form box (elevation : 10)-->
             <md-content class="md-elevation-15">
 
@@ -24,10 +26,14 @@
 
                     </md-card-content>
 
-                    <md-card-actions>
-                        <md-button class="md-raised md-primary">더 자세히</md-button>
-                        <md-button class="md-raised md-primary">가입 신청</md-button>
-                    </md-card-actions>
+                    <v-card-actions>
+                        <v-btn color="blue" bottom style="width : 270px;">
+                            <p class="circle_button">더 자세히</p>
+                        </v-btn>
+                        <v-btn color="blue" bottom style="width : 270px;">
+                            <p class="circle_button">가입 신청</p>
+                        </v-btn>
+                    </v-card-actions>
                 </md-card>
 
                 <md-card>
@@ -45,8 +51,12 @@
                         </md-card-content>
 
                         <md-card-actions>
-                            <md-button class="md-raised md-primary">더 자세히</md-button>
-                            <md-button class="md-raised md-primary">가입 신청</md-button>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">더 자세히</p>
+                            </v-btn>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">가입 신청</p>
+                            </v-btn>
                         </md-card-actions>
                     </md-card>
 
@@ -65,8 +75,13 @@
                         </md-card-content>
 
                         <md-card-actions>
-                            <md-button class="md-raised md-primary">더 자세히</md-button>
-                            <md-button class="md-raised md-primary">가입 신청</md-button>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">더 자세히</p>
+                            </v-btn>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">가입 신청</p>
+                            </v-btn>
+
                         </md-card-actions>
                     </md-card>
 
@@ -85,8 +100,12 @@
                         </md-card-content>
 
                         <md-card-actions>
-                            <md-button class="md-raised md-primary">더 자세히</md-button>
-                            <md-button class="md-raised md-primary">가입 신청</md-button>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">더 자세히</p>
+                            </v-btn>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">가입 신청</p>
+                            </v-btn>
                         </md-card-actions>
                     </md-card>
 
@@ -105,8 +124,12 @@
                         </md-card-content>
 
                         <md-card-actions>
-                            <md-button class="md-raised md-primary">더 자세히</md-button>
-                            <md-button class="md-raised md-primary">가입 신청</md-button>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">더 자세히</p>
+                            </v-btn>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">가입 신청</p>
+                            </v-btn>
                          </md-card-actions>
                     </md-card>
 
@@ -125,11 +148,22 @@
                         </md-card-content>
 
                         <md-card-actions>
-                            <md-button class="md-raised md-primary">더 자세히</md-button>
-                            <md-button class="md-raised md-primary">가입 신청</md-button>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">더 자세히</p>
+                            </v-btn>
+                            <v-btn color="blue" bottom style="width : 270px;">
+                                <p class="circle_button">가입 신청</p>
+                            </v-btn>
                         </md-card-actions>
                     </md-card>
+
+                <v-pagination
+                        v-model="page"
+                        :length="6"
+                        color="blue"
+                ></v-pagination>
             </md-content>
+
         </div>
     </div>
 </template>
@@ -139,6 +173,12 @@
 
     export default {
         name: 'circles',
+
+        data() {
+            return {
+                page : 1
+            }
+        },
 
         components: {
             headerBar
@@ -156,9 +196,14 @@
         position: relative;
         height: 180vh;
 
+        .v-card{
+            width : 500px;
+            height : 500px;
+        }
+
         .md-card {
-            max-width : 600px;
-            max-height : 400px;
+            width : 600px;
+            height : 400px;
 
             margin-left : 50px;
             vertical-align: top;
@@ -182,6 +227,16 @@
             justify-content : center;
             flex-wrap: wrap;
         }
+    }
+
+    .circle_button{
+        color : white;
+        margin-top : 10px;
+    }
+
+    .ajou_title{
+        margin-bottom : 30px;
+        font-size : 40px;
     }
 
     #first_row {

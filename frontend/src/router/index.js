@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuetify from 'vuetify'
+
 import Router from 'vue-router'
 import Login from '../components/login'
 import Home from '../components/home'
@@ -13,16 +13,12 @@ import TimeLine from '../components/timeline'
 
 Vue.use(Router);
 
-Vue.use(Vuetify, {
-    iconfont: 'mdi' // 'md' || 'mdi' || 'fa' || 'fa4'
-});
-
 export default new Router({
     // '#' tag를 없애줌.
-    mode : "history",
 
     //router's list
     routes : [
+
         {
             path: '/',
             component: Home
@@ -54,6 +50,10 @@ export default new Router({
         {
             path: '/timeline',
             component: TimeLine
+        },
+        {
+            path: '/abc/abc',
+            component: Board
         }
     ]
 })
