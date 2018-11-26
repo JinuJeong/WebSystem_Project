@@ -29,8 +29,8 @@
                 </div>
 
                 <div class="actions md-layout md-alignment-center-space-around">
-                    <a href="/">아이디 찾기</a>
-                    <a href="/">비밀번호 찾기</a>
+                    <a to="/">아이디 찾기</a>
+                    <a to="/">비밀번호 찾기</a>
                 </div>
 
                 <div class="actions md-layout md-alignment-center-space-around">
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="actions md-layout md-alignment-center-space-around">
-                    <md-button class="md-raised md-primary" href="/signup">계정 생성</md-button>
+                    <md-button class="md-raised md-primary" to="/signup">계정 생성</md-button>
                 </div>
             </md-content>
             

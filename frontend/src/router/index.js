@@ -9,12 +9,15 @@ import Notice from '../components/notice'
 import Circles from '../components/circles'
 import Board from '../components/board'
 import TimeLine from '../components/timeline'
+import Circle from '../components/circle'
+import manageNotice from '../components/manageNotice'
+import showNotice from '../components/showNotice'
 
 Vue.use(Router);
 
 export default new Router({
     // '#' tag를 없애줌.
-  //  mode : "history",
+    //mode : "history",
     //router's list
     routes : [
 
@@ -47,12 +50,24 @@ export default new Router({
             component: Board
         },
         {
-            path: '/circle/:name',
+            path: '/circle/:circleName',
             component: Circle,
         },
         {
             path: '/timeline',
             component: TimeLine
         },
+        {
+            path: '/circle/:circleName/manage_notice/create',
+            component: manageNotice
+        },
+        {
+            path: '/circle/:circleName/manage_notice/:title/:date',
+            component: manageNotice
+        },
+        {
+            path: '/circle/:circleName/show_notice/:title/:date',
+            component: showNotice
+        }
     ]
 })

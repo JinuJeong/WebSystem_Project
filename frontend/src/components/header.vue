@@ -11,11 +11,12 @@
                 <v-btn class="toolbar-item" flat to="/board"><p class="item-p">자유 게시판</p></v-btn>
                 <v-btn class="toolbar-item" flat><p class="item-p">이달의 동아리</p></v-btn>
                 <v-btn class="toolbar-item" flat to="/timeline"><p class="item-p">최근 활동 내역</p></v-btn>
+                <v-btn class="toolbar-item" flat to="/circle/HANTOR"><p class="item-p">HANTOR</p></v-btn>
             </v-toolbar-items>
 
             <v-spacer></v-spacer>
             <search/>
-            <v-btn flat v-if="beforeLogin" href="/login"><p class="item-p">Login</p></v-btn>
+            <v-btn flat v-if="beforeLogin" to="/login"><p class="item-p">Login</p></v-btn>
             <p class="item-p" v-if="!beforeLogin">{{userName}} 님</p>
         </v-toolbar>
 
