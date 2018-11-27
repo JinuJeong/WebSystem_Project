@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+import Circle from '../components/circle.vue'
 import Router from 'vue-router'
 import Login from '../components/login'
 import Home from '../components/home'
@@ -8,12 +8,9 @@ import SignUp from '../components/signup'
 import Notice from '../components/notice'
 import Circles from '../components/circles'
 import Board from '../components/board'
-<<<<<<< HEAD
 import CircleSignup from '../components/circlesignup'
 
-=======
 import TimeLine from '../components/timeline'
->>>>>>> 44447c1db9ba21807504d57946a6c1601b56dc86
 
 Vue.use(Router);
 
@@ -52,18 +49,16 @@ export default new Router({
             component: Board
         },
         {
-<<<<<<< HEAD
             path: '/circlesignup',
             component: CircleSignup
-        }
-=======
+        },
+        {
             path: '/circle/:name',
             component: Circle,
         },
         {
             path: '/timeline',
             component: TimeLine
-        },
->>>>>>> 44447c1db9ba21807504d57946a6c1601b56dc86
+        }
     ]
 })

@@ -2,7 +2,6 @@
     <div class="circles">
         <!--항상 상단에 떠있는 bar-->
         <header-bar></header-bar>
-<<<<<<< HEAD
         <md-content>
                  <md-button class="md-raised md-primary" href="/circlesignup">동아리 신청</md-button>
         </md-content>    
@@ -27,7 +26,6 @@
                 <md-table-cell>{{circle.concept}}</md-table-cell>
             </md-table-row>               
         </md-table>
-=======
 
         <!--바탕이 되는 container-->
         <div class="centered-container">
@@ -191,14 +189,12 @@
             </md-content>
 
         </div>
->>>>>>> 44447c1db9ba21807504d57946a6c1601b56dc86
     </div>
 </template>
 
 <script>
 import headerBar from './header.vue'
 
-<<<<<<< HEAD
 export default {
     created () {//혹시 안 되면 서버 껐다 켜봐라
         this.$http.get('http://localhost:8000/circle/send').then((res) => {
@@ -210,25 +206,13 @@ export default {
             circles: [],
             users: [],
             president: {},
-            com: ""
+            com: "",
+            page : 1
         }
     },
     name: 'circles',
     components: {
         headerBar
-    },
-    methods: {
-=======
-        data() {
-            return {
-                page : 1
-            }
-        },
-
-        components: {
-            headerBar
-        },
->>>>>>> 44447c1db9ba21807504d57946a6c1601b56dc86
     }
 }
 </script>

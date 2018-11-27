@@ -107,7 +107,8 @@ export default {
     circle_kind: String,
     college: String,
     major: String,
-    circle: String
+    circle: String,
+    circle_name: String
   })
 }
 </script>
