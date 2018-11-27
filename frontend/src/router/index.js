@@ -10,6 +10,7 @@ import Circles from '../views/circle/circles'
 import Circle from '../views/circle/circle'
 import CircleSignup from '../views/circle/circlesignup'
 import Board from '../views/menu/board'
+import Boards from '../views/menu/boards'
 import TimeLine from '../views/menu/timeline'
 import manageNotice from '../components/manageNotice'
 import showNotice from '../components/showNotice'
@@ -50,6 +51,10 @@ export default new Router({
         {
             path: '/board',
             component: Board
+        },
+        {
+            path: '/boards',
+            component: Boards
         },
         {
             path: '/circlesignup',
