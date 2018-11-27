@@ -8,6 +8,7 @@ import SignUp from '../components/signup'
 import Notice from '../components/notice'
 import Circles from '../components/circles'
 import Board from '../components/board'
+import CircleSignup from '../components/circlesignup'
 import TimeLine from '../components/timeline'
 import Circle from '../components/circle'
 import manageNotice from '../components/manageNotice'
@@ -48,6 +49,10 @@ export default new Router({
         {
             path: '/board',
             component: Board
+        },
+        {
+            path: '/circlesignup',
+            component: CircleSignup
         },
         {
             path: '/circle/:circleName',

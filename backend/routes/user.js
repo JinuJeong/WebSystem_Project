@@ -9,9 +9,8 @@ router.use('/',(req,res,next)=>{
     next()
 })
 router.get('/send', (req, res) => {
-    User.usersendAll().then((user) => {
-        mongoose.disconnect()
-        .then(res.send(user))
+    userModel.find().then((user) => {
+        res.send(user)
     })
 });
 
@@ -20,12 +19,11 @@ router.post('/create', (req, res) => {
 });
 
 router.get('/find/:name', (req, res) => {
-    console.log("this it user /:name")
-    User.userfind(req.params.name)
-        .then((user) => {
-            mongoose.disconnect()
-            .then(res.send(user))
-        });
+   var name = req.params.name
+   
+   userModel.findOne({name}).then((user) => {
+       res.send(user)
+   })
 });
 
 router.post('/signin',(req,res)=>{

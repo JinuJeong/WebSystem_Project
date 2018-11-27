@@ -21,12 +21,16 @@
             required
             ></v-textarea>
             
-            <v-btn
+            <v-btn v-if="match==true"
             @click="onModify"
             >
             modify
             </v-btn>
-            
+            <v-btn v-if="match==false"
+            @click="onSubmit"
+            >
+            Submit
+            </v-btn>
            <v-btn @click="onClear">close</v-btn>
            <v-btn v-if="match==true" @click="onDelete">delete</v-btn>
         </v-form>
@@ -83,6 +87,12 @@
                 "contents":this.contents,"author":this.userName}).then((data)=>{
                     this.$router.push("/circle/"+this.circleName);
                 })
+            },
+            onSubmit: function(){
+                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/notice/create",{"title":this.title,
+                    "contents":this.contents,"author":this.userName}).then((data)=>{
+                        this.$router.push("/circle/"+this.circleName);
+                    })
             }
         }
     }
