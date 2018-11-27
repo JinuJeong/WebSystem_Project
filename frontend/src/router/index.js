@@ -8,6 +8,7 @@ import Search from '../components/search'
 import Notice from '../components/notice'
 import Circles from '../components/circles'
 import Board from '../components/board'
+import CircleSignup from '../components/circlesignup'
 
 
 Vue.use(Router);
@@ -45,6 +46,10 @@ export default new Router({
         {
             path: '/board',
             component: Board
+        },
+        {
+            path: '/circlesignup',
+            component: CircleSignup
         }
     ]
 })
