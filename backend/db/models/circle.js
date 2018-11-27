@@ -22,5 +22,6 @@ circleSchema.plugin(autoIncrement, {
     field: 'circleNum',
     startAt: 1
 })
+
 module.exports = mongoose.model("circle", circleSchema);
 

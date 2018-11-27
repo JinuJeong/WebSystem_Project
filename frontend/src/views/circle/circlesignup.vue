@@ -93,7 +93,7 @@
     </div>
 </template>
 <script>
-import headerBar from './header.vue'
+import headerBar from '../../components/header'
     
 export default {
     name: 'circlesignup',
