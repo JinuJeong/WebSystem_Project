@@ -4,7 +4,6 @@
             <v-icon color="white" v-if="showMenu" @click="showNavigation=true">menu</v-icon>
             <router-link :to="{path : '/'}" id="header_title" class="jg" style="width:auto">A-Dong</router-link>
 
-
             <v-toolbar-items class="toolbar-items-list">
                 <v-btn class="toolbar-item" flat to="/notice"><p class="item-p">공지사항</p></v-btn>
                 <v-btn class="toolbar-item" flat to="/circles" ><p class="item-p">동아리 정보</p></v-btn>
@@ -12,6 +11,8 @@
                 <v-btn class="toolbar-item" flat><p class="item-p">이달의 동아리</p></v-btn>
                 <v-btn class="toolbar-item" flat to="/timeline"><p class="item-p">최근 활동 내역</p></v-btn>
                 <v-btn class="toolbar-item" flat href="https://mportal.ajou.ac.kr/main.do"><p class="item-p">아주 Portal</p></v-btn>
+                <v-btn class="toolbar-item" flat to="/circle/HANTOR"><p class="item-p">HANTOR</p></v-btn>
+
             </v-toolbar-items>
 
             <v-spacer></v-spacer>

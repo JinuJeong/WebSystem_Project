@@ -1,6 +1,6 @@
 import Vue from 'vue'
-
 import Router from 'vue-router'
+
 import Login from '../views/menu/login'
 import Home from '../views/home/home'
 import NotFound from '../views/404'
@@ -8,14 +8,21 @@ import SignUp from '../views/menu/signup'
 import Notice from '../views/menu/notice'
 import Circles from '../views/circle/circles'
 import Circle from '../views/circle/circle'
+import CircleSignup from '../views/circle/circlesignup'
 import Board from '../views/menu/board'
 import TimeLine from '../views/menu/timeline'
-import Test from "../components/test"
+import manageNotice from '../components/manageNotice'
+import showNotice from '../components/showNotice'
+import Vuetify from "vuetify";
 
 Vue.use(Router);
+Vue.use(Vuetify, {
+    iconfont: 'mdi'
+});
 
 export default new Router({
     // '#' tag를 없애줌.
+
    // mode : "history",
 
     //router's list
@@ -45,7 +52,11 @@ export default new Router({
             component: Board
         },
         {
-            path: '/circle/:name',
+            path: '/circlesignup',
+            component: CircleSignup
+        },
+        {
+            path: '/circle/:circleName',
             component: Circle,
         },
         {
@@ -53,12 +64,20 @@ export default new Router({
             component: TimeLine
         },
         {
-            path: '/test',
-            component: Test
-        },
-        {
             path: '*',
             component: NotFound
         },
+        {
+            path: '/circle/:circleName/manage_notice/create',
+            component: manageNotice
+        },
+        {
+            path: '/circle/:circleName/manage_notice/:title/:date',
+            component: manageNotice
+        },
+        {
+            path: '/circle/:circleName/show_notice/:title/:date',
+            component: showNotice
+        }
     ]
 })

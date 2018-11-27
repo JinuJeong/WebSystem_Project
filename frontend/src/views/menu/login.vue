@@ -28,16 +28,18 @@
                     </md-field>
                 </div>
 
-                <div class="form-actions md-layout md-alignment-center-space-around">
-                    <a href="/" class="ns" style="width : 40%">아이디 찾기</a>
-                    <a href="/" class="ns" style="width : 20%">비밀번호 찾기</a>
+                <div class="actions md-layout md-alignment-center-space-around">
+                    <a to="/">아이디 찾기</a>
+                    <a to="/">비밀번호 찾기</a>
                 </div>
 
                 <div class="form-actions md-layout md-alignment-center-space-around">
                     <v-btn class="md-raised md-primary jg" color="blue-grey lighten-1" v-on:click="auth">로그인</v-btn>
                 </div>
+
                 <div class="form-actions md-layout md-alignment-center-space-around">
                     <v-btn class="md-raised md-primary jg" color="blue-grey lighten-1" to="/signup">계정 생성</v-btn>
+
                 </div>
             </md-content>
             
