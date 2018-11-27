@@ -11,6 +11,5 @@ const circleSchema = mongoose.Schema({
     subject: {type: String},
 });
 
-
 module.exports = mongoose.model("circle", circleSchema);
 

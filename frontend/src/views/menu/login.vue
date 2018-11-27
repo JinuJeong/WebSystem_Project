@@ -7,15 +7,15 @@
         <div class="centered-container">
             <!--그 위에 올려지는 Login form box (elevation : 10)-->
 
-            <md-content class="md-elevation-10">
+            <md-content class="md-elevation-10" >
                 <!--Title 이미지 + 설명 -->
                 <div class="title">
-                    <img src="https://vuematerial.io/assets/logo-color.png">
-                    <div class="md-title">A-Dong</div>
-                    <h2>Login</h2>
+                    <router-link to="/">
+                    <img src="../../assets/A-dong.png">
+                    </router-link>
                 </div>
 
-                <div class="form">
+                <div class="login-form">
                     <!--ID 입력-->
                     <md-field>
                         <label>ID</label>
@@ -28,17 +28,16 @@
                     </md-field>
                 </div>
 
-                <div class="actions md-layout md-alignment-center-space-around">
-                    <a href="/">아이디 찾기</a>
-                    <a href="/">비밀번호 찾기</a>
+                <div class="form-actions md-layout md-alignment-center-space-around">
+                    <a href="/" class="ns" style="width : 40%">아이디 찾기</a>
+                    <a href="/" class="ns" style="width : 20%">비밀번호 찾기</a>
                 </div>
 
-                <div class="actions md-layout md-alignment-center-space-around">
-                    <md-button class="md-raised md-primary" v-on:click="auth">로그인</md-button>
+                <div class="form-actions md-layout md-alignment-center-space-around">
+                    <v-btn class="md-raised md-primary jg" color="blue-grey lighten-1" v-on:click="auth">로그인</v-btn>
                 </div>
-
-                <div class="actions md-layout md-alignment-center-space-around">
-                    <md-button class="md-raised md-primary" href="/signup">계정 생성</md-button>
+                <div class="form-actions md-layout md-alignment-center-space-around">
+                    <v-btn class="md-raised md-primary jg" color="blue-grey lighten-1" to="/signup">계정 생성</v-btn>
                 </div>
             </md-content>
             
@@ -46,27 +45,26 @@
         <!--alert operation -->
         <md-dialog-alert
             :md-active.sync="active"
-            md-content="Login Failed"
-            md-confirm-text="DONE" />
+            md-content="아이디나 비밀번호가 맞지 않습니다."
+            md-confirm-text="확인" />
 
         <md-divider></md-divider>
     </div>
 </template>
 
 <script>
-    import headerBar from './header.vue'
+    import headerBar from '../../components/header'
 
     export default {
         name: 'login',
         data: function(){
             return {
-                loading: false,
+                loading : false,
                 login: {
                     ID: '',
                     password: ''
                 },
-                active: false
-
+                active  : false
             };
         },
         components: {
@@ -85,6 +83,7 @@
                     }
                     this.$session.start()
                     this.$session.set('username', res.data.name)
+                    this.$session.set('userDepartment', res.data.department)
                     console.log(this.$session.getAll());
                     this.$router.push('/')
                 })
@@ -94,45 +93,53 @@
 </script>
 
 <style lang="scss">
-    .centered-container {
+    .centered-container { // 밑바탕 Container
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
         height: 100vh;
 
-        .title { // A-Dong + img
-            text-align: center;
-            margin-bottom: 30px;
-            img {
-                margin-bottom: 16px;
-                max-width: 80px;
-            }
-            .md-title{ // A-Dong
-                font-size : 50px;
-            }
-        }
 
-        .actions {
-            margin-bottom : 10px;
-
-            .md-button {
-                margin-bottom : 10px;
-                width : 500px;
-            }
-        }
-        .form {
-            margin-bottom: 60px;
-        }
-
-        .md-content {
-            z-index: 0;
+        .md-content { //하얀 Box
+            z-index: 1;
             padding: 40px;
             width: 100%;
             height : 200%;
-            max-width: 400px;
-            max-height : 550px;
+            max-width: 500px;
+            max-height : 600px;
             position: relative;
+
+            .title { // A-Dong + img
+                text-align: center;
+                margin-bottom: 30px;
+                img {
+                    resize: both;
+                    max-width :300px;
+                    height : 150px;
+                    margin-left : 10%
+                }
+                .md-title{ // A-Dong
+                    font-size : 50px;
+                }
+            }
+
+            .login-form { // id와 비밀번호 입력칸
+                margin-bottom: 15%;
+            }
+
+            .form-actions { // 아이디/비밀번호 찾기
+                margin-bottom : 3%;
+
+                .md-button { // 로그인 , 계정생성
+                    width : 500px;
+                }
+                .v-btn { // 로그인 , 계정생성
+                    width : 400px;
+                    color : white;
+                }
+            }
         }
+
     }
 </style>

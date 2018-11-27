@@ -1,23 +1,25 @@
 import Vue from 'vue'
 
 import Router from 'vue-router'
-import Login from '../components/login'
-import Home from '../components/home'
-import NotFound from '../components/404'
-import SignUp from '../components/signup'
-import Notice from '../components/notice'
-import Circles from '../components/circles'
-import Board from '../components/board'
-import TimeLine from '../components/timeline'
+import Login from '../views/menu/login'
+import Home from '../views/home/home'
+import NotFound from '../views/404'
+import SignUp from '../views/menu/signup'
+import Notice from '../views/menu/notice'
+import Circles from '../views/circle/circles'
+import Circle from '../views/circle/circle'
+import Board from '../views/menu/board'
+import TimeLine from '../views/menu/timeline'
+import Test from "../components/test"
 
 Vue.use(Router);
 
 export default new Router({
     // '#' tag를 없애줌.
-  //  mode : "history",
+   // mode : "history",
+
     //router's list
     routes : [
-
         {
             path: '/',
             component: Home
@@ -25,10 +27,6 @@ export default new Router({
         {
             path: '/login',
             component: Login
-        },
-        {
-            path: '*',
-            component: NotFound
         },
         {
             path: '/signup',
@@ -53,6 +51,14 @@ export default new Router({
         {
             path: '/timeline',
             component: TimeLine
+        },
+        {
+            path: '/test',
+            component: Test
+        },
+        {
+            path: '*',
+            component: NotFound
         },
     ]
 })

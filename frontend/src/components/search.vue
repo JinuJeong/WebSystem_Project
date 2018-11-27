@@ -9,7 +9,7 @@
             <div class="md-layout md-gutter">
               <div class="md-layout-item">
                 <md-field>
-                  <label for="circle_kind">동아리 종류</label>
+                  <label>동아리 종류</label>
                   <md-select v-model="circle_kind" name="circle_kind" id="circle_kind">
                     <md-option v-for="circle_kind in circles_kind" v-bind:value="circle_kind.value" :key="circle_kind.value">
                       {{ circle_kind.name }}
@@ -17,11 +17,11 @@
                   </md-select>
                   </md-field>
               </div>
-              <div class="md-layout-item" v-if="circle_kind=='small_circle'">
+              <div class="md-layout-item" v-if="circle_kind==='small_circle'">
                 <md-field>
-                  <label for="college">단과대</label>
+                  <label>단과대</label>
                   <md-select v-model="college" name="college" id="college">
-                    <md-option v-for="college in colleges" v-show="college.parent==circle_kind" v-bind:value="college.value" :key="college.value">
+                    <md-option v-for="college in colleges" v-show="college.parent===circle_kind" v-bind:value="college.value" :key="college.value">
                       {{ college.name }}
                     </md-option>
                   </md-select>
@@ -29,7 +29,7 @@
               </div>
               <div class="md-layout-item" v-else>
                 <md-field>
-                  <label for="circle">동아리 이름</label>
+                  <label>동아리 이름</label>
                   <md-select v-model="circle_name" name="circle" id="circle">
                   <md-option v-for="circle in circles" v-bind:value="circle.value" :key="circle.value">
                     {{ circle.name }}
@@ -38,21 +38,21 @@
                 </md-field>
               </div>
 
-              <div class="md-layout-item" v-if="circle_kind=='small_circle'">
+              <div class="md-layout-item" v-if="circle_kind==='small_circle'">
                 <md-field>
-                  <label for="major">전공</label>
+                  <label>전공</label>
                   <md-select v-model="major" name="major" id="major">
-                    <md-option v-for="major in majors" v-show="major.parent==college" v-bind:value="major.value" :key="major.value">
+                    <md-option v-for="major in majors" v-show="major.parent===college" v-bind:value="major.value" :key="major.value">
                       {{ major.name }}
                     </md-option>
                   </md-select>
                 </md-field>
               </div>
-              <div class="md-layout-item" v-if="circle_kind=='small_circle'">
+              <div class="md-layout-item" v-if="circle_kind==='small_circle'">
                 <md-field>
-                  <label for="circle_name">동아리 이름</label>
+                  <label>동아리 이름</label>
                   <md-select v-model="circle" name="circle" id="circle">
-                    <md-option v-for="circle in circles" v-show="circle.parent==major" v-bind:value="circle.value" :key="circle.value">
+                    <md-option v-for="circle in circles" v-show="circle.parent===major" v-bind:value="circle.value" :key="circle.value">
                       {{ circle.name }}
                     </md-option>
                   </md-select>
@@ -71,7 +71,7 @@
     </md-dialog>
 
     <md-button class="md-icon-button" @click="showDialog = true">
-        <md-icon>search</md-icon>
+        <md-icon style="color:white">search</md-icon>
     </md-button>
   </div>
 </template>

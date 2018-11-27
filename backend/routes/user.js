@@ -4,7 +4,7 @@ const userModel = require('../db/models/user')
 const circleModel = require('../db/models/circle')
 const nodemailer = require('nodemailer');
 
-router.use('/',(req,res,next)=>{
+router.use('/',(req, res, next)=>{
     console.log("user start")
     next()
 })
@@ -32,7 +32,6 @@ router.post('/signin',(req,res)=>{
     var session
     
     userModel.findOne(req.body).then((user)=>{
-        
         res.send(user)
     })
 });
@@ -56,7 +55,7 @@ router.post('/signup',(req,res)=>{
             html: '<p>아래의 링크를 클릭해주세요 !</p>' +
           "<a href='http://localhost:8000/user/auth/"+email+"'>인증하기</a>"
         };
-    
+
         transporter.sendMail(mailOptions, function(error, info){
             if (error) {
                 console.log(error);
@@ -73,8 +72,8 @@ router.post('/signup',(req,res)=>{
     })
 });
 router.get('/auth/:email',(req,res)=>{
-    let email = req.params.email
-    console.log(email)
+    let email = req.params.email;
+    console.log(email);
     userModel.update({"ID":email},{"auth":true}).then((data)=>{
         res.send("인증 완료")
     })

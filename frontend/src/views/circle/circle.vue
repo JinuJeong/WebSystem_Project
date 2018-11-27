@@ -25,18 +25,27 @@
     </v-flex>
 
   </v-container>
+
     </div>
 </template>
 
 <script>
-    import headerBar from './header.vue'
+    import headerBar from '../../components/header'
 
     export default {
         name: 'home',
         data(){
           return{
+              links: [
+                  'Home',
+                  'About Us',
+                  'Team',
+                  'Services',
+                  'Blog',
+                  'Contact Us'
+              ],
 
-                items:[{name:"jinu"}]
+              items:[{name:"jinu"}]
           }  
         },
         components: {
@@ -65,7 +74,6 @@
     display: inline-block;
     vertical-align: top;
     overflow: auto;
-    border: 1px solid rgba(#000, .12);
     margin-left: 10px
   }
   .md-list-item-text{
