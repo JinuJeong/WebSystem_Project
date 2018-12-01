@@ -15,6 +15,7 @@ import TimeLine from '../views/menu/timeline'
 import manageNotice from '../components/manageNotice'
 import showNotice from '../components/showNotice'
 import showNotices from '../components/showNotices'
+import showSchedules from '../components/showSchedules'
 
 import Vuetify from "vuetify";
 
@@ -89,6 +90,10 @@ export default new Router({
         {
             path: '/circle/:circleName/board/:kind/show_notices',
             component: showNotices
+        },
+        {
+            path: '/circle/:circleName/schedule/show_schedules',
+            component: showSchedules
         }
     ]
 })

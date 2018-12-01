@@ -1,9 +1,9 @@
 const { mongoose} = require('../mongo')
 
 const scheduleSchema = mongoose.Schema({
-    title: {type: String, require: true},
-    contents: {type: String, require: true},
-    date : {type: Date, require: true},
+    content : {type: String, require: true},
+    start : {type: Date, require: true},
+    end : {type: Date, require: true},
     circle : {type: String}
 });
 

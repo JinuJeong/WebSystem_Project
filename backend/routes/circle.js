@@ -93,5 +93,15 @@ router.get('/send/:name', (req, res) => {
     })
 })
 */
+router.get('/:name/schedule',(req,res)=>{
+    scheduleModel.find().then((data)=>{
+        res.send(data)
+    })
+})
+router.post('/:name/schedule/create',(req,res)=>{
+    scheduleModel.create(req.body).then((data)=>{
+        res.send("ok")
+    })
+})
 
 module.exports = router;
