@@ -2,6 +2,11 @@
     <div class="circles">
         <!--항상 상단에 떠있는 bar-->
         <header-bar></header-bar>
+    <div v-for="circle in circles" :key="circle.id">
+      <h2>{{circle.name}}</h2>
+      <h3>소속 : {{circle.party}}</h3>
+      <p>{{circle.president}}</p>
+    </div>
 
         <!--바탕이 되는 container-->
         <div class="centered-container" >
@@ -9,27 +14,28 @@
 
             <!--그 위에 올려지는 하얀 container (elevation : 10)-->
             <md-content class="md-elevation-15">
-                <md-card v-for="data in calData" class = "md-elevation-8">
+                <md-card v-for="circle in circles" :key="circle.id" class = "md-elevation-8">
 
-                    <v-img v-if="data.name === 'ANSI'"
+                    <v-img v-if="circle.name === 'ANSI'"
                             src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
                             aspect-ratio="2.75"
                     ></v-img>
 
-                    <img src="../../assets/A-dong.png" v-if="data.name === 'HANTOR'" style="resize:both; max-height:268px; margin-left: 20%;">
+                    <img src="../../assets/A-dong.png" v-if="circle.name === 'HANTOR'" style="resize:both; max-height:268px; margin-left: 20%;">
 
                     <md-card-header>
-                        <div class="md-title jg" style="font-size : 30px;">{{data.name}}</div>
+                        <div class="md-title jg" style="font-size : 30px;">{{circle.name}}</div>
                     </md-card-header>
 
                     <md-card-content>
-                        <p class="content-circle">분류 : {{data.category}} </p>
-                        <p class="content-circle">동방 : {{data.roomexist}}</p>
-                        <p class="content-circle">회장 이름 및 연락처 : {{data.president}}</p>
-                        <p class="content-circle">다른 학과 가입 여부 : {{data.diff_join}}</p>
-                        <p class="content-circle">동아리(소학회) 규모 : {{data.size}}</p>
-                        <p class="content-circle">지도 교수님 : {{data.teach_professor}} </p>
-                        <p class="content-circle">한줄 소개 : {{data.intro}} </p>
+                        <p class="content-circle">분류 : {{circle.party}}</p>
+                        <p class="content-circle">동방 : </p>
+                        <p class="content-circle">회장 이름 : </p>
+                        <p class="content-circle">회장 연락처 : </p>
+                        <p class="content-circle">다른 학과 가입 여부 : </p>
+                        <p class="content-circle">동아리(소학회) 규모 : {{circle.memberNumber}}</p>
+                        <p class="content-circle">지도 교수님 :  </p>
+                        <p class="content-circle">한줄 소개 : {{circle.introduce}}</p>
                     </md-card-content>
 
                     <v-card-actions>
@@ -53,6 +59,8 @@
                 </div>
             </md-content>
         </div>
+        <v-btn v-on:click="circleSignup()">동아리 등록</v-btn>
+
         <div>
             <footer-bar style="margin-top:17%"></footer-bar>
         </div>
@@ -65,12 +73,16 @@
 
     export default {
         name: 'circles',
-
+        created (){
+            this.$http.get('http://localhost:8000/circle/send').then((res) => {
+                this.circles = res.data
+            })
+        },
         data() {
             return {
                 curPage : 1,
                 dataPerPage : 6,
-
+                circles: [],
                 listData : [
                     {   category : "소프트웨어학과 소속 소학회", roomexist : "신학생회관 100호", name : "ANSI",
                         president : "홍길동 010-1234-5678", diff_join : "O",
@@ -162,6 +174,11 @@
             },
             calData() {
                 return this.listData.slice(this.startOffset, this.endOffset)
+            }
+        },
+        methods: {
+            circleSignup(){
+                this.$router.push('/circlesignup')
             }
         }
     }

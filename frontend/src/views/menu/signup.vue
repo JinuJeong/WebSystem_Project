@@ -23,6 +23,16 @@
                     </md-field>
 
                     <md-field>
+                        <label>연락처</label>
+                        <md-input v-model="call" placeholder="call"></md-input>
+                    </md-field>
+
+                    <md-field>
+                        <label>별명</label>
+                        <md-input v-model="nickname" placeholder="nickname"></md-input>
+                    </md-field>
+
+                    <md-field>
                         <label>생년월일</label>
                         <md-input v-model="birth" type="number"  placeholder="data of birth"></md-input>
                     </md-field>
@@ -82,7 +92,7 @@
             <div class="md-layout-item">
                 <md-field>
                     <label>관심분야</label>
-                    <md-select v-model="selectedInterest" name="Interest" id="Interest" multiple>
+                    <md-select v-model="selectedInterest" name="interest" id="interest" multiple>
                         <md-option value="music">음악</md-option>
                         <md-option value="study">공부(Study)</md-option>
                         <md-option value="exercise">운동</md-option>
@@ -137,14 +147,17 @@
             textarea    : null,
             department  : null,
             selectedInterest : [],
-
+            call        : null,
             fail        : false,
-            check       : false
+            check       : false,
+            nickname    : null,
+            birth       : null
         }),
         methods:{
             signup:function(){
                 this.$http.post("http://localhost:8000/user/signup",
-                    {"ID":this.id, "password":this.password, "name":this.name, "department":this.department}).then((res)=>{
+                    {"ID":this.id, "password":this.password, "name":this.name, "department":this.department, "nickname":this.nickname,
+                    "call":this.call, "interest": this.selectedInterest, "birth": this.birth}).then((res)=>{
                         console.log(res);
 
                         if(res.data.errmsg){

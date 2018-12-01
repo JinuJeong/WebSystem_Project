@@ -16,7 +16,7 @@
                 <md-table-head>회원수</md-table-head>
                 <md-table-head>동아리컨셉</md-table-head>                
             </md-table-row>
-            </md-table-row>
+
             <md-table-row v-for="circle in circles" :key="circle.id">
                 <md-table-cell md-numeric>{{circle.circleNum}}</md-table-cell>
                 <md-table-cell>{{circle.name}}</md-table-cell>

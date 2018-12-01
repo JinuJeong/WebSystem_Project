@@ -58,11 +58,6 @@ router.post("/:name/board/:kind/update",(req,res,next)=>{
 })
 
 router.get('/send', (req, res) => {
-    /*
-   circleModel.find().then((circles) => {
-       res.send(circles)
-   })
-   */
     circleModel.find().populate('president').exec((err, data) => {
         res.send(data)
 })
@@ -80,6 +75,7 @@ router.get('/find/:name', (req, res) => {
        res.send(circle)
    })
 });
+<<<<<<< HEAD
 /*
 router.get('/send/:name', (req, res) => {
     console.log(req.params.name)
@@ -104,4 +100,6 @@ router.post('/:name/schedule/create',(req,res)=>{
     })
 })
 
+=======
+>>>>>>> 51a2a31463d5518114d82f335dbaf59a9d4788a8
 module.exports = router;

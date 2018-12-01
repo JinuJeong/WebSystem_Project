@@ -69,11 +69,76 @@ router.post('/signup',(req,res)=>{
         res.send(err)
     })
 });
+
 router.get('/auth/:email',(req,res)=>{
     let email = req.params.email;
     console.log(email);
     userModel.update({"ID":email},{"auth":true}).then((data)=>{
         res.send("인증 완료")
+    })
+})
+
+router.post("/:name/update/profile",(req, res)=>{
+    var name = req.params.name
+    var _id
+    console.log(name)
+userModel.findOne({name}).then((user) => {
+        _id = user._id
+    }).then(() => {
+        userModel.findByIdAndUpdate({_id}, {"name": req.body.name, "nickname": req.body.nickname, "department": req.body.department})
+        .then((user) => {
+            console.log(user)//바뀌기 전의 유저
+            userModel.findById({_id}).then((user) => {
+                console.log(user) //바뀐 유저
+                res.send(user)
+            })
+        })
+    })
+})
+
+router.post("/:name/update/call",(req, res)=>{
+    var name = req.params.name
+    var _id
+
+userModel.findOne({name}).then((user) => {
+        _id = user._id
+    }).then(() => {
+        userModel.findByIdAndUpdate({_id}, {"call": req.body.call, "ID": req.body.ID})
+        .then((user) => {
+            console.log(user)//바뀌기 전의 유저
+            userModel.findById({_id}).then((user) => {
+                console.log(user) //바뀐 유저
+                res.send(user)
+            })
+        })
+    })
+})
+
+
+router.post("/:name/update/password",(req, res)=>{
+    var name = req.params.name
+    var _id
+    console.log(req.body)
+userModel.findOne({name}).then((user) => {
+        _id = user._id
+    }).then(() => {
+        userModel.findByIdAndUpdate({_id}, {"password": req.body.password})
+        .then((user) => {
+            console.log(user)//바뀌기 전의 유저
+            userModel.findById({_id}).then((user) => {
+                console.log(user) //바뀐 유저
+                res.send(user)
+            })
+        })
+    })
+})
+
+router.delete("/:name/delete", (req, res) => {
+    var name = req.params.name
+    var _id
+
+    userModel.deleteOne({name}).then(() => {
+        res.end()
     })
 })
 module.exports = router;

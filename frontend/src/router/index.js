@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
 import Login from '../views/menu/login'
 import Home from '../views/home/home'
 import NotFound from '../views/404'
@@ -19,6 +18,7 @@ import showSchedules from '../components/showSchedules'
 
 import Vuetify from "vuetify";
 
+import mypage from '../views/menu/mypage'
 Vue.use(Router);
 Vue.use(Vuetify, {
     iconfont: 'mdi'
@@ -94,6 +94,10 @@ export default new Router({
         {
             path: '/circle/:circleName/schedule/show_schedules',
             component: showSchedules
+        },
+        {
+            path: '/mypage',
+            component: mypage
         }
     ]
 })
