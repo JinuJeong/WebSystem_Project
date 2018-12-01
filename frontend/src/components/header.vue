@@ -3,7 +3,6 @@
         <v-toolbar color="black" class="header-toolbar" fixed>
             <v-icon color="white" v-if="showMenu" @click="showNavigation=true">menu</v-icon>
             <router-link :to="{path : '/'}" id="header_title" class="jg" style="width:auto">A-Dong</router-link>
-
             <v-toolbar-items class="toolbar-items-list">
                 <v-btn class="toolbar-item" flat to="/boards/notice"><p class="item-p">공지사항</p></v-btn>
                 <v-btn class="toolbar-item" flat to="/circles" ><p class="item-p">동아리 정보</p></v-btn>
@@ -11,8 +10,7 @@
                 <v-btn class="toolbar-item" flat><p class="item-p">이달의 동아리</p></v-btn>
                 <v-btn class="toolbar-item" flat to="/timeline"><p class="item-p">최근 활동 내역</p></v-btn>
                 <v-btn class="toolbar-item" flat href="https://mportal.ajou.ac.kr/main.do"><p class="item-p">아주 Portal</p></v-btn>
-                <v-btn class="toolbar-item" flat to="/circle/HANTOR"><p class="item-p">HANTOR</p></v-btn>
-
+                <v-btn v-if="exist==true" class="toolbar-item" flat to="/circle/HANTOR"><p class="item-p">{{circle.name}}</p></v-btn>
             </v-toolbar-items>
 
             <v-spacer></v-spacer>
@@ -60,6 +58,10 @@ export default {
     beforeLogin: true,
     userName: "",
     userDepartment : "",
+    circles: [],
+    user: {},
+    circle: {},
+    exist: false,
   }),
   created () {
     if (this.$session.exists()) {
@@ -67,7 +69,18 @@ export default {
       this.showMenu = true;
       this.userName = this.$session.getAll().username;
       this.userDepartment = this.$session.getAll().userDepartment;
+      this.$http.get('http://localhost:8000/circle/send').then((res) => {
+        this.circles = res.data
+      }).then(() => {
+          for(var i = 0; i < this.circles.length; i++){
+              if(this.circles[i].president.name == this.userName){
+                this.circle = this.circles[i]
+                this.exist = true
+              }
+          }
+      })
     }
+    
   },
   components: {
     search

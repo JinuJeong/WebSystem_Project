@@ -16,7 +16,7 @@
                             aspect-ratio="2.75"
                     ></v-img>
 
-                    <img src="../../assets/A-dong.png" v-if="circle.name === '하우두유두'" style="resize:both; max-height:268px; margin-left: 20%;">
+                    <img src="../../assets/A-dong.png" v-if="circle.name === '한터'" style="resize:both; max-height:268px; margin-left: 20%;">
 
                     <md-card-header>
                         <div class="md-title jg" style="font-size : 30px;">{{circle.name}}</div>
@@ -92,13 +92,7 @@
                 circles: [],
                 signcircle: {},
                 user: {},
-                check: false,
-                listData : [
-                    {   category : "소프트웨어학과 소속 소학회", roomexist : "신학생회관 100호", name : "ANSI",
-                        president : "홍길동 010-1234-5678", diff_join : "O",
-                        size : "회원 30명", teach_professor : "오상윤 교수님",
-                        intro : "소프트웨어학과 소속 학술 소학회입니다. 알고리즘을 푸는 시간을 갖습니다."}
-                ],
+                check: false
             }
         },
 
@@ -109,7 +103,7 @@
 
         computed: {
             numOfPages() {
-                return Math.ceil(this.listData.length / this.dataPerPage);
+                return Math.ceil(this.circles.length / this.dataPerPage);
             },
             startOffset() {
                 return ((this.curPage - 1) * this.dataPerPage);
@@ -118,15 +112,16 @@
                 return (this.startOffset + this.dataPerPage);
             },
             calData() {
-                return this.listData.slice(this.startOffset, this.endOffset)
+                return this.circles.slice(this.startOffset, this.endOffset)
             }
         },
         methods: {
             circleSignup(){
                 this.$router.push('/circlesignup')
             },
-            onCheck: function() {
-                this.userSignup()
+            onCheck: async function() {
+                await this.userSignup()
+                this.check = false
             },
             onCancle: function(){
                 this.check = false
@@ -143,8 +138,6 @@
                         alert("이미 동아리에 가입하셨습니다.")
                     }
                 })
-                                       // this.$http.post('http://localhost:8000/circle/' + this.signcircle.name + '/signupCircle/', this.user)
-
             }
         }
     }
