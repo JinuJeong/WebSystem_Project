@@ -15,6 +15,8 @@ import manageNotice from '../components/manageNotice'
 import showNotice from '../components/showNotice'
 import showNotices from '../components/showNotices'
 import showSchedules from '../components/showSchedules'
+import manageBoard from '../components/manageBoard'
+import showBoard from '../components/showBoard'
 
 import Vuetify from "vuetify";
 
@@ -56,7 +58,7 @@ export default new Router({
             component: Board
         },
         {
-            path: '/boards',
+            path: '/boards/:boardName',
             component: Boards
         },
         {
@@ -98,6 +100,14 @@ export default new Router({
         {
             path: '/mypage',
             component: mypage
+        },
+        {
+            path: '/boards/:boardName/manage_notice/create',
+            component: manageBoard
+        },
+        {
+            path: '/boards/:boardName/show_notice/:title/:date',
+            component: showBoard
         }
     ]
 })
