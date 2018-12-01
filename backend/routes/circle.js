@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const userModel = require('../db/models/user')
 const circleModel = require('../db/models/circle')
-const noticeModel = require('../db/models/notice')
 const scheduleModel = require('../db/models/schedule')
 const boardModel = require('../db/models/board')
+const groupModel = require('../db/models/group')
 
 let circleName
 let postType
@@ -88,6 +88,8 @@ router.get('/send/:name', (req, res) => {
     })
 })
 */
+
+// Schedule Part
 router.get('/:circleName/schedule',(req,res)=>{
     scheduleModel.find().then((data)=>{
         res.send(data)
@@ -112,5 +114,28 @@ router.post('/:circleName/schedule/update',(req,res)=>{
     })
 })
 
+//Group part
+router.post('/:circleName/group/create',(req,res)=>{
+    let group = req.body
+    userModel.findOne({"ID":group.teacher}).then((user)=>{
+        group["teacher"]={"_id":user._id}
+        console.log(group)
+        groupModel.create(group).then((data)=>{
+            res.send("ok")
+        })
+    })
+})
+
+router.get('/:circleName/group',(req,res)=>{
+    groupModel.find().then((data)=>{
+        res.send(data)
+    })
+})
+
+router.get('/:circleName/group/:groupId',(req,res)=>{
+    groupModel.findOne({"groupId":req.params.groupId}).then((data)=>{
+        res.send(data);
+    })
+})
 
 module.exports = router;

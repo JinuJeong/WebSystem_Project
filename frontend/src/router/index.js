@@ -17,6 +17,9 @@ import showNotices from '../components/showNotices'
 import showSchedules from '../components/showSchedules'
 import manageBoard from '../components/manageBoard'
 import showBoard from '../components/showBoard'
+import showGroups from '../components/showGroups'
+import manageGroup from '../components/manageGroup'
+import showGroup from '../components/showGroup'
 
 import Vuetify from "vuetify";
 
@@ -108,6 +111,18 @@ export default new Router({
         {
             path: '/boards/:boardName/show_notice/:postNum',
             component: showBoard
+        },
+        {
+            path: '/circle/:circleName/group/show_groups',
+            component: showGroups
+        },
+        {
+            path: '/circle/:circleName/manage_group/create',
+            component: manageGroup
+        },
+        {
+            path: '/circle/:circleName/group/show_group/:groupId',
+            component: showGroup
         }
     ]
 })

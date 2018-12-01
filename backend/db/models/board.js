@@ -2,12 +2,12 @@ const { mongoose, autoIncrement } = require('../mongo')
 
 const boardSchema = mongoose.Schema({
     postNum: {type: Number, unique: true},
-    title: {type: String, require: true},
-    contents: {type: String, require: true},
-    author: {type: String, require: true},
+    title: {type: String, required: true},
+    contents: {type: String, required: true},
+    author: {type: String, required: true},
     date: {type: Date, default: Date.now},
     postType: {type: String}, //true: Board, false: Notice
-    circleName: {type: String}
+    circleName: {type: String},
     //postViews: {type: Number}
 });
 

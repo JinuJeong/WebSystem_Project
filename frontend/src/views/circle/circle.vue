@@ -2,15 +2,16 @@
     <div id="home">
         <!--항상 상단에 떠있는 bar-->
         <header-bar></header-bar>
-        <div id='title'>
-           <span class="md-display-3">{{ $route.params.name }}</span>
-        </div>
+        
 
         <v-container
           fluid
           grid-list-md
           style="padding : 5%"
         >
+        <div id='title'>
+           <span class="md-display-3">{{circleName}}</span>
+        </div><br/>
         <v-layout row wrap>
           <v-flex 
               xs4
@@ -86,18 +87,18 @@
             <v-card>
                 <v-card-title class="subheading font-weight-bold">스터디</v-card-title>
                 <v-divider></v-divider>
-                <v-list v-for="notice in noticelists" :key="notice.postId" dense>
+                <v-list v-for="group in grouplists" :key="group.groupId" dense>
                   <v-list-tile
-                  @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.postNum)">
-                    <v-list-tile-title v-text="notice.title"></v-list-tile-title>
+                  @click="$router.push('/circle/'+circleName+'/group/show_group/'+group.groupId)">
+                    <v-list-tile-title v-text="group.title"></v-list-tile-title>
                     <v-list-tile-action>
-                    <v-list-tile-action-text>{{notice.author}}</v-list-tile-action-text>
-                    <v-list-tile-action-text>{{notice.date}}</v-list-tile-action-text>
+                    <v-list-tile-action-text>{{group.start}}</v-list-tile-action-text>
+                    <v-list-tile-action-text>{{group.end}}</v-list-tile-action-text>
                     </v-list-tile-action>
                             
                 </v-list-tile>
                 </v-list>
-                  <v-btn icon @click="$router.push('/circle/'+circleName+'/board/notice/show_notices')">
+                  <v-btn icon @click="$router.push('/circle/'+circleName+'/group/show_groups')">
                     <v-icon>add</v-icon>
                   </v-btn>
                
@@ -143,6 +144,7 @@
                 schedulelists: [],
                 boardlists: [],
                 noticelists: [],
+                grouplists: [],
           }  
         },
         created: function(){
@@ -174,6 +176,15 @@
                 "date":date,"postNum":data.data[i].postNum,"author":data.data[i].author}
                 console.log(board)
                 this.boardlists.push(board)
+              }
+          })
+          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/group").then((data)=>{
+              for(let i=0;i<data.data.length;i++){
+                let group={"title":data.data[i].title,"contents":data.data[i].contents,
+                "start":data.data[i].start.substr(0,10),"end":data.data[i].end.substr(0,10),
+                "groupId":data.data[i].groupId,"teacher":data.data[i].teacher.name}
+                console.log(group)
+                this.grouplists.push(group)
               }
           })
           
