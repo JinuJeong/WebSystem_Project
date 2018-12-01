@@ -102,11 +102,11 @@ export default new Router({
             component: mypage
         },
         {
-            path: '/boards/:boardName/manage_notice/create',
+            path: '/boards/:boardName/manage_notice/:postNum',
             component: manageBoard
         },
         {
-            path: '/boards/:boardName/show_notice/:title/:date',
+            path: '/boards/:boardName/show_notice/:postNum',
             component: showBoard
         }
     ]

@@ -17,10 +17,8 @@ router.get("/:boardName/",(req,res,next)=>{
     })
 });
 
-router.get("/:boardName/:title/:date",(req,res,next)=>{
-    let parm={"postTitle":req.params.title,"postDate":req.params.date}
-    boardModel.findOne(parm).then((data)=>{
-        console.log(parm)
+router.get("/:boardName/:postNum",(req,res,next)=>{
+    boardModel.findOne({"postNum":req.params.postNum}).then((data)=>{
         res.send(data)
     })
 })
@@ -31,9 +29,8 @@ router.post("/:boardName/delete",(req,res,next)=>{
     })
 })
 
-router.post("/:boardName/update",(req,res,next)=>{
-    let notice = {"title":req.body.title,"date":req.body.date};
-    boardModel.updateOne(notice,{"contents":req.body.contents}).then((data)=>{
+router.post("/:boardName/:postNum/update",(req,res,next)=>{
+    boardModel.updateOne({"postNum":req.params.postNum},{"title":req.body.title, "contents":req.body.contents}).then((data)=>{
         res.send("ok");
     })
 })

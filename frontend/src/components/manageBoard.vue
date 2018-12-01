@@ -48,22 +48,22 @@
         name: 'notice',
         data(){
             return{
-                postTitle: this.$route.params.postTitle,
-                postDate: this.$route.params.postDate,
-                postContent: "",
+                postNum: this.$route.params.postNum,
+                title: "",
+                contents: "",
                 match: false,
                 boardName: this.$route.params.boardName,
                 userName: this.$session.getAll().username,
             }
         },
         created: function(){
-            if(this.postTitle!=undefined){
+            if(this.title!=undefined){
                 console.log(this.postDate)
-                this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"
-                +this.postTitle+"/"+this.postDate).then((data)=>{
-                    this.postContent=data.data.postContent
-                    console.log(this.postContent)
-                    if(this.userName==data.data.postWriter) this.match=true;
+                this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum).then((result)=>{
+                    this.title=result.data.title
+                    this.contents=result.data.contents
+                    console.log(result.data.author)
+                    if(this.userName==result.data.author) this.match=true;
                 })
             }
         },
@@ -72,8 +72,8 @@
         },
         methods:{
             onModify: function(){       
-                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/update",{"postTitle":this.postTitle,
-                "postContent":this.postContent,"postDate":this.postDate}).then((data)=>{
+                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/update",{"title":this.title,
+                "contents":this.contents,"date":this.date}).then((data)=>{
                     this.$router.push("/boards/"+this.boardName);
                 })
             },
@@ -81,14 +81,14 @@
                 this.$router.push("/boards/"+this.boardName);
             },
             onDelete: function(){
-                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/delete",{"postTitle":this.postTitle,
-                "postContent":this.postContent,"postWriter":this.userName}).then((data)=>{
+                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/delete",{"title":this.title,
+                "contents":this.contents,"author":this.userName}).then((data)=>{
                     this.$router.push("/boards/"+this.boardName);
                 })
             },
             onSubmit: function(){
-                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/create",{"postTitle":this.title,
-                "postContent":this.contents,"postWriter":this.userName}).then((data)=>{
+                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/create",{"title":this.title,
+                "contents":this.contents,"author":this.userName,"circleName":"Home", "postType":this.boardName}).then((data)=>{
                     this.$router.push("/boards/"+this.boardName);
                 })
             }
