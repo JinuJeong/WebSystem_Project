@@ -8,7 +8,7 @@
             keyboard_backspace
             </i>
             </button>
-            <h1 class="text-md-center">{{circleName}} 공지사항</h1>
+            <h1 class="text-md-center">{{circleName}} {{kind_head}}</h1>
             <md-table class="mt-5">
                 <md-table-row>
                     <md-table-head>제목</md-table-head>
@@ -22,7 +22,7 @@
                     <md-table-cell>{{notice.author}}</md-table-cell>
                 </md-table-row>
             </md-table>
-            <v-btn color="blue" @click="$router.push('/circle/'+circleName+'/manage_notice/create')">새글작성</v-btn>
+            <v-btn color="blue" @click="$router.push('/circle/'+circleName+'/board/'+kind+'/manage_notice/create')">새글작성</v-btn>
         </v-container>
         
     </div>
@@ -35,12 +35,17 @@
           return{
                 circleName: this.$route.params.circleName,
                 noticelists: [],
+                kind: this.$route.params.kind,
+                kind_head: String,      //<h1>에 들어갈 제목
           }  
         },
         created: function(){
           console.log(this.circleName)
-          
-          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/notice").then((data)=>{
+
+          if(this.kind=="notice") this.kind_head="공지사항"
+          else if(this.kind="board") this.kind_head="게시판"
+
+          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/"+this.kind).then((data)=>{
               for(let i=0;i<data.data.length;i++){
                 let date = data.data[i].date.split('T')[0]
                 let notice={"title":data.data[i].title,"contents":data.data[i].contents,

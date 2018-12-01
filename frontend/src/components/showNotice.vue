@@ -45,11 +45,12 @@
                 match: false,
                 circleName: this.$route.params.circleName,
                 userName: this.$session.getAll().username,
+                kind: this.$route.params.kind,
             }
         },
         created: function(){
                     console.log(this.date)
-                    this.$http.get("http://localhost:8000/circle/"+this.circleName+"/notice/"
+                    this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/"+this.kind+"/"
                     +this.title+"/"+this.date).then((data)=>{
                         this.contents=data.data.contents
                         console.log(this.contents)
@@ -62,13 +63,13 @@
         },
         methods:{
             onEdit: function(){
-                this.$router.push("/circle/"+this.circleName+"/manage_notice/"+this.title+"/"+this.date);
+                this.$router.push("/circle/"+this.circleName+"/board/"+this.kind+"/manage_notice/"+this.title+"/"+this.date);
             },
             onClear: function(){
                 this.$router.push("/circle/"+this.circleName);
             },
             onDelete: function(){
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/notice/delete",{"title":this.title,
+                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.kind+"/delete",{"title":this.title,
                 "contents":this.contents,"author":this.userName}).then((data)=>{
                     this.$router.push("/circle/"+this.circleName);
                 })

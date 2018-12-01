@@ -53,12 +53,13 @@
                 match: false,
                 circleName: this.$route.params.circleName,
                 userName: this.$session.getAll().username,
+                kind: this.$route.params.kind,
             }
         },
         created: function(){
                 if(this.title!=undefined){
                     console.log(this.date)
-                    this.$http.get("http://localhost:8000/circle/"+this.circleName+"/notice/"
+                    this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/"+this.kind+"/"
                     +this.title+"/"+this.date).then((data)=>{
                         this.contents=data.data.contents
                         console.log(this.contents)
@@ -73,8 +74,9 @@
         methods:{
             onModify: function(){
                 
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/notice/update",{"title":this.title,
+                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.kind+"/update",{"title":this.title,
                 "contents":this.contents,"date":this.date}).then((data)=>{
+                    console.log(this.title)
                     this.$router.push("/circle/"+this.circleName);
                 })
             },
@@ -82,7 +84,7 @@
                 this.$router.push("/circle/"+this.circleName);
             },
             onDelete: function(){
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/notice/delete",{"title":this.title,
+                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.kind+"/delete",{"title":this.title,
                 "contents":this.contents,"author":this.userName}).then((data)=>{
                     this.$router.push("/circle/"+this.circleName);
                 })
@@ -92,7 +94,7 @@
                     alert("로그인이 필요합니다")
                     return;
                 }
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/notice/create",{"title":this.title,
+                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.kind+"/create",{"title":this.title,
                     "contents":this.contents,"author":this.userName}).then((data)=>{
                         this.$router.push("/circle/"+this.circleName);
                     })

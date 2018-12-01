@@ -4,79 +4,58 @@ const userModel = require('../db/models/user')
 const circleModel = require('../db/models/circle')
 const noticeModel = require('../db/models/notice')
 const scheduleModel = require('../db/models/schedule')
+const boardModel = require('../db/models/board')
 
-router.post("/:name/schedule/create",(req,res,next)=>{
-    console.log(req.body)
-    scheduleModel.create(req.body).then((data)=>{
-        res.send("ok")
-    })
+let circleName
+let kind
+let model
+
+router.use("/:name/board/:kind",(req,res,next)=>{
+    name = req.params.name
+    kind = req.params.kind
+    if(kind=="notice") model=noticeModel
+    else if(kind=="board") model=boardModel
+    next();
 });
 
-router.get("/:name/schedule",(req,res,next)=>{
-    scheduleModel.find().then((data)=>{
+router.get("/:name/board/:kind",(req,res,next)=>{
+    model.find().then((data)=>{
         res.send(data)
     })
 });
 
-router.get("/:name/schedule/:title/:date",(req,res,next)=>{
+router.post("/:name/board/:kind/create",(req,res,next)=>{
+    model.create(req.body).then((data)=>{
+        res.send("ok")
+    })
+});
+
+router.get("/:name/board/schedule",(req,res,next)=>{
+    model.find().then((data)=>{
+        res.send(data)
+    })
+});
+
+router.get("/:name/board/:kind/:title/:date",(req,res,next)=>{
     let parm={"title":req.params.title,"date":req.params.date}
-    scheduleModel.findOne(parm).then((data)=>{
+    model.findOne(parm).then((data)=>{
         console.log(parm)
         res.send(data)
     })
 })
 
-router.post("/:name/schedule/delete",(req,res,next)=>{
-    scheduleModel.deleteOne(req.body).then((data)=>{
+router.post("/:name/board/:kind/delete",(req,res,next)=>{
+    model.deleteOne(req.body).then((data)=>{
         res.send("ok")
     })
 })
 
-router.post("/:name/schedule/update",(req,res,next)=>{
-    let notice = {"title":req.body.title,"date":req.body.date};
-    scheduleeModel.updateOne(notice,{"contents":req.body.contents}).then((data)=>{
+router.post("/:name/board/:kind/update",(req,res,next)=>{
+    let notice = {"date":req.body.date};
+    model.updateOne(notice,{"title":req.body.title,"contents":req.body.contents}).then((data)=>{
         res.send("ok");
     })
 })
-
-router.post("/:name/notice/create",(req,res,next)=>{
-    console.log(req.body)
-    noticeModel.create(req.body).then((data)=>{
-        res.send("ok")
-    })
-});
-
-router.get("/:name/notice",(req,res,next)=>{
-    noticeModel.find().then((data)=>{
-        res.send(data)
-    })
-});
-
-router.get("/:name/notice/:title/:date",(req,res,next)=>{
-    let parm={"title":req.params.title,"date":req.params.date}
-    noticeModel.findOne(parm).then((data)=>{
-        console.log(parm)
-        res.send(data)
-    })
-})
-
-router.post("/:name/notice/delete",(req,res,next)=>{
-    noticeModel.deleteOne(req.body).then((data)=>{
-        res.send("ok")
-    })
-})
-
-router.post("/:name/notice/update",(req,res,next)=>{
-    let notice = {"title":req.body.title,"date":req.body.date};
-    noticeModel.updateOne(notice,{"contents":req.body.contents}).then((data)=>{
-        res.send("ok");
-    })
-})
-
-router.use('/', (req, res, next) => {
-    console.log("circle start")
-    next()
-});
 
 router.get('/send', (req, res) => {
     /*

@@ -18,19 +18,7 @@
             <v-card>
                 <v-card-title class="subheading font-weight-bold">일정</v-card-title>
                 <v-divider></v-divider>
-                <v-list v-for="schedule in schedulelists" :key="schedule.date" dense>
-                  <v-list-tile
-                  @click="$router.push('/circle/'+circleName+'/show_notice/'+notice.title+'/'+notice.full_date)">
-                    <v-list-tile-title v-text="schedule.title"></v-list-tile-title>
-                    <v-list-tile-action>
-                    <v-list-tile-action-text>{{schedule.date}}</v-list-tile-action-text>
-                    </v-list-tile-action>
-                            
-                </v-list-tile>
-                </v-list>
-                <v-btn icon @click="$router.push('/circle/'+circleName+'/show_schedule')">
-                    <v-icon>add</v-icon>
-                  </v-btn>
+                
             </v-card>
           </v-flex>
 
@@ -42,7 +30,7 @@
                 <v-divider></v-divider>
                 <v-list v-for="notice in noticelists" :key="notice.full_date" dense>
                   <v-list-tile
-                  @click="$router.push('/circle/'+circleName+'/show_notice/'+notice.title+'/'+notice.full_date)">
+                  @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.title+'/'+notice.full_date)">
                     <v-list-tile-title v-text="notice.title"></v-list-tile-title>
                     <v-list-tile-action>
                     <v-list-tile-action-text>{{notice.author}}</v-list-tile-action-text>
@@ -51,12 +39,36 @@
                             
                 </v-list-tile>
                 </v-list>
-                  <v-btn icon @click="$router.push('/circle/'+circleName+'/show_notices')">
+                  <v-btn icon @click="$router.push('/circle/'+circleName+'/board/notice/show_notices')">
                     <v-icon>add</v-icon>
                   </v-btn>
                
             </v-card>
           </v-flex>
+
+          <v-flex 
+              xs4
+              d-flex>
+            <v-card>
+                <v-card-title class="subheading font-weight-bold">게시판</v-card-title>
+                <v-divider></v-divider>
+                <v-list v-for="board in boardlists" :key="board.date" dense>
+                  <v-list-tile
+                  @click="$router.push('/circle/'+circleName+'/board/board/show_notice/'+board.title+'/'+board.full_date)">
+                    <v-list-tile-title v-text="board.title"></v-list-tile-title>
+                    <v-list-tile-action>
+                    <v-list-tile-action-text>{{board.author}}</v-list-tile-action-text>
+                    <v-list-tile-action-text>{{board.date}}</v-list-tile-action-text>
+                    </v-list-tile-action>
+                            
+                </v-list-tile>
+                </v-list>
+                <v-btn icon @click="$router.push('/circle/'+circleName+'/board/board/show_notices')">
+                    <v-icon>add</v-icon>
+                  </v-btn>
+            </v-card>
+          </v-flex>
+
         </v-layout>
         </v-container>
     </div>
@@ -71,13 +83,14 @@
           return{
                 circleName: this.$route.params.circleName,
                 schedulelists: [],
+                boardlists: [],
                 noticelists: [],
           }  
         },
         created: function(){
           console.log(this.circleName)
           
-          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/notice").then((data)=>{
+          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/notice").then((data)=>{
               for(let i=0;i<data.data.length;i++){
                 let date = data.data[i].date.split('T')[0]
                 let notice={"title":data.data[i].title,"contents":data.data[i].contents,
@@ -85,11 +98,19 @@
                 this.noticelists.push(notice)
               }
           })
-          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/schedule").then((data)=>{
+          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/schedule").then((data)=>{
               for(let i=0;i<data.data.length;i++){
                 let schedule={"title":data.data[i].title,"contents":data.data[i].contents,
-                "date":date,"full_date":data.data[i].date}
+                "date":data.data[i].date}
                 this.schedulelists.push(schedule)
+              }
+          })
+          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/board").then((data)=>{
+              for(let i=0;i<data.data.length;i++){
+                let date = data.data[i].date.split('T')[0]
+                let board={"title":data.data[i].title,"contents":data.data[i].contents,
+                "date":date,"full_date":data.data[i].date,"author":data.data[i].author}
+                this.boardlists.push(board)
               }
           })
           
