@@ -7,52 +7,52 @@ const scheduleModel = require('../db/models/schedule')
 const boardModel = require('../db/models/board')
 
 let circleName
-let kind
+let postType
 let model
 
-router.use("/:name/board/:kind",(req,res,next)=>{
+router.use("/:circleName/board/:postType",(req,res,next)=>{
+    circleName=req.params.circleName
     name = req.params.name
-    kind = req.params.kind
-    if(kind=="notice") model=noticeModel
-    else if(kind=="board") model=boardModel
+    postType = req.params.postType
     next();
 });
 
-router.get("/:name/board/:kind",(req,res,next)=>{
-    model.find().then((data)=>{
+router.get("/:circleName/board/:postType",(req,res,next)=>{
+    boardModel.find({"circleName":circleName,"postType":postType}).then((data)=>{
+        console.log(data)
         res.send(data)
     })
 });
 
-router.post("/:name/board/:kind/create",(req,res,next)=>{
-    model.create(req.body).then((data)=>{
+router.post("/:circleName/board/:postType/create",(req,res,next)=>{
+    let value=req.body;
+    value["circleName"]=req.params.circleName
+    value["postType"]=postType
+    boardModel.create(value).then((data)=>{
         res.send("ok")
     })
 });
 
-router.get("/:name/board/schedule",(req,res,next)=>{
-    model.find().then((data)=>{
+router.get("/:circleName/board/schedule",(req,res,next)=>{
+    boardModel.find({"circleName":circleName,"postType":postType}).then((data)=>{
         res.send(data)
     })
 });
 
-router.get("/:name/board/:kind/:title/:date",(req,res,next)=>{
-    let parm={"title":req.params.title,"date":req.params.date}
-    model.findOne(parm).then((data)=>{
-        console.log(parm)
+router.get("/:circleName/board/:postType/:postNum",(req,res,next)=>{
+    boardModel.findOne({"postNum":req.params.postNum}).then((data)=>{
         res.send(data)
     })
 })
 
-router.post("/:name/board/:kind/delete",(req,res,next)=>{
-    model.deleteOne(req.body).then((data)=>{
+router.post("/:circleName/board/:postType/:postNum/delete",(req,res,next)=>{
+    boardModel.deleteOne({"postNum":req.params.postNum}).then((data)=>{
         res.send("ok")
     })
 })
 
-router.post("/:name/board/:kind/update",(req,res,next)=>{
-    let notice = {"date":req.body.date};
-    model.updateOne(notice,{"title":req.body.title,"contents":req.body.contents}).then((data)=>{
+router.post("/:circleName/board/:postType/:postNum/update",(req,res,next)=>{
+    boardModel.updateOne({"postNum":req.params.postNum},{"title":req.body.title,"contents":req.body.contents}).then((data)=>{
         res.send("ok");
     })
 })
@@ -88,25 +88,25 @@ router.get('/send/:name', (req, res) => {
     })
 })
 */
-router.get('/:name/schedule',(req,res)=>{
+router.get('/:circleName/schedule',(req,res)=>{
     scheduleModel.find().then((data)=>{
         res.send(data)
     })
 })
 
-router.post('/:name/schedule/create',(req,res)=>{
+router.post('/:circleName/schedule/create',(req,res)=>{
     scheduleModel.create(req.body).then((data)=>{
         res.send("ok")
     })
 })
 
-router.post('/:name/schedule/delete',(req,res)=>{
+router.post('/:circleName/schedule/delete',(req,res)=>{
     scheduleModel.deleteOne(req.body).then((data)=>{
         res.send("ok")
     })
 })
 
-router.post('/:name/schedule/update',(req,res)=>{
+router.post('/:circleName/schedule/update',(req,res)=>{
     scheduleModel.update({"scheduleId":req.body.scheduleId},req.body).then((data)=>{
         res.send("ok")
     })

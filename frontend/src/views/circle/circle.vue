@@ -18,12 +18,12 @@
             <v-card>
                 <v-card-title class="subheading font-weight-bold">일정</v-card-title>
                 <v-divider></v-divider>
-                <v-list v-for="schedule in schedulelists" :key="schedule.full_date" dense>
+                <v-list v-for="schedule in schedulelists" :key="schedule.scheduleId" dense>
                 <v-list-tile>
                   <v-list-tile-title v-text="schedule.content"></v-list-tile-title>
                   <v-list-tile-action>
                   <v-list-tile-action-text>{{schedule.start}}</v-list-tile-action-text>
-                  <v-list-tile-action-text>{{schedule.start}}</v-list-tile-action-text>
+                  <v-list-tile-action-text>{{schedule.end}}</v-list-tile-action-text>
                   </v-list-tile-action>
                 </v-list-tile>
                 </v-list>
@@ -39,9 +39,9 @@
             <v-card>
                 <v-card-title class="subheading font-weight-bold">공지사항</v-card-title>
                 <v-divider></v-divider>
-                <v-list v-for="notice in noticelists" :key="notice.full_date" dense>
+                <v-list v-for="notice in noticelists" :key="notice.postId" dense>
                   <v-list-tile
-                  @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.title+'/'+notice.full_date)">
+                  @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.postNum)">
                     <v-list-tile-title v-text="notice.title"></v-list-tile-title>
                     <v-list-tile-action>
                     <v-list-tile-action-text>{{notice.author}}</v-list-tile-action-text>
@@ -65,7 +65,7 @@
                 <v-divider></v-divider>
                 <v-list v-for="board in boardlists" :key="board.date" dense>
                   <v-list-tile
-                  @click="$router.push('/circle/'+circleName+'/board/board/show_notice/'+board.title+'/'+board.full_date)">
+                  @click="$router.push('/circle/'+circleName+'/board/board/show_notice/'+board.postNum)">
                     <v-list-tile-title v-text="board.title"></v-list-tile-title>
                     <v-list-tile-action>
                     <v-list-tile-action-text>{{board.author}}</v-list-tile-action-text>
@@ -86,9 +86,9 @@
             <v-card>
                 <v-card-title class="subheading font-weight-bold">스터디</v-card-title>
                 <v-divider></v-divider>
-                <v-list v-for="notice in noticelists" :key="notice.full_date" dense>
+                <v-list v-for="notice in noticelists" :key="notice.postId" dense>
                   <v-list-tile
-                  @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.title+'/'+notice.full_date)">
+                  @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.postNum)">
                     <v-list-tile-title v-text="notice.title"></v-list-tile-title>
                     <v-list-tile-action>
                     <v-list-tile-action-text>{{notice.author}}</v-list-tile-action-text>
@@ -109,9 +109,9 @@
             <v-card>
                 <v-card-title class="subheading font-weight-bold">활동</v-card-title>
                 <v-divider></v-divider>
-                <v-list v-for="notice in noticelists" :key="notice.full_date" dense>
+                <v-list v-for="notice in noticelists" :key="notice.postId" dense>
                   <v-list-tile
-                  @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.title+'/'+notice.full_date)">
+                  @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.postNum)">
                     <v-list-tile-title v-text="notice.title"></v-list-tile-title>
                     <v-list-tile-action>
                     <v-list-tile-action-text>{{notice.author}}</v-list-tile-action-text>
@@ -152,7 +152,7 @@
               for(let i=0;i<data.data.length;i++){
                 let date = data.data[i].date.split('T')[0]
                 let notice={"title":data.data[i].title,"contents":data.data[i].contents,
-                "date":date,"full_date":data.data[i].date,"author":data.data[i].author}
+                "date":date,"postNum":data.data[i].postNum,"author":data.data[i].author}
                 this.noticelists.push(notice)
               }
           })
@@ -162,17 +162,17 @@
                         let date ={"start": data.data[i].start.substr(0,10)
                         ,"end":data.data[i].end.substr(0,10)
                         ,"content":data.data[i].content
-                        ,"full_date":data.data[i].start}
+                        ,"scheduleId":data.data[i].scheduleId}
                         this.schedulelists.push(date)
                     }
-                    console.log(this.schedulelists[0]);
                     
           })
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/board").then((data)=>{
               for(let i=0;i<data.data.length;i++){
                 let date = data.data[i].date.split('T')[0]
                 let board={"title":data.data[i].title,"contents":data.data[i].contents,
-                "date":date,"full_date":data.data[i].date,"author":data.data[i].author}
+                "date":date,"postNum":data.data[i].postNum,"author":data.data[i].author}
+                console.log(board)
                 this.boardlists.push(board)
               }
           })

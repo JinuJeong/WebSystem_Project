@@ -128,7 +128,7 @@
                     label="일정 내용"
                     v-model="content"
                     ></v-text-field>
-                <v-btn color="blue" @click="onUpdate(scheduleId)">일정 추가</v-btn>
+                <v-btn color="blue" @click="onUpdate(scheduleId)">일정 수정</v-btn>
                 <v-btn color="blue" @click="plus=false">취소</v-btn>
                 </v-flex>
             </v-layout>

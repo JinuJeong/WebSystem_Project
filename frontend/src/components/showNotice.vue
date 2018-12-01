@@ -1,7 +1,7 @@
 <template>
     <div>
             <header-bar></header-bar>
-            <v-container
+            <v-container class="mt-5"
             align-center>
             <div>
                 <v-list>
@@ -39,20 +39,22 @@
         name: 'notice',
         data(){
             return{
-                title: this.$route.params.title,
-                date: this.$route.params.date,
+                title: "",
+                date: "",
                 contents: "",
                 match: false,
                 circleName: this.$route.params.circleName,
                 userName: this.$session.getAll().username,
-                kind: this.$route.params.kind,
+                postType: this.$route.params.postType,
+                postNum: this.$route.params.postNum,
             }
         },
         created: function(){
                     console.log(this.date)
-                    this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/"+this.kind+"/"
-                    +this.title+"/"+this.date).then((data)=>{
+                    this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/"
+                    +this.postNum).then((data)=>{
                         this.contents=data.data.contents
+                        this.title=data.data.title
                         console.log(this.contents)
                         if(this.userName==data.data.author) this.match=true;
                     })
@@ -63,14 +65,13 @@
         },
         methods:{
             onEdit: function(){
-                this.$router.push("/circle/"+this.circleName+"/board/"+this.kind+"/manage_notice/"+this.title+"/"+this.date);
+                this.$router.push("/circle/"+this.circleName+"/board/"+this.postType+"/manage_notice/"+this.postNum);
             },
             onClear: function(){
                 this.$router.push("/circle/"+this.circleName);
             },
             onDelete: function(){
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.kind+"/delete",{"title":this.title,
-                "contents":this.contents,"author":this.userName}).then((data)=>{
+                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/"+this.postNum+"/delete").then((data)=>{
                     this.$router.push("/circle/"+this.circleName);
                 })
             }

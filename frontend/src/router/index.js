@@ -78,19 +78,19 @@ export default new Router({
             component: NotFound
         },
         {
-            path: '/circle/:circleName/board/:kind/manage_notice/create',
+            path: '/circle/:circleName/board/:postType/manage_notice/create',
             component: manageNotice
         },
         {
-            path: '/circle/:circleName/board/:kind/manage_notice/:title/:date',
+            path: '/circle/:circleName/board/:postType/manage_notice/:postNum',
             component: manageNotice
         },
         {
-            path: '/circle/:circleName/board/:kind/show_notice/:title/:date',
+            path: '/circle/:circleName/board/:postType/show_notice/:postNum',
             component: showNotice
         },
         {
-            path: '/circle/:circleName/board/:kind/show_notices',
+            path: '/circle/:circleName/board/:postType/show_notices',
             component: showNotices
         },
         {
