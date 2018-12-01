@@ -93,10 +93,24 @@ router.get('/:name/schedule',(req,res)=>{
         res.send(data)
     })
 })
+
 router.post('/:name/schedule/create',(req,res)=>{
     scheduleModel.create(req.body).then((data)=>{
         res.send("ok")
     })
 })
+
+router.post('/:name/schedule/delete',(req,res)=>{
+    scheduleModel.deleteOne(req.body).then((data)=>{
+        res.send("ok")
+    })
+})
+
+router.post('/:name/schedule/update',(req,res)=>{
+    scheduleModel.update({"scheduleId":req.body.scheduleId},req.body).then((data)=>{
+        res.send("ok")
+    })
+})
+
 
 module.exports = router;

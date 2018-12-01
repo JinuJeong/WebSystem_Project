@@ -2,10 +2,10 @@ const {mongoose} = require('../mongo')
 
 const boardSchema = mongoose.Schema({
    // postNum: {type: Number, unique: true},
-    postTitle: {type: String, require: true},
-    postContent: {type: String, require: true},
-    postWriter: {type: String, require: true},
-    postDate: {type:  Date, default: Date.now},
+    title: {type: String, require: true},
+    contents: {type: String, require: true},
+    author: {type: String, require: true},
+    date: {type:  Date, default: Date.now},
     //postViews: {type: Number}
 });
 

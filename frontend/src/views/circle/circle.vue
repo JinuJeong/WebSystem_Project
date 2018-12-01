@@ -18,15 +18,15 @@
             <v-card>
                 <v-card-title class="subheading font-weight-bold">일정</v-card-title>
                 <v-divider></v-divider>
-                <v-list v-for="schedule in schedulelists" :key="schedule.full_date">
+                <v-list v-for="schedule in schedulelists" :key="schedule.full_date" dense>
                 <v-list-tile>
-                  <v-list-tile-title>{{schedule.content}}</v-list-tile-title>
+                  <v-list-tile-title v-text="schedule.content"></v-list-tile-title>
                   <v-list-tile-action>
                   <v-list-tile-action-text>{{schedule.start}}</v-list-tile-action-text>
                   <v-list-tile-action-text>{{schedule.start}}</v-list-tile-action-text>
                   </v-list-tile-action>
                 </v-list-tile>
-                  </v-list>
+                </v-list>
                 <v-btn icon @click="$router.push('/circle/'+circleName+'/schedule/show_schedules')">
                     <v-icon>add</v-icon>
                 </v-btn>

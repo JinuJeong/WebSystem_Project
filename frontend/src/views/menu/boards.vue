@@ -2,6 +2,7 @@
     <div id="board">
     <header-bar/>
     <br>
+    <v-container class="container">
     <v-flex xs12 sm10 offset-sm1>
         <div class="centered-container">
             <v-card color="blue lighten-4">
@@ -38,6 +39,7 @@
             <v-btn color="primary" dark @click="$router.push('/boards/'+boardName+'/manage_notice/create')">새 글 작성</v-btn>
         </div>
     </v-flex>
+    </v-container>
     </div> 
 </template>
 
@@ -81,5 +83,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.container{
+    margin-top : 50px
+}
 </style>

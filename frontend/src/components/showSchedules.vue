@@ -10,7 +10,7 @@
                 </i>
             </button>
             <h1 class="text-md-center">{{circleName}} 일정</h1>
-            
+            <div class="my-5">
             <v-layout row wrap>
                 <v-flex xs12 sm6 class="my-3">
                     <v-date-picker
@@ -25,74 +25,115 @@
                     <md-table-head>일정 시작</md-table-head>
                     <md-table-head>일정 마감</md-table-head>
                     <md-table-head>일정 내용</md-table-head>
+                    <md-table-head>수정</md-table-head>
+                    <md-table-head>삭제</md-table-head>
                 </md-table-row>
                 <md-table-row v-for="schedule in schedulelists" :key="schedule.full_date">
                     <md-table-cell>{{schedule.start}}</md-table-cell>
                     <md-table-cell>{{schedule.end}}</md-table-cell>
                     <md-table-cell>{{schedule.content}}</md-table-cell>
+                    <md-table-cell>
+                        <md-button  class="md-icon-button md-accent"
+                        @click="onModify(schedule.start,schedule.end,schedule.content,schedule.scheduleId)">
+                            <md-icon>edit</md-icon>
+                        </md-button>
+                    </md-table-cell>
+                    <md-table-cell>
+                        <md-button  class="md-icon-button md-accent" @click="onDelete(schedule.scheduleId)">
+                            <md-icon>clear</md-icon>
+                        </md-button>
+                    </md-table-cell>
                 </md-table-row>
             </md-table>
             </v-layout>
-
-
-            <v-layout row wrap class="mt-5">
-                 <v-text-field
-                v-model="content"
-                label="일정"
-                required
-                ></v-text-field>
-            <v-menu
-            ref="menu1"
-            :close-on-content-click="false"
-            v-model="menu1"
-            :nudge-right="40"
-            :return-value.sync="date"
-            lazy
-            transition="scale-transition"
-            offset-y
-            full-width
-            min-width="290px">
-                <v-text-field
+            <v-btn v-if="plus==false" color="blue" @click="plus=true">일정 추가</v-btn>
+            </div>
+            <v-divider></v-divider>
+            
+            <!-- 일정 추가 -->
+            <div v-if="plus==true" class="mt-5">
+                <h1 class="text-md-center">일정 추가</h1>
+              <v-layout row wrap>
+                <v-flex xs12 sm6>
+                <v-date-picker
+                    color="green"
+                    :events="allowDate"
+                    v-model="dates"
+                    multiple
+                ></v-date-picker>
+                </v-flex>
+                <v-flex xs12 sm6>
+                    <v-combobox
                     slot="activator"
                     v-model="date1"
-                    label="Picker in menu"
+                    small-chips
+                    label="시작 일정"
                     prepend-icon="event"
                     readonly
-                    ></v-text-field>
-                    <v-date-picker v-model="date1" no-title scrollable color="blue">
-                    <v-spacer></v-spacer>
-                    <v-btn flat color="primary" @click="menu1 = false">Cancel</v-btn>
-                    <v-btn flat color="primary" @click="$refs.menu1.save(date1)">OK</v-btn>
-                    </v-date-picker>
-            </v-menu>
-            <v-menu
-            ref="menu2"
-            :close-on-content-click="false"
-            v-model="menu2"
-            :nudge-right="40"
-            :return-value.sync="date2"
-            lazy
-            transition="scale-transition"
-            offset-y
-            full-width
-            min-width="290px">
-                <v-text-field
+                    ></v-combobox>
+
+                    <v-combobox
                     slot="activator"
                     v-model="date2"
-                    label="Picker in menu"
+                    small-chips
+                    label="마감 일정"
                     prepend-icon="event"
                     readonly
+                    ></v-combobox>
+
+                   
+                    <v-text-field
+                    label="일정 내용"
+                    v-model="content"
                     ></v-text-field>
-                    <v-date-picker v-model="date2" no-title scrollable color="green">
-                    <v-spacer></v-spacer>
-                    <v-btn flat color="primary" @click="menu2 = false">Cancel</v-btn>
-                    <v-btn flat color="primary" @click="$refs.menu2.save(date2)">OK</v-btn>
-                    </v-date-picker>
-            </v-menu>
-            <v-btn color="blue" @click="onSubmit()">일정 추가</v-btn>
-           
+                <v-btn color="blue" @click="onSubmit()">일정 추가</v-btn>
+                <v-btn color="blue" @click="plus=false">취소</v-btn>
+                </v-flex>
+            </v-layout>
+            </div>
+
+            <!-- 일정 수정 -->
+            <div v-if="modify==true" class="mt-5">
+                <h1 class="text-md-center">일정 수정</h1>
+              <v-layout row wrap>
+                <v-flex xs12 sm6>
+                <v-date-picker
+                    color="green"
+                    :events="allowDate"
+                    v-model="dates"
+                    multiple
+                ></v-date-picker>
+                </v-flex>
+                <v-flex xs12 sm6>
+                    <v-combobox
+                    slot="activator"
+                    v-model="date1"
+                    small-chips
+                    label="시작 일정"
+                    prepend-icon="event"
+                    readonly
+                    ></v-combobox>
+
+                    <v-combobox
+                    slot="activator"
+                    v-model="date2"
+                    small-chips
+                    label="마감 일정"
+                    prepend-icon="event"
+                    readonly
+                    ></v-combobox>
+
+                   
+                    <v-text-field
+                    label="일정 내용"
+                    v-model="content"
+                    ></v-text-field>
+                <v-btn color="blue" @click="onUpdate(scheduleId)">일정 추가</v-btn>
+                <v-btn color="blue" @click="plus=false">취소</v-btn>
+                </v-flex>
+            </v-layout>
+            </div>
             
-        </v-layout>
         </v-container>
 
             
@@ -106,14 +147,17 @@
           return{
                 circleName: this.$route.params.circleName,
                 schedulelists: [],
+                scheduleId: Number,
                 kind: this.$route.params.kind,
                 kind_head: String,      //<h1>에 들어갈 제목
                 date: new Date().toISOString().substr(0, 10),
-                menu1: false,
-                menu2: false,
-                date1: new Date().toISOString().substr(0, 10),
-                date2: new Date().toISOString().substr(0, 10),
+                date1: Date,
+                date2: Date,
+                dates: [new Date().toISOString().substr(0, 10)],
+                menu: false,
                 content: "",
+                plus: false,
+                modify: false,
           }  
         },
         created: function(){
@@ -124,7 +168,9 @@
                         let date ={"start": data.data[i].start.substr(0,10)
                         ,"end":data.data[i].end.substr(0,10)
                         ,"content":data.data[i].content
-                        ,"full_date":data.data[i].start}
+                        ,"full_date":data.data[i].start
+                        ,"scheduleId":data.data[i].scheduleId
+                        }
                         this.schedulelists.push(date)
                     }
                     console.log(this.schedulelists[0]);
@@ -145,11 +191,52 @@
             onSubmit:function(){
                 this.$http.post("http://localhost:8000/circle/"+this.circleName+"/schedule/create",
                 {"start":this.date1,"end":this.date2,"circle":this.circleName,"content":this.content}).then((data)=>{
-                    alert(this.date1+" ~ "+this.date2 +"일정 추가")
+                    alert(this.date1+" ~ "+this.date2 +" "+this.content+" 일정이 추가됐습니다.")
                     window.location.reload()
                     return;
                 })
-            }
+            },
+            onUpdate:function(scheduleId){
+                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/schedule/update",
+                {"start":this.data1,"end":this.date2,"content":this.content,"scheduleId":this.scheduleId})
+                .then((data)=>{
+                    window.location.reload()
+                    return;
+                })
+            },
+            onModify:function(date1,date2,content,scheduleId){
+                this.modify=true;
+                this.dates[0]=date1;
+                this.dates[1]=date2;
+                this.content=content;
+                this.scheduleId=scheduleId;
+            },
+            onDelete:function(scheduleId){
+                
+                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/schedule/delete",{"scheduleId":scheduleId})
+                .then((data)=>{
+                    window.location.reload()
+                    return;
+                })
+            },
+            // 데이트 설정 갯수 제안
+            allowDate:function(){
+                let dates=this.dates
+                if(dates.length==0){
+                    this.date1=null
+                    this.date2=null
+                }else if(dates.length==1){
+                    this.date1=dates[0]
+                    this.date2=dates[0]
+                }else if(this.dates.length==2){
+                    this.date1=dates[0]
+                    this.date2=dates[1]
+                }
+                if(this.dates.length>2){
+                    this.dates.splice(2,1)
+                }
+            },
+            
         },
         components:{
             headerBar
