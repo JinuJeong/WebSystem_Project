@@ -31,7 +31,7 @@
                     <md-icon>send</md-icon>
                     <p class="md-list-item-text">가입 동아리</p>
                 </md-list-item>
-                <md-list-item>
+                <md-list-item v-on:click="mypage()">
                     <md-icon>move_to_inbox</md-icon>
                     <p class="md-list-item-text">내 정보</p>
                 </md-list-item>
@@ -77,6 +77,9 @@ export default {
           this.$session.destroy();
           this.$router.push('/');
           window.location.reload();
+      },
+      mypage: function(){
+          this.$router.push('/mypage');
       }
   }
 }
