@@ -75,19 +75,7 @@ router.get('/find/:name', (req, res) => {
        res.send(circle)
    })
 });
-/*
-router.get('/send/:name', (req, res) => {
-    console.log(req.params.name)
-    circlename = req.params.name
-    circleModel.find().populate('president').exec((err, data) => {
-        console.log(data)
-    })
-    circleModel.findOne({name: circlename}).populate('president').exec((err, data) => {
-        console.log("회장이름 갑니다."+ data.president.name)
-        res.send(data.president.name)
-    })
-})
-*/
+
 router.get('/:name/schedule',(req,res)=>{
     scheduleModel.find().then((data)=>{
         res.send(data)
@@ -96,6 +84,30 @@ router.get('/:name/schedule',(req,res)=>{
 router.post('/:name/schedule/create',(req,res)=>{
     scheduleModel.create(req.body).then((data)=>{
         res.send("ok")
+    })
+})
+
+router.post('/:name/signupCircle', (req, res) => {
+    var name =  req.params.name // 동아리이름 
+                                // req.body user 정보
+    circleModel.findOne({name}).populate('members').exec().then((circle) => {
+        
+        for(var i = 0; i < circle.members.length; i++){
+            if(circle.members[i].name === req.body.name)
+                throw new Error();
+        }
+
+        return circle
+    }).then((circle) => {
+        circle.members.push(req.body)
+        circle.save().then(() => {
+            console.log(circle)
+            console.log(req.body.name)
+        })
+        res.send(circle)
+    }).catch((err) => {
+        res.send("err")
+        console.log("err")
     })
 })
 
