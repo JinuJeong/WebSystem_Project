@@ -108,11 +108,7 @@ export default {
     college: String,
     major: String,
     circle: String,
-<<<<<<< HEAD
-    circle_name: String
-=======
     circle_name: String,
->>>>>>> ee26abf2244ded58a36f2754eb6c6768366297d2
   })
 }
 </script>

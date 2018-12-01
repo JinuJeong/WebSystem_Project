@@ -3,6 +3,41 @@ const router = express.Router();
 const userModel = require('../db/models/user')
 const circleModel = require('../db/models/circle')
 const noticeModel = require('../db/models/notice')
+const scheduleModel = require('../db/models/schedule')
+
+router.post("/:name/schedule/create",(req,res,next)=>{
+    console.log(req.body)
+    scheduleModel.create(req.body).then((data)=>{
+        res.send("ok")
+    })
+});
+
+router.get("/:name/schedule",(req,res,next)=>{
+    scheduleModel.find().then((data)=>{
+        res.send(data)
+    })
+});
+
+router.get("/:name/schedule/:title/:date",(req,res,next)=>{
+    let parm={"title":req.params.title,"date":req.params.date}
+    scheduleModel.findOne(parm).then((data)=>{
+        console.log(parm)
+        res.send(data)
+    })
+})
+
+router.post("/:name/schedule/delete",(req,res,next)=>{
+    scheduleModel.deleteOne(req.body).then((data)=>{
+        res.send("ok")
+    })
+})
+
+router.post("/:name/schedule/update",(req,res,next)=>{
+    let notice = {"title":req.body.title,"date":req.body.date};
+    scheduleeModel.updateOne(notice,{"contents":req.body.contents}).then((data)=>{
+        res.send("ok");
+    })
+})
 
 router.post("/:name/notice/create",(req,res,next)=>{
     console.log(req.body)
@@ -79,4 +114,5 @@ router.get('/send/:name', (req, res) => {
     })
 })
 */
+
 module.exports = router;

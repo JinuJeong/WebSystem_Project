@@ -2,8 +2,7 @@
     <div class="notice">
         <!--항상 상단에 떠있는 bar-->
         <header-bar></header-bar>
-        <v-container
-        align-center style="padding : 5%">
+        <v-container class="container">
         <div>
         <v-form ref="form">
             <v-text-field
@@ -89,6 +88,10 @@
                 })
             },
             onSubmit: function(){
+                if(this.userName==undefined){
+                    alert("로그인이 필요합니다")
+                    return;
+                }
                 this.$http.post("http://localhost:8000/circle/"+this.circleName+"/notice/create",{"title":this.title,
                     "contents":this.contents,"author":this.userName}).then((data)=>{
                         this.$router.push("/circle/"+this.circleName);
@@ -99,29 +102,7 @@
 </script>
 
 <style lang="scss" scoped>
-    .centered-container {
-
-        display : flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        height: 120vh;
-
-        .md-content {
-            z-index: 0;
-            padding: 150px;
-            width: 100%;
-            height : 200%;
-            max-width: 1000px;
-            max-height : 1000px;
-            position: relative;
-
-            .actions {
-                margin-top : 100px;
-            }
-        }
-    }
-    .guest{
-        font-size: 30px;
+    .container{
+        margin-top: 100px
     }
 </style>
