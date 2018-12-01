@@ -75,7 +75,6 @@ router.get('/find/:name', (req, res) => {
        res.send(circle)
    })
 });
-<<<<<<< HEAD
 /*
 router.get('/send/:name', (req, res) => {
     console.log(req.params.name)
@@ -100,6 +99,4 @@ router.post('/:name/schedule/create',(req,res)=>{
     })
 })
 
-=======
->>>>>>> 51a2a31463d5518114d82f335dbaf59a9d4788a8
 module.exports = router;
