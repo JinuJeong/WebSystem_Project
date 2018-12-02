@@ -20,10 +20,7 @@ router.post('/create', (req, res) => {
 
 router.get('/find/:name', (req, res) => {
    var name = req.params.name
-   
-   //userModel.findOne({name}).then((user) => {
-   //    res.send(user)
-   //})
+
    userModel.findOne({name}).populate('circles').exec().then((user) => {
        res.send(user)
    })

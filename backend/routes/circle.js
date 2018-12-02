@@ -71,7 +71,9 @@ router.post('/register', (req, res) => {
 });
 
 router.get('/find/:name', (req, res) => {
-   circleModel.find(req.params.name).then((circle) => {
+    var name = req.params.name
+
+   circleModel.findOne({name}).populate('president').populate('members').exec().then((circle) => {
        res.send(circle)
    })
 });

@@ -11,7 +11,7 @@
                 <v-btn class="toolbar-item" flat to="/timeline"><p class="item-p">최근 활동 내역</p></v-btn>
                 <v-btn class="toolbar-item" flat href="https://mportal.ajou.ac.kr/main.do"><p class="item-p">아주 Portal</p></v-btn>
                 <span v-for="circle in circleManage" :key="circle.id">    
-                <v-btn v-if="exist==true" class="toolbar-item" flat to="/circle/HANTOR"><p class="item-p">{{circle.name}}</p></v-btn>
+                <v-btn v-if="exist==true" class="toolbar-item" flat :to="'/circle/' + circle.name"><p class="item-p">{{circle.name}}</p></v-btn>
                 </span>
             </v-toolbar-items>
 
@@ -64,6 +64,7 @@ export default {
     user: {},
     circleManage: [],
     exist: false,
+    circlelink: "/circle/한터"
   }),
   created () {
     if (this.$session.exists()) {
