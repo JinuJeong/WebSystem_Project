@@ -19,7 +19,7 @@
             <v-card>
                 <v-card-title class="subheading font-weight-bold">일정</v-card-title>
                 <v-divider></v-divider>
-                <v-list v-for="schedule in schedulelists" :key="schedule.scheduleId" dense>
+                <v-list v-for="schedule in schedulelists" :key="schedule.scheduleId">
                 <v-list-tile>
                   <v-list-tile-title v-text="schedule.content"></v-list-tile-title>
                   <v-list-tile-action>
@@ -40,7 +40,7 @@
             <v-card>
                 <v-card-title class="subheading font-weight-bold">공지사항</v-card-title>
                 <v-divider></v-divider>
-                <v-list v-for="notice in noticelists" :key="notice.postId" dense>
+                <v-list v-for="notice in noticelists" :key="notice.postId">
                   <v-list-tile
                   @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.postNum)">
                     <v-list-tile-title v-text="notice.title"></v-list-tile-title>
@@ -64,7 +64,7 @@
             <v-card>
                 <v-card-title class="subheading font-weight-bold">게시판</v-card-title>
                 <v-divider></v-divider>
-                <v-list v-for="board in boardlists" :key="board.date" dense>
+                <v-list v-for="board in boardlists" :key="board.date">
                   <v-list-tile
                   @click="$router.push('/circle/'+circleName+'/board/board/show_notice/'+board.postNum)">
                     <v-list-tile-title v-text="board.title"></v-list-tile-title>
@@ -87,7 +87,7 @@
             <v-card>
                 <v-card-title class="subheading font-weight-bold">스터디</v-card-title>
                 <v-divider></v-divider>
-                <v-list v-for="group in grouplists" :key="group.groupId" dense>
+                <v-list v-for="group in grouplists" :key="group.groupId">
                   <v-list-tile
                   @click="$router.push('/circle/'+circleName+'/group/show_group/'+group.groupId)">
                     <v-list-tile-title v-text="group.title"></v-list-tile-title>
@@ -110,7 +110,7 @@
             <v-card>
                 <v-card-title class="subheading font-weight-bold">활동</v-card-title>
                 <v-divider></v-divider>
-                <v-list v-for="notice in noticelists" :key="notice.postId" dense>
+                <v-list v-for="notice in noticelists" :key="notice.postId">
                   <v-list-tile
                   @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.postNum)">
                     <v-list-tile-title v-text="notice.title"></v-list-tile-title>

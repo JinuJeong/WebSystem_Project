@@ -42,9 +42,10 @@
 
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/group").then((data)=>{
               for(let i=0;i<data.data.length;i++){
-                let date = data.data[i].date.split('T')[0]
+                let start = data.data[i].start.split('T')[0]
+                let end = data.data[i].start.split('T')[0]
                 let group={"title":data.data[i].title,"contents":data.data[i].contents,
-                "date":date,"postNum":data.data[i].groupId,"author":data.data[i].teacher}
+                "date":start+" ~ "+end,"groupId":data.data[i].groupId,"teacher":data.data[i].teacher.name}
                 this.grouplist.push(group)
               }
               

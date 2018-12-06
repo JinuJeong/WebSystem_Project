@@ -127,15 +127,30 @@ router.post('/:circleName/group/create',(req,res)=>{
 })
 
 router.get('/:circleName/group',(req,res)=>{
-    groupModel.find().then((data)=>{
+    groupModel.find().populate("teacher").then((data)=>{
         res.send(data)
     })
 })
 
 router.get('/:circleName/group/:groupId',(req,res)=>{
-    groupModel.findOne({"groupId":req.params.groupId}).then((data)=>{
+    groupModel.findOne({"groupId":req.params.groupId}).populate("teacher").then((data)=>{
         res.send(data);
     })
 })
 
+router.post('/:circleName/group/update/:groupId',(req,res)=>{
+    let group = req.body
+    userModel.findOne({"ID":group.teacher}).then((user)=>{
+        group["teacher"]={"_id":user._id}
+        groupModel.updateOne({"groupId":req.params.groupId},group).then((data)=>{
+            res.send(data)
+        })
+    })
+})
+
+router.post('/:circleName/group/delete/:groupId',(req,res)=>{
+    groupModel.deleteOne({"groupId":req.params.groupId}).then((data)=>{
+        res.send(data)
+    })
+})
 module.exports = router;

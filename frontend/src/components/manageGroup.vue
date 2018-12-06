@@ -94,9 +94,27 @@ export default{
             dates: [new Date().toISOString().substr(0, 10)],
             groupType: "",
             contents: "",
-            
+            teacher: "",
+            groupId: this.$route.params.groupId,
         }
     },
+    created : function(){
+        this.$http.get("http://localhost:8000/circle/"+this.circleName+"/group/"+this.groupId).then((data)=>{
+            console.log(data)
+            let info=data.data
+            this.title=info.title
+            this.maxNumber=info.maxNumber
+            this.date1=info.start.substr(0,10)
+            this.date2=info.end.substr(0,10)
+            this.groupType=info.groupType
+            this.teacher=info.teacher.ID
+            this.datalist=[info.title,info.maxNumber,info.start.substr(0,10),info.end.substr(0,10),info.circleName,info.groupType,
+            info.teacher.name,info.memberNumber,info.maxNumber]
+            this.contents=info.contents
+            if(this.userName==data.data.author) this.match=true;
+        })
+    }
+    ,
     methods:{
         // 데이트 설정 갯수 제안
             allowDate:function(){
@@ -116,12 +134,22 @@ export default{
                 }
             },
             onSubmit: function(){
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/group/create",
-                {"title":this.title,"contents":this.contents,"teacher":this.teacher,"maxNumber":this.maxNumber,
-                "circleName":this.circleName, "groupType":this.groupType,"start":this.date1,"end":this.date2})
-                .then((data)=>{
-                    this.$router.push("/circle/"+this.circleName);
-                })
+                if(this.groupId==undefined){
+                    this.$http.post("http://localhost:8000/circle/"+this.circleName+"/group/create",
+                    {"title":this.title,"contents":this.contents,"teacher":this.teacher,"maxNumber":this.maxNumber,
+                    "circleName":this.circleName, "groupType":this.groupType,"start":this.date1,"end":this.date2})
+                    .then((data)=>{
+                        this.$router.push("/circle/"+this.circleName);
+                    })
+                }
+                else{
+                    this.$http.post("http://localhost:8000/circle/"+this.circleName+"/group/update/"+this.groupId,
+                    {"title":this.title,"contents":this.contents,"teacher":this.teacher,"maxNumber":this.maxNumber,
+                    "circleName":this.circleName, "groupType":this.groupType,"start":this.date1,"end":this.date2})
+                    .then((data)=>{
+                        this.$router.push("/circle/"+this.circleName);
+                    })
+                }
             }
     },
     components: {

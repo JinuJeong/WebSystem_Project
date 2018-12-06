@@ -123,6 +123,10 @@ export default new Router({
         {
             path: '/circle/:circleName/group/show_group/:groupId',
             component: showGroup
+        },
+        {
+            path: '/circle/:circleName/manage_group/update/:groupId',
+            component: manageGroup
         }
     ]
 })
