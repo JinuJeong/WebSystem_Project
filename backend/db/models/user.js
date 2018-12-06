@@ -1,4 +1,5 @@
 const { mongoose, autoIncrement } = require('../mongo')
+const circleModel = require('./circle')
 
 //Set User Schema
 const userSchema = mongoose.Schema({
@@ -10,7 +11,12 @@ const userSchema = mongoose.Schema({
     department: {type: String, required: true},
     auth: {type: Boolean, default: false},
     interest: {type: String},
-    birth: {type: Number}
+    birth: {type: Number},
+    circles: [{type: mongoose.Schema.Types.ObjectId, ref: 'circle'}],
+    circleAuth: [
+        {type: String},
+        {type: Boolean, default: false}
+    ]
 });
 
 //module exports to Routers ★★★★★★★★★★★★

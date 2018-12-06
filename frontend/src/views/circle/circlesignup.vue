@@ -56,6 +56,10 @@
                 </form>
                 <form>
                     <md-field>
+                        <label>지도 교수</label>
+                        <md-input v-model="professor" placeholder="교수님 성함"></md-input>
+                    </md-field> 
+                    <md-field>
                         <label>회장</label>
                         <md-input v-model="presidentin" placeholder="회장 이름"></md-input>
                     </md-field>                    
@@ -67,7 +71,14 @@
                         <label>회원수</label>
                         <md-input v-model="number" type="number"></md-input>
                     </md-field>
-                    
+                    <md-field>
+                        <label>동방 유무</label>
+                        <md-input v-model="roomExistence" placeholder="1 or 0"></md-input>
+                    </md-field> 
+                    <md-field>
+                        <label>다른 학과 가입 여부</label>
+                        <md-input v-model="othersAccept" placeholder="1 or 0"></md-input>
+                    </md-field> 
                     <md-field>
                         <label>동아리컨셉</label>
                         <md-input v-model="concept"></md-input>
@@ -85,7 +96,7 @@
         <md-dialog-confirm
         :md-active.sync="check"
         md-title="Check"
-        md-content="I will send you an email after click Check button. And verify your email."
+        md-content="정말 동아리를 등록하시겠습니까?"
         md-confirm-text="Check"
         md-cancel-text="Cancle"
         @md-cancel="onCancel"
@@ -99,7 +110,7 @@ export default {
     name: 'circlesignup',
     data () {
         return {
-            circle: {name: String, party: String, memberNumber: Number, concept: String, introduce: String},
+            circle: {},
             president: {},
             exist: "",
             name: null,
@@ -113,11 +124,16 @@ export default {
     methods: {
         register: function () {
             this.circle = {name: this.name, party: this.department, memberNumber: this.number
-            , concept: this.concept, introduce: this.introduce, president: this.president}
+            , concept: this.concept, introduce: this.introduce, president: this.president, professor: this.professor
+            , roomExistence: this.roomExistence, othersAccept: this.othersAccept}
             this.$http.post('http://localhost:8000/circle/register', this.circle) 
         },
-        onCheck: function() {
-            this.register()
+        onCheck: async function() {
+            await this.register()
+            await this.$router.push('/circles')
+        },
+        onCancle: function() {
+            this.check = false
         },
         find: function () {
             this.$http.get('http://localhost:8000/user/find/' + this.presidentin).then((res) => {

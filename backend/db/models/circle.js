@@ -12,9 +12,12 @@ const circleSchema = mongoose.Schema({
     roomLocation: {type: Number},
     president: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
     vicePresident: {type: mongoose.Schema.Types.ObjectId},
+    professor: {type: String},
     memberNumber: {type: Number},
+    members: [{type: mongoose.Schema.Types.ObjectId, ref: 'user'}],
     concept: {type: String},
-    introduce: {type: String}
+    introduce: {type: String},
+    othersAccept: {type: Boolean}
 });
 
 circleSchema.plugin(autoIncrement, {

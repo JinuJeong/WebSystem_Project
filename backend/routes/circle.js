@@ -71,7 +71,9 @@ router.post('/register', (req, res) => {
 });
 
 router.get('/find/:name', (req, res) => {
-   circleModel.find(req.params.name).then((circle) => {
+    var name = req.params.name
+
+   circleModel.findOne({name}).populate('president').populate('members').exec().then((circle) => {
        res.send(circle)
    })
 });
@@ -153,4 +155,28 @@ router.post('/:circleName/group/delete/:groupId',(req,res)=>{
         res.send(data)
     })
 })
+router.post('/:name/signupCircle', (req, res) => {
+    var name =  req.params.name // 동아리이름 
+                                // req.body user 정보
+    circleModel.findOne({name}).populate('members').exec().then((circle) => {
+        
+        for(var i = 0; i < circle.members.length; i++){
+            if(circle.members[i].name === req.body.name)
+                throw new Error();
+        }
+
+        return circle
+    }).then((circle) => {
+        circle.members.push(req.body)
+        circle.save().then(() => {
+            console.log(circle)
+            console.log(req.body.name)
+        })
+        res.send(circle)
+    }).catch((err) => {
+        res.send("err")
+        console.log("err")
+    })
+})
+
 module.exports = router;

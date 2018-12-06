@@ -134,10 +134,9 @@
                     </md-card-header>
 
                     <md-card-content>
-                        <p>사용자 이름 : {{user.name}}</p>
-                        <p>ID : {{user.ID}}</p>
-                        <p>소속 : {{user.department}}</p>
-                        <p>가입한 동아리 : 한터</p>
+                        <div v-for="circle in user.circles" :key="circle.id" >
+                        <p>동아리 이름 : {{circle.name}}</p>
+                        </div>
                     </md-card-content>
                     <v-card-actions class="btn">
                         <v-btn round color="blue" large v-on:click="change3=true" v-if="change3==false">
@@ -234,7 +233,7 @@ export default {
             passwordCorrect: false,
             passwordin: null             
         }
-    },    
+    },
     created () {//혹시 안 되면 서버 껐다 켜봐라
         this.userName = this.$session.getAll().username
         this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {

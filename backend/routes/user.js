@@ -20,8 +20,8 @@ router.post('/create', (req, res) => {
 
 router.get('/find/:name', (req, res) => {
    var name = req.params.name
-   
-   userModel.findOne({name}).then((user) => {
+
+   userModel.findOne({name}).populate('circles').exec().then((user) => {
        res.send(user)
    })
 });
@@ -139,6 +139,30 @@ router.delete("/:name/delete", (req, res) => {
 
     userModel.deleteOne({name}).then(() => {
         res.end()
+    })
+})
+
+router.post("/:name/signupCircle", (req, res) => {
+    var name = req.params.name
+    
+    userModel.findOne({name}).populate('circles').exec().then((user) => {
+
+        for(var i = 0; i < user.circles.length; i++){
+            if(user.circles[i].name === req.body.name)
+                throw new Error();
+        }
+        
+        return user
+    }).then((user) => {
+        user.circles.push(req.body)
+        user.save().then(() => {
+            console.log(user)
+            console.log(req.body.name)
+        })
+        res.send(user)
+    }).catch((err) => {
+        res.send("err")
+        console.log("이미 동아리에 가입하셨습니다.")
     })
 })
 module.exports = router;

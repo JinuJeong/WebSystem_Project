@@ -153,6 +153,7 @@
             nickname    : null,
             birth       : null
         }),
+        
         methods:{
             signup:function(){
                 this.$http.post("http://localhost:8000/user/signup",
