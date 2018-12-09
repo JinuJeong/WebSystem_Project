@@ -121,7 +121,7 @@
                             
                 </v-list-tile>
                 </v-list>
-                  <v-btn icon @click="$router.push('/circle/'+circleName+'/board/notice/show_notices')">
+                  <v-btn icon @click="$router.push('/circle/'+circleName+'/active/show_actives')">
                     <v-icon>add</v-icon>
                   </v-btn>
                
