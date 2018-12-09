@@ -5,6 +5,7 @@ const circleModel = require('../db/models/circle')
 const scheduleModel = require('../db/models/schedule')
 const boardModel = require('../db/models/board')
 const groupModel = require('../db/models/group')
+const activeModel = require('../db/models/active')
 
 let circleName
 let postType
@@ -30,12 +31,6 @@ router.post("/:circleName/board/:postType/create",(req,res,next)=>{
     value["postType"]=postType
     boardModel.create(value).then((data)=>{
         res.send("ok")
-    })
-});
-
-router.get("/:circleName/board/schedule",(req,res,next)=>{
-    boardModel.find({"circleName":circleName,"postType":postType}).then((data)=>{
-        res.send(data)
     })
 });
 
@@ -93,7 +88,7 @@ router.get('/send/:name', (req, res) => {
 
 // Schedule Part
 router.get('/:circleName/schedule',(req,res)=>{
-    scheduleModel.find().then((data)=>{
+    scheduleModel.find({'circle':req.params.circleName}).then((data)=>{
         res.send(data)
     })
 })
@@ -129,7 +124,7 @@ router.post('/:circleName/group/create',(req,res)=>{
 })
 
 router.get('/:circleName/group',(req,res)=>{
-    groupModel.find().populate("teacher").then((data)=>{
+    groupModel.find({'circleName':req.params.circleName}).populate("teacher").then((data)=>{
         res.send(data)
     })
 })
@@ -155,6 +150,22 @@ router.post('/:circleName/group/delete/:groupId',(req,res)=>{
         res.send(data)
     })
 })
+
+//Active
+
+router.post('/:circleName/active/create',(req,res)=>{
+    console.log(req.body)
+    activeModel.create(req.body).then((data)=>{
+        res.send("ok")
+    })
+})
+
+router.get('/:circleName/active',(req,res)=>{
+    activeModel.find().then((data)=>{
+        res.send(data)
+    })
+})
+
 router.post('/:name/signupCircle', (req, res) => {
     var name =  req.params.name // 동아리이름 
                                 // req.body user 정보
