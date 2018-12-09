@@ -38,18 +38,20 @@
                             <p class="circle_button">더 자세히</p>
                         </v-btn>
                         <v-btn color="blue-grey lighten-1" bottom style="width : 45%; margin : auto">
-                            <p class="circle_button" v-on:click="check=true, signcircle=circle">가입 신청</p>
+                            <p class="circle_button" v-on:click="check=true;signcircle=circle">가입 신청</p>
                         </v-btn>
                     </v-card-actions>
+                    <md-dialog-confirm
+                        :md-active.sync="check"
+                        md-title="사전 공지"
+                        md-content="동아리 회장의 승인 후 이용 가능합니다."
+                        md-confirm-text="Check"
+                        md-cancel-text="Cancle"
+                        @md-cancel="onCancel"
+                        @md-confirm="onCheck" />
+    
+
                 </md-card>
-        <md-dialog-confirm
-            :md-active.sync="check"
-            md-title="Check"
-            md-content="정말 동아리에 가입하시겠습니까?"
-            md-confirm-text="Check"
-            md-cancel-text="Cancle"
-            @md-cancel="onCancel"
-            @md-confirm="onCheck" />
                 <div class="content-end">
                         <v-pagination
                             v-model="curPage"
@@ -125,7 +127,6 @@
             },
             onCancle: function(){
                 this.check = false
-                return 0;
             },
             userSignup: function() {
                 this.$http.post('http://localhost:8000/user/' + this.user.name + '/signupCircle', this.signcircle)

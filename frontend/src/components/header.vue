@@ -30,7 +30,11 @@
                 <md-list-item>
                     <md-icon>send</md-icon>
                     <p class="md-list-item-text">가입 동아리</p>
-                </md-list-item>
+                </md-list-item>                
+                <md-list-item v-for="circle in signedCircles" :key="circle.id" v-on:click="circlePage(circle.name)">
+                    <md-icon></md-icon>
+                    <p class="md-list-item-text" >{{circle.name}}</p>
+                </md-list-item>                
                 <md-list-item v-on:click="mypage()">
                     <md-icon>move_to_inbox</md-icon>
                     <p class="md-list-item-text">내 정보</p>
@@ -61,10 +65,9 @@ export default {
     userName: "",
     userDepartment : "",
     circles: [],
-    user: {},
     circleManage: [],
-    exist: false,
-    circlelink: "/circle/한터"
+    signedCircles: [],
+    exist: false
   }),
   created () {
     if (this.$session.exists()) {
@@ -77,9 +80,12 @@ export default {
       }).then(() => {
           for(var i = 0; i < this.circles.length; i++){
               if(this.circles[i].president.name == this.userName){
-                //this.circle = this.circles[i]
                 this.circleManage.push(this.circles[i])
                 this.exist = true
+              }
+              for(var j = 0; j < this.circles[i].members.length; j++){
+                  if(this.circles[i].members[j].user.name == this.userName && this.circles[i].members[j].circleAuth == true)
+                    this.signedCircles.push(this.circles[i])
               }
           }
       })
@@ -97,6 +103,10 @@ export default {
       },
       mypage: function(){
           this.$router.push('/mypage');
+      },
+      circlePage: function(name){
+          this.$router.push('/circle/' + name)
+          window.location.reload();
       }
   }
 }

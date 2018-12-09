@@ -14,10 +14,14 @@ const circleSchema = mongoose.Schema({
     vicePresident: {type: mongoose.Schema.Types.ObjectId},
     professor: {type: String},
     memberNumber: {type: Number},
-    members: [{type: mongoose.Schema.Types.ObjectId, ref: 'user'}],
+    members: [{
+        user: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
+        circleAuth: {type: Boolean, default: false}
+    }],
     concept: {type: String},
     introduce: {type: String},
-    othersAccept: {type: Boolean}
+    othersAccept: {type: Boolean},
+
 });
 
 circleSchema.plugin(autoIncrement, {
