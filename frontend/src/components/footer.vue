@@ -1,6 +1,6 @@
 <template>
     <div id="footer">
-        <v-footer absoulte height="6%" >
+        <v-footer absoulte height="6%">
             <v-layout justify-center wrap>
                 <v-btn to="/" class="jg footer-link" color="black" flat round>
                     Home

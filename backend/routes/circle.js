@@ -63,6 +63,20 @@ router.get('/send', (req, res) => {
 })
 });
 
+router.post('/send/search', (req, res) => {
+
+    if(req.body.search_select === "name") {
+        circleModel.find({"name": req.body.search_value}).populate('president').exec((err, data) => {
+            res.send(data)
+        })
+    }
+    else if(req.body.search_select === "professor") {
+        circleModel.find({"professor": req.body.search_value}).populate('president').exec((err, data) => {
+            res.send(data)
+        })
+    }
+});
+
 router.post('/register', (req, res) => {
    console.log(req.body)
    circleModel.create(req.body).then((circle) => {

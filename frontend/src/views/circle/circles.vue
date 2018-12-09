@@ -4,12 +4,13 @@
         <header-bar></header-bar>
 
         <!--바탕이 되는 container-->
-        <div class="centered-container" >
+        <div class="centered-container">
             <h1 class="jg ajou-title"> 동아리/소학회 정보 </h1>
 
             <!--그 위에 올려지는 하얀 container (elevation : 10)-->
             <md-content class="md-elevation-15">
-                <md-card v-for="circle in circles" :key="circle.id" class = "md-elevation-8">
+                <div class="container-one">
+                <md-card v-for="circle in calData" :key="circle.id" class = "md-elevation-8">
 
                     <v-img v-if="circle.name === 'ANSI'"
                             src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
@@ -42,27 +43,43 @@
                         </v-btn>
                     </v-card-actions>
                 </md-card>
-        <md-dialog-confirm
-            :md-active.sync="check"
-            md-title="Check"
-            md-content="정말 동아리에 가입하시겠습니까?"
-            md-confirm-text="Check"
-            md-cancel-text="Cancle"
-            @md-cancel="onCancel"
-            @md-confirm="onCheck" />
-                <div class="content-end">
-                        <v-pagination
+                </div>
+            <md-dialog-confirm
+                :md-active.sync="check"
+                md-title="Check"
+                md-content="정말 동아리에 가입하시겠습니까?"
+                md-confirm-text="Check"
+                md-cancel-text="Cancle"
+                @md-cancel="onCancel"
+                @md-confirm="onCheck" />
+
+                <div class="content-end container-two" style="display : flex; justify-items : center; flex-direction : column">
+                    <v-pagination
                             v-model="curPage"
                             :length="numOfPages"
                             color="blue-grey darken-2"
                             bottom
-                            style="align-self : flex-end"
                      ></v-pagination>
+
+                    <v-form>
+                        <md-field>
+                            <label> search_category</label>
+                            <md-select v-model="search_select" name="search" id="search">
+                                <md-option value="name">동아리 이름</md-option>
+                                <md-option value="professor">지도교수님 이름</md-option>
+                                <md-option value="president">회장 이름</md-option>
+                            </md-select>
+                        </md-field>
+
+                        <v-text-field v-model="search_value" required></v-text-field>
+
+                        <v-btn @click="search()" style="width : 250px; "> 검색 </v-btn>
+                    </v-form>
                 </div>
             </md-content>
-        </div>
-        <v-btn v-on:click="circleSignup()">동아리 등록</v-btn>
 
+            <v-btn v-on:click="circleSignup()">동아리 등록</v-btn>
+        </div>
         <div>
             <footer-bar style="margin-top:17%"></footer-bar>
         </div>
@@ -89,6 +106,12 @@
                 userName: null,
                 curPage : 1,
                 dataPerPage : 6,
+                food1 : null,
+
+                search_value : '',
+                search_category : ['name', 'professor'],
+                search_select : null,
+
                 circles: [],
                 signcircle: {},
                 user: {},
@@ -130,15 +153,26 @@
             userSignup: function() {
                 this.$http.post('http://localhost:8000/user/' + this.user.name + '/signupCircle', this.signcircle)
                 .then((res) => {
-                    console.log()
-                    if(res.data != "err"){
+
+                    if(res.data !== "err"){
                         this.$http.post('http://localhost:8000/circle/' + this.signcircle.name + '/signupCircle/', this.user)
                     }
                     else{
                         alert("이미 동아리에 가입하셨습니다.")
                     }
                 })
+            },
+            search: function() {
+                this.$http.post('http://localhost:8000/circle/send/search',
+                    {"search_value": this.search_value, "search_select" : this.search_select})
+                .then((res) => {
+                    this.circles = res.data
+                    this.search_value = ""
+                    this.search_select = ""
+                    alert("검색")
+                 })
             }
+
         }
     }
 </script>
@@ -176,28 +210,51 @@
             justify-content : center;
             align-items: center;
             flex-wrap: wrap;
+            flex-direction: column;
 
+            .container-one {
+                z-index: 1;
+                padding: 15px;
+                width: 100%;
+                height : 300%;
+                position: relative;
+                display : flex;
+                justify-content : center;
+                align-items: center;
+                flex-wrap: wrap;
 
-            /*각각의 동아리를 나타내는 card*/
-            .md-card {
-                width : 45%;
-                height : 40%;
-                margin-left : 2%;
-                margin-bottom : 3%;
-                vertical-align: top;
+                /*각각의 동아리를 나타내는 card*/
+                .md-card {
+                    width: 45%;
+                    height: 40%;
+                    margin-left: 2%;
+                    margin-bottom: 3%;
+                    vertical-align: top;
 
-                /*(더 자세히), (가입 신청) 버튼*/
-                .circle_button{
-                    color : white;
-                    margin-top : 10px;
-                }
+                    /*(더 자세히), (가입 신청) 버튼*/
+                    .circle_button {
+                        color: white;
+                        margin-top: 10px;
+                    }
 
-                .content-circle{
-                    font-size : 17px;
+                    .content-circle {
+                        font-size: 17px;
+                    }
                 }
             }
-        }
 
+            .container-two {
+                z-index: 1;
+                padding: 10px;
+                width: 100%;
+                height : 100%;
+                position: relative;
+                display : flex;
+                justify-content : center;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+        }
     }
 
 </style>

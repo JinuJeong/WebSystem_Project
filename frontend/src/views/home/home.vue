@@ -3,188 +3,117 @@
         <!--항상 상단에 떠있는 bar-->
         <header-bar></header-bar>
 
-        <v-container class="first-container" >
+        <v-container fluid grid-list-md style="padding : 5%">
+            <v-layout row wrap>
 
-            <div class="group">
-                <v-card class="md-transparent" style="max-width : 500px;">
-                    <v-card-title class="home-content-title"><router-link to="/board">자유게시판</router-link></v-card-title>
-                    <v-divider></v-divider>
-                    <v-list dense>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">BEAT 동아리 공연봤냐?</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">공부하기에 ANSI가 나음? HANTOR가 나음?</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">구학생회관좀 고쳐줬으면...</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">동방 바뀌는거 언제임</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">오늘날씨개춥네</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                    </v-list>
-                </v-card>
-            </div>
+                <v-flex xs4 d-flex style="width : 50px;">
+                    <v-btn color="blue-grey lighten-1" bottom style="width : 15px; margin : auto">
+                        <p class="circle_button" style="color : white;">가입 신청</p>
+                    </v-btn>
+                </v-flex>
 
-            <div class="group">
-                <v-card class="md-transparent" style="max-width : 500px;">
-                    <v-card-title class="home-content-title"><router-link to="/board">New동아리</router-link></v-card-title>
-                    <v-divider></v-divider>
-                    <v-list dense>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">ANSI</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">HANTOR</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">WHOIS</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">BEAT</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">SOUL</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                    </v-list>
-                </v-card>
-            </div>
+                <v-flex xs4 d-flex>
+                    <v-card>
+                        <v-card-title class="subheading font-weight-bold">공지사항</v-card-title>
+                        <v-divider></v-divider>
+                        <v-list v-for="notice in noticelists" :key="notice.postId">
+                            <v-list-tile
+                                    @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.postNum)">
+                                <v-list-tile-title v-text="notice.title"></v-list-tile-title>
+                                <v-list-tile-action>
+                                    <v-list-tile-action-text>{{notice.author}}</v-list-tile-action-text>
+                                    <v-list-tile-action-text>{{notice.date}}</v-list-tile-action-text>
+                                </v-list-tile-action>
 
-            <div class="group">
-                <v-card class="md-transparent" style="max-width : 500px;">
-                    <v-card-title class="home-content-title" ><router-link to="/board">자유게시판</router-link></v-card-title>
-                    <v-divider></v-divider>
-                    <v-list dense>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">BEAT 동아리 공연봤냐?</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">공부하기에 ANSI가 나음? HANTOR가 나음?</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">구학생회관좀 고쳐줬으면...</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">동방 바뀌는거 언제임</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">오늘날씨개춥네</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                    </v-list>
-                </v-card>
-            </div>
+                            </v-list-tile>
+                        </v-list>
+                        <v-btn icon @click="$router.push('/circle/'+circleName+'/board/notice/show_notices')">
+                            <v-icon>add</v-icon>
+                        </v-btn>
+                    </v-card>
+                </v-flex>
 
-            <div class="group">
-                <v-card class="md-transparent" style="max-width : 550px;">
-                    <v-card-title class="home-content-title"><router-link to="/board">자유게시판</router-link></v-card-title>
-                    <v-divider></v-divider>
-                    <v-list dense>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">BEAT 동아리 공연봤냐?</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">공부하기에 ANSI가 나음? HANTOR가 나음?</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">구학생회관좀 고쳐줬으면...</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">동방 바뀌는거 언제임</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">오늘날씨개춥네</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                    </v-list>
-                </v-card>
-            </div>
+                <v-flex xs4 d-flex>
+                    <v-card>
+                        <v-card-title class="subheading font-weight-bold">게시판</v-card-title>
+                        <v-divider></v-divider>
+                        <v-list v-for="board in boardlists" :key="board.date">
+                            <v-list-tile
+                                    @click="$router.push('/circle/'+circleName+'/board/board/show_notice/'+board.postNum)">
+                                <v-list-tile-title v-text="board.title"></v-list-tile-title>
+                                <v-list-tile-action>
+                                    <v-list-tile-action-text>{{board.author}}</v-list-tile-action-text>
+                                    <v-list-tile-action-text>{{board.date}}</v-list-tile-action-text>
+                                </v-list-tile-action>
+
+                            </v-list-tile>
+                        </v-list>
+                        <v-btn icon @click="$router.push('/circle/'+circleName+'/board/board/show_notices')">
+                            <v-icon>add</v-icon>
+                        </v-btn>
+                    </v-card>
+                </v-flex>
+
+                <v-flex xs4 d-flex>
+                    <v-card>
+                        <v-card-title class="subheading font-weight-bold">스터디</v-card-title>
+                        <v-divider></v-divider>
+                        <v-list v-for="group in grouplists" :key="group.groupId">
+                            <v-list-tile
+                                    @click="$router.push('/circle/'+circleName+'/group/show_group/'+group.groupId)">
+                                <v-list-tile-title v-text="group.title"></v-list-tile-title>
+                                <v-list-tile-action>
+                                    <v-list-tile-action-text>{{group.start}}</v-list-tile-action-text>
+                                    <v-list-tile-action-text>{{group.end}}</v-list-tile-action-text>
+                                </v-list-tile-action>
+
+                            </v-list-tile>
+                        </v-list>
+                        <v-btn icon @click="$router.push('/circle/'+circleName+'/group/show_groups')">
+                            <v-icon>add</v-icon>
+                        </v-btn>
+                    </v-card>
+                </v-flex>
+
+                <v-flex xs4 d-flex>
+                    <v-card>
+                        <v-card-title class="subheading font-weight-bold">활동</v-card-title>
+                        <v-divider></v-divider>
+                        <v-list v-for="notice in noticelists" :key="notice.postId">
+                            <v-list-tile
+                                    @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.postNum)">
+                                <v-list-tile-title v-text="notice.title"></v-list-tile-title>
+                                <v-list-tile-action>
+                                    <v-list-tile-action-text>{{notice.author}}</v-list-tile-action-text>
+                                    <v-list-tile-action-text>{{notice.date}}</v-list-tile-action-text>
+                                </v-list-tile-action>
+                            </v-list-tile>
+                        </v-list>
+                        <v-btn icon @click="$router.push('/circle/'+circleName+'/board/notice/show_notices')">
+                            <v-icon>add</v-icon>
+                        </v-btn>
+                    </v-card>
+                </v-flex>
+
+                <v-flex xs4 d-flex>
+                    <v-card v-if="this.president">
+                        <v-card-title class="subheading font-weight-bold">회원관리</v-card-title>
+                        <v-divider></v-divider>
+                        <div v-for="member in members" :key="member.id">
+                            {{member.name}} {{member.department}}
+                            <v-card-actions class="btn">
+                                <v-btn round color="blue" large v-on:click="change4=true">
+                                    <p class="circle_button">승인</p>
+                                </v-btn>
+                                <v-btn round color="blue" large v-on:click="change4=true">
+                                    <p class="circle_button">거절</p>
+                                </v-btn>
+                            </v-card-actions>
+                        </div>
+                    </v-card>
+                </v-flex>
+            </v-layout>
         </v-container>
-
-        <v-container class="second-container">
-            <div class="second-group">
-                <v-card class="md-transparent" style="width:100%;">
-                    <v-card-title class="home-content-title"><router-link to="/notice">공지사항</router-link></v-card-title>
-                    <v-divider></v-divider>
-                    <v-list dense>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">BEAT 동아리 공연봤냐?</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">공부하기에 ANSI가 나음? HANTOR가 나음?</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">구학생회관좀 고쳐줬으면...</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">동방 바뀌는거 언제임</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">오늘날씨개춥네</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                    </v-list>
-                </v-card>
-            </div>
-        </v-container>
-
-        <v-container class="last-container">
-            <div class="second-group">
-                <v-card class="md-transparent" style="width:100%;">
-                    <v-card-title class="home-content-title"><router-link to="/notice">이달의동아리</router-link></v-card-title>
-                    <v-divider></v-divider>
-                    <v-list dense>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">BEAT 동아리 공연봤냐?</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">공부하기에 ANSI가 나음? HANTOR가 나음?</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">구학생회관좀 고쳐줬으면...</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">동방 바뀌는거 언제임</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-content class="rank-text">오늘날씨개춥네</v-list-tile-content>
-                            <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
-                        </v-list-tile>
-                    </v-list>
-                </v-card>
-            </div>
-
-        </v-container>
-
         <v-divider></v-divider>
         <footerBar></footerBar>
     </div>
@@ -197,6 +126,18 @@
     export default {
         name: 'home',
 
+        created() {
+            if (this.$session.exists()) {
+                this.beforeLogin = false;
+            }
+        },
+
+        data () {
+            return {
+                beforeLogin : true
+            }
+        },
+
         components: {
             headerBar,
             footerBar
@@ -205,6 +146,17 @@
 </script>
 
 <style>
+    .centered-container {
+        display: flex;
+        align-items : center;
+        flex-direction: row;
+        position: relative;
+        padding: 5%;
+        justify-content: space-around;
+        height: 80%;
+        width: 100%;
+    }
+
     .first-container {
         display : flex;
         flex-direction : row;

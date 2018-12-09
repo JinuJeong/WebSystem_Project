@@ -1,4 +1,4 @@
-<template>
+    <template>
     <div>
         <header-bar/>
         <v-container class="container">
