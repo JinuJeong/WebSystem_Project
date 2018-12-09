@@ -47,22 +47,22 @@
         name: 'notice',
         data(){
             return{
-                title: this.$route.params.title,
-                date: this.$route.params.date,
+                title: "",
                 contents: "",
                 match: false,
                 circleName: this.$route.params.circleName,
                 userName: this.$session.getAll().username,
-                kind: this.$route.params.kind,
+                postType: this.$route.params.postType,
+                postNum: this.$route.params.postNum,
             }
         },
         created: function(){
-                if(this.title!=undefined){
-                    console.log(this.date)
-                    this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/"+this.kind+"/"
-                    +this.title+"/"+this.date).then((data)=>{
+                if(this.postNum!=undefined){
+                    
+                    this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/"
+                    +this.postNum).then((data)=>{
+                        this.title=data.data.title;
                         this.contents=data.data.contents
-                        console.log(this.contents)
                         if(this.userName==data.data.author) this.match=true;
                     })
                 }
@@ -74,7 +74,7 @@
         methods:{
             onModify: function(){
                 
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.kind+"/update",{"title":this.title,
+                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/"+this.postNum+"/update",{"title":this.title,
                 "contents":this.contents,"date":this.date}).then((data)=>{
                     console.log(this.title)
                     this.$router.push("/circle/"+this.circleName);
@@ -84,8 +84,7 @@
                 this.$router.push("/circle/"+this.circleName);
             },
             onDelete: function(){
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.kind+"/delete",{"title":this.title,
-                "contents":this.contents,"author":this.userName}).then((data)=>{
+                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/"+this.postNum+"/delete").then((data)=>{
                     this.$router.push("/circle/"+this.circleName);
                 })
             },
@@ -94,7 +93,7 @@
                     alert("로그인이 필요합니다")
                     return;
                 }
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.kind+"/create",{"title":this.title,
+                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/create",{"title":this.title,
                     "contents":this.contents,"author":this.userName}).then((data)=>{
                         this.$router.push("/circle/"+this.circleName);
                     })

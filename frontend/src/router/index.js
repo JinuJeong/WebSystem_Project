@@ -17,6 +17,12 @@ import showNotices from '../components/showNotices'
 import showSchedules from '../components/showSchedules'
 import manageBoard from '../components/manageBoard'
 import showBoard from '../components/showBoard'
+import showGroups from '../components/showGroups'
+import manageGroup from '../components/manageGroup'
+import showGroup from '../components/showGroup'
+import showActive from '../components/showActive'
+import manageActive from '../components/manageActive'
+import showActives from '../components/showActives'
 
 import Vuetify from "vuetify";
 
@@ -78,19 +84,19 @@ export default new Router({
             component: NotFound
         },
         {
-            path: '/circle/:circleName/board/:kind/manage_notice/create',
+            path: '/circle/:circleName/board/:postType/manage_notice/create',
             component: manageNotice
         },
         {
-            path: '/circle/:circleName/board/:kind/manage_notice/:title/:date',
+            path: '/circle/:circleName/board/:postType/manage_notice/:postNum',
             component: manageNotice
         },
         {
-            path: '/circle/:circleName/board/:kind/show_notice/:title/:date',
+            path: '/circle/:circleName/board/:postType/show_notice/:postNum',
             component: showNotice
         },
         {
-            path: '/circle/:circleName/board/:kind/show_notices',
+            path: '/circle/:circleName/board/:postType/show_notices',
             component: showNotices
         },
         {
@@ -108,6 +114,38 @@ export default new Router({
         {
             path: '/boards/:boardName/show_notice/:postNum',
             component: showBoard
-        }
+        },
+        {
+            path: '/circle/:circleName/group/show_groups',
+            component: showGroups
+        },
+        {
+            path: '/circle/:circleName/manage_group/create',
+            component: manageGroup
+        },
+        {
+            path: '/circle/:circleName/group/show_group/:groupId',
+            component: showGroup
+        },
+        {
+            path: '/circle/:circleName/manage_group/update/:groupId',
+            component: manageGroup
+        },
+        {
+            path: '/circle/:circleName/active/show_actives',
+            component: showActives
+        },
+        {
+            path: '/circle/:circleName/manage_active/create',
+            component: manageActive
+        },
+        {
+            path: '/circle/:circleName/group/show_active/:activeId',
+            component: showActive
+        },
+        {
+            path: '/circle/:circleName/manage_active/update/:activeId',
+            component: manageActive
+        },
     ]
 })
