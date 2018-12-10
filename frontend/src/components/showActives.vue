@@ -9,7 +9,20 @@
             </i>
             </button>
             <h1 class="text-md-center">{{circleName}} Active</h1>
-            <img :src="image" />
+            
+            <v-layout row wrap>
+            <v-flex xs12 sm3 v-for="active in activelist" :key="active.activeId" class ='ma-3'>
+            <v-card @click="$router.push('/circle/'+circleName+'/active/show_active/'+active.activeId)">
+                <v-img :src="active.image" aspect-ratio="1" contain></v-img>
+                <v-card-title>
+                    <div>
+                        <h3>{{active.title}}</h3>
+                        <span>{{active.date}}</span>
+                    </div>
+                </v-card-title>
+            </v-card>
+            </v-flex>
+            </v-layout>
             <v-btn color="blue" @click="$router.push('/circle/'+circleName+'/manage_active/create')">새글작성</v-btn>
         </v-container>
         
@@ -23,7 +36,7 @@
           return{
                 circleName: this.$route.params.circleName,
                 activelist: [],
-                image: "",
+                images: [],
           }  
         },
         created: function(){
@@ -34,8 +47,8 @@
                 let start = data.data[i].start.split('T')[0]
                 let end = data.data[i].start.split('T')[0]
                 let active={"title":data.data[i].title,"contents":data.data[i].contents,
-                "date":start+" ~ "+end,"activeId":data.data[i].groupId,"image":data.data[i].image}
-                this.image=data.data[i].image
+                "date":start+" ~ "+end,"activeId":data.data[i].activeId,"image":data.data[i].image}
+                this.images.push(data.data[i].image)
                 this.activelist.push(active)
                 console.log(active)
               }

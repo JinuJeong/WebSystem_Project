@@ -140,7 +140,7 @@ export default new Router({
             component: manageActive
         },
         {
-            path: '/circle/:circleName/group/show_active/:activeId',
+            path: '/circle/:circleName/active/show_active/:activeId',
             component: showActive
         },
         {
