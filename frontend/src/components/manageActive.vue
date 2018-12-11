@@ -85,7 +85,7 @@
                 <td class="text-xs-right">{{props.item.ID}}</td>
             </template>
             </v-data-table>
-
+            
         </v-container>
     </div>
 </template>
@@ -113,8 +113,7 @@ export default{
             date2 : Date,
             dates: [new Date().toISOString().substr(0, 10)],
             contents: "",
-            //activeId: this.$route.params.activeId,
-            activeId: null,
+            activeId: this.$route.params.activeId,
             image: "",
             userName : this.$session.getAll().username,
             files: [],
@@ -143,8 +142,7 @@ export default{
                 this.users.push(this.members[i].user)
             }
         })
-    }
-    ,
+    },
     methods:{
         // 데이트 설정 갯수 제안
             allowDate:function(){
@@ -164,7 +162,7 @@ export default{
                 }
             },
             onSubmit: function(){
-                if(this.activeId==null){ // 새로 만드는 거
+                if(this.activeId == undefined){ // 새로 만드는 거 if(this.activeId != this.$route.params.activeId)
                     this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/create",
                     {"title":this.title,"contents":this.contents,"circleName":this.circleName,"start":this.date1,"end":this.date2
                     ,"image":this.image, "members":this.selected})
@@ -175,7 +173,7 @@ export default{
                 else{ // 수정
                     this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/update/"+this.activeId,
                     {"title":this.title,"contents":this.contents,"circleName":this.circleName,"start":this.date1,"end":this.date2
-                    ,"image":this.image, "activeId":this.activeId})
+                    ,"image":this.image, "activeId":this.activeId, "members":this.selected})
                     .then((data)=>{
                         this.$router.push("/circle/"+this.circleName);
                     })

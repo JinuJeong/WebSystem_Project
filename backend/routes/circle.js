@@ -185,7 +185,7 @@ router.post('/:circleName/group/delete/:groupId',(req,res)=>{
 
 router.post('/:circleName/active/create',(req,res)=>{
     console.log(req.body)
-    activeModel.create(req.body).then((data)=>{
+    activeModel.create(req.body).then(()=>{
         res.send("ok")
     })
 })
@@ -197,7 +197,7 @@ router.get('/:circleName/active',(req,res)=>{
 })
 
 router.get('/:circleName/active/:activeId',(req,res)=>{
-    activeModel.findOne({"activeId":req.params.activeId}).then((data)=>{
+    activeModel.findOne({"activeId":req.params.activeId}).populate('members').then((data)=>{
         res.send(data)
     })
 })

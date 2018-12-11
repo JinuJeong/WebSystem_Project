@@ -52,7 +52,6 @@
                 this.activelist.push(active)
                 console.log(active)
               }
-              
           })
         },
         components:{
