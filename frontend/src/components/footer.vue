@@ -5,7 +5,7 @@
                 <v-btn to="/" class="jg footer-link" color="black" flat round>
                     Home
                 </v-btn>
-                <v-btn to="/" class="jg footer-link" color="black" flat round>
+                <v-btn to="/boards/notice" class="jg footer-link" color="black" flat round>
                     공지사항
                 </v-btn>
                 <v-btn to="/" class="jg footer-link" color="black" flat round>

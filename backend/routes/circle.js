@@ -9,6 +9,9 @@ const activeModel = require('../db/models/active')
 
 let circleName
 let postType
+let model
+let name
+
 
 router.use("/:circleName/board/:postType",(req,res,next)=>{
     circleName=req.params.circleName
@@ -57,6 +60,15 @@ router.get('/send', (req, res) => {
 })
 });
 
+router.get('/send/title', (req, res) => {
+
+    console.log("/send/title!")
+
+    circleModel.find().limit(5).then((data)=>{
+        res.send(data)
+    })
+});
+
 router.post('/send/search', (req, res) => {
 
     if(req.body.search_select === "name") {
@@ -66,6 +78,11 @@ router.post('/send/search', (req, res) => {
     }
     else if(req.body.search_select === "professor") {
         circleModel.find({"professor": req.body.search_value}).populate('president').exec((err, data) => {
+            res.send(data)
+        })
+    }
+    else if(req.body.search_select === "subject") {
+        circleModel.find({"party": req.body.search_value}).populate('president').exec((err, data) => {
             res.send(data)
         })
     }

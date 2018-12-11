@@ -9,6 +9,27 @@
 
             <!--그 위에 올려지는 하얀 container (elevation : 10)-->
             <md-content class="md-elevation-15">
+
+                <div class="content-end container-two" style="display : flex; justify-content : flex-end; flex-direction : row">
+
+                    <v-form style="display : flex; justify-content: flex-end; flex-direction : row; width : 50%;">
+
+                        <md-field>
+                            <label> search_category</label>
+                            <md-select v-model="search_select" name="search" id="search">
+                                <md-option value="name">동아리이름</md-option>
+                                <md-option value="professor">지도교수님</md-option>
+                                <md-option value="president">회장</md-option>
+                                <md-option value="subject">학과</md-option>
+                            </md-select>
+                        </md-field>
+
+                        <v-text-field v-model="search_value" required style="margin-top : 0.9%; margin-left : 3%;width : 70%;"></v-text-field>
+
+                        <v-btn @click="search()" style="width : 250px; margin-top : 1%;"> 검색 </v-btn>
+                    </v-form>
+                </div>
+
                 <div class="container-one">
                 <md-card v-for="circle in calData" :key="circle.id" class = "md-elevation-8">
 
@@ -70,21 +91,6 @@
                             color="blue-grey darken-2"
                             bottom
                      ></v-pagination>
-
-                    <v-form>
-                        <md-field>
-                            <label> search_category</label>
-                            <md-select v-model="search_select" name="search" id="search">
-                                <md-option value="name">동아리 이름</md-option>
-                                <md-option value="professor">지도교수님 이름</md-option>
-                                <md-option value="president">회장 이름</md-option>
-                            </md-select>
-                        </md-field>
-
-                        <v-text-field v-model="search_value" required></v-text-field>
-
-                        <v-btn @click="search()" style="width : 250px; "> 검색 </v-btn>
-                    </v-form>
                 </div>
             </md-content>
 
@@ -122,6 +128,7 @@
                 search_category : ['name', 'professor'],
                 search_select : null,
 
+                items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
                 circles: [],
                 signcircle: {},
                 user: {},
@@ -178,7 +185,6 @@
                     this.circles = res.data
                     this.search_value = ""
                     this.search_select = ""
-                    alert("검색")
                  })
             }
 
