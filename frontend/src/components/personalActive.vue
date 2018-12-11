@@ -81,8 +81,7 @@ export default {
     },
     components: {
         headerBar
-    },
-    
+    },    
 }    
 </script>
 
