@@ -5,12 +5,11 @@
         <v-container class="container">
             <v-flex xs12 sm10 offset-sm1>
                 <div class="centered-container">
-                    <v-card color="blue lighten-4">
+                    <v-card color="cyan">
                         <v-card-title>
                             게시판
                             <v-spacer/>
                             <v-text-field  
-                                color = "dark"
                                 v-model="search"
                                 append-icon="search"
                                 label="Search"
@@ -22,7 +21,7 @@
                             :headers="headers"
                             :items="boards"
                             :search="search"
-                            disable-initial-sort="false"
+                            disable-initial-sort
                             next-icon="chevron_right"
                             prev-icon ="chevron_left"
                             class="elevation-1"

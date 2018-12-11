@@ -52,7 +52,7 @@
                 title:"",
                 match: false,
                 groupId: this.$route.params.groupId,
-                titlelist: ["제목","제한수","시작","종료","동아리 이름","활동 분야","주최자","참여 수","최대 인원 수"],
+                titlelist: ["제목","시작","종료","동아리 이름","활동 분야","주최자","참여 수","최대 인원 수"],
                 datalist: []
             }
         },
@@ -61,7 +61,7 @@
                     this.$http.get("http://localhost:8000/circle/"+this.circleName+"/group/"+this.groupId).then((data)=>{
                         let info=data.data
                         this.title=info.title
-                        this.datalist=[info.title,info.maxNumber,info.start.substr(0,10),info.end.substr(0,10),info.circleName,info.groupType,
+                        this.datalist=[info.title,info.start.substr(0,10),info.end.substr(0,10),info.circleName,info.groupType,
                         info.teacher.name,info.memberNumber,info.maxNumber]
                         this.contents=info.contents
                        
