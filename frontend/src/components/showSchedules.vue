@@ -158,6 +158,7 @@
                 content: "",
                 plus: false,
                 modify: false,
+                
           }  
         },
         created: function(){
