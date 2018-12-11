@@ -46,7 +46,7 @@
                         <v-card-title class="home-content-title"><router-link to="/boards/notice">학사일정</router-link></v-card-title>
                         <v-divider></v-divider>
                         <v-list dense>
-                            <v-list-tile v-for="schedule in scheduleList">
+                            <v-list-tile v-for="schedule in scheduleList" :key="schedule._id">
                                 <v-list-tile-content class="rank-text jg">{{schedule.content}}</v-list-tile-content>
                                 <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
                             </v-list-tile>

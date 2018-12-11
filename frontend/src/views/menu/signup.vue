@@ -103,9 +103,6 @@
                     </md-field>
             </div>
 
-                :to
-                :value='{{mem
-                <md-option v-for="member in members" value="">mem</md-option>
             <div class="md-layout-item">
                 <md-field>
                     <label>관심분야</label>
