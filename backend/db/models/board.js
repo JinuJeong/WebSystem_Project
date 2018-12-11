@@ -1,7 +1,6 @@
 const { mongoose, autoIncrement } = require('../mongo')
 
 const commentSchema = mongoose.Schema({
-    postNum: {type: Number},
     cmtContent: {type: String, required: true},
     author: {type: String, required: true},
     date: {type: Date, default: Date.now},

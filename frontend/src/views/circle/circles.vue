@@ -164,10 +164,6 @@
             },
             onCheck: function() {
                 this.userSignup()
-<<<<<<< HEAD
-                this.check = false
-=======
->>>>>>> e89f8fd62c0d85d43e22a024f2cdc9ec87fc07f8
             },
             onCancle: function(){
                 this.check = false
