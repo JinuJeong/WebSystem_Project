@@ -6,11 +6,9 @@ const activeSchema = mongoose.Schema({
     author: {type: String, required: true},
     start : {type: Date, required: true},
     end : {type: Date, required: true},
+    contents : {type: String, required : true},
     image : {
-        type : Buffer,
-    },
-    files : {
-        
+        type : String,
     },
     circleName: {type: String},
     //postViews: {type: Number}

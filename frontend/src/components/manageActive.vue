@@ -16,7 +16,7 @@
                 <input type="file" @change="onFileChange">
             </div>
             <div v-else>
-                <img :src="image" />
+                <v-img :src="image" aspect-ratio="5" contain/>
                 <v-btn @click="removeImage">Remove image</v-btn>
             </div>
 
@@ -53,10 +53,10 @@
                    <v-textarea
                     outline
                     name="contents"
-                    label="group 내용"
+                    label="활동 내용"
                     v-model="contents"
                     ></v-textarea>
-                <v-btn color="blue" @click="onSubmit()">그룹 추가</v-btn>
+                <v-btn color="blue" @click="onSubmit()">활동 추가</v-btn>
                 <v-btn color="blue" @click="plus=false">취소</v-btn>
                 </v-flex>
             </v-layout>
@@ -83,17 +83,13 @@ export default{
         }
     },
     created : function(){
-        this.$http.get("http://localhost:8000/circle/"+this.circleName+"/group/"+this.groupId).then((data)=>{
+        this.$http.get("http://localhost:8000/circle/"+this.circleName+"/active/"+this.activeId).then((data)=>{
             console.log(data)
             let info=data.data
             this.title=info.title
-            this.maxNumber=info.maxNumber
             this.date1=info.start.substr(0,10)
             this.date2=info.end.substr(0,10)
-            this.groupType=info.groupType
-            this.teacher=info.teacher.ID
-            this.datalist=[info.title,info.maxNumber,info.start.substr(0,10),info.end.substr(0,10),info.circleName,info.groupType,
-            info.teacher.name,info.memberNumber,info.maxNumber]
+            this.image=info.image
             this.contents=info.contents
             if(this.userName==data.data.author) this.match=true;
         })
@@ -118,7 +114,7 @@ export default{
                 }
             },
             onSubmit: function(){
-                if(this.groupId==undefined){
+                if(this.activeId==undefined){
                     this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/create",
                     {"title":this.title,"contents":this.contents,"circleName":this.circleName,"start":this.date1,"end":this.date2
                     ,"image":this.image,"author":this.userName,"files":this.files[0]})
@@ -127,9 +123,9 @@ export default{
                     })
                 }
                 else{
-                    this.$http.post("http://localhost:8000/circle/"+this.circleName+"/group/update/"+this.groupId,
-                    {"title":this.title,"contents":this.contents,"teacher":this.teacher,"maxNumber":this.maxNumber,
-                    "circleName":this.circleName, "groupType":this.groupType,"start":this.date1,"end":this.date2})
+                    this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/update/"+this.activeId,
+                    {"title":this.title,"contents":this.contents,"circleName":this.circleName,"start":this.date1,"end":this.date2
+                    ,"image":this.image,"author":this.userName,"files":this.files[0],"activeId":this.activeId})
                     .then((data)=>{
                         this.$router.push("/circle/"+this.circleName);
                     })
