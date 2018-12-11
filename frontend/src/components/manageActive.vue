@@ -60,16 +60,12 @@
                 <v-btn color="blue" @click="plus=false">취소</v-btn>
                 </v-flex>
             </v-layout>
-            <div v-for="member in members" :key="member.id">
-                {{member.user.name}}
-                {{member.circleAuth}}
-                {{member._id}}
-            </div>
+
 
             <v-data-table
                 v-model="selected"
                 :headers="headers"
-                :items="members"
+                :items="users"
                 item-key="_id"
                 select-all
                 class="elevation-1"
@@ -85,18 +81,16 @@
                      hide-details
                     ></v-checkbox>
                 </td>
-                <td>{{props.item.user.name}}</td>
-                <td class="text-xs-right">{{props.item.user.ID}}</td>
+                <td>{{props.item.name}}</td>
+                <td class="text-xs-right">{{props.item.ID}}</td>
             </template>
             </v-data-table>
-            {{selected}}
 
         </v-container>
     </div>
 </template>
 <script>
 import headerBar from './header.vue'
-//          {{selected[0].user.name}}
 export default{
     data(){
         return{
@@ -119,12 +113,14 @@ export default{
             date2 : Date,
             dates: [new Date().toISOString().substr(0, 10)],
             contents: "",
-            activeId: this.$route.params.activeId,
+            //activeId: this.$route.params.activeId,
+            activeId: null,
             image: "",
             userName : this.$session.getAll().username,
             files: [],
             circle: {},
             members: [],
+            users: [],
         }
     },
     created : function(){
@@ -139,7 +135,13 @@ export default{
             if(this.userName==data.data.author) this.match=true;
         }),
         this.$http.get("http://localhost:8000/circle/find/" + this.circleName).then((res) => {
-            this.members = res.data.members
+            for(var i = 0; i < res.data.members.length; i++){
+                if(res.data.members[i].circleAuth == true) // 동아리 등록된 회원들만 come in
+                    this.members.push(res.data.members[i])
+            }
+            for(var i = 0; i < this.members.length; i++){
+                this.users.push(this.members[i].user)
+            }
         })
     }
     ,
@@ -162,18 +164,18 @@ export default{
                 }
             },
             onSubmit: function(){
-                if(this.activeId==undefined){
+                if(this.activeId==null){ // 새로 만드는 거
                     this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/create",
                     {"title":this.title,"contents":this.contents,"circleName":this.circleName,"start":this.date1,"end":this.date2
-                    ,"image":this.image,"author":this.userName,"files":this.files[0]})
+                    ,"image":this.image, "members":this.selected})
                     .then((data)=>{
                         this.$router.push("/circle/"+this.circleName);
                     })
                 }
-                else{
+                else{ // 수정
                     this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/update/"+this.activeId,
                     {"title":this.title,"contents":this.contents,"circleName":this.circleName,"start":this.date1,"end":this.date2
-                    ,"image":this.image,"author":this.userName,"files":this.files[0],"activeId":this.activeId})
+                    ,"image":this.image, "activeId":this.activeId})
                     .then((data)=>{
                         this.$router.push("/circle/"+this.circleName);
                     })

@@ -184,7 +184,7 @@ router.post('/:circleName/group/delete/:groupId',(req,res)=>{
 //Active
 
 router.post('/:circleName/active/create',(req,res)=>{
-   
+    console.log(req.body)
     activeModel.create(req.body).then((data)=>{
         res.send("ok")
     })

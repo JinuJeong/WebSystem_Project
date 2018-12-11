@@ -90,7 +90,7 @@
                         <v-card-title class="home-content-title"><router-link to="/circles" style="width : 50%;">동아리 정보</router-link></v-card-title>
                         <v-divider></v-divider>
                         <v-list dense>
-                            <v-list-tile v-for="circle in CircleList">
+                            <v-list-tile v-for="circle in CircleList" :key="circle._id">
                                 <v-list-tile-content class="rank-text jg">{{circle.name}}</v-list-tile-content>
                                 <v-list-tile-content class="align-end time-text">3분전</v-list-tile-content>
                             </v-list-tile>
@@ -102,7 +102,7 @@
                         <v-card-title class="home-content-title"><router-link to="/circles" style="width : 50%;">이달의 동아리</router-link></v-card-title>
                         <v-divider></v-divider>
                         <v-list dense>
-                            <v-list-tile v-for="circle in CircleList">
+                            <v-list-tile v-for="circle in CircleList" :key="circle._id">
                                 <v-list-tile-content class="rank-text jg">{{circle.name}}</v-list-tile-content>
                                 <v-list-tile-content class="align-end time-text">4분전</v-list-tile-content>
                             </v-list-tile>
