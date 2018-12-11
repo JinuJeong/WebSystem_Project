@@ -59,7 +59,8 @@
                 president: {},
                 circle: {},
                 match: Boolean,
-                members: []              
+                members: [],
+                recovery: "",           
             }
         },
         created: function(){
@@ -76,13 +77,14 @@
                     })
                     
                     this.$http.get("http://localhost:8000/circle/"+this.circleName+"/active/"+this.activeId).then((data)=>{
-                        console.log(data.data)
+                        this.recovery=data.data
                         let info=data.data
                         this.title=info.title
                         this.date = info.start.substr(0,10)+" ~ "+info.end.substr(0,10)
                         this.contents=info.contents
                         this.image = info.image
                         this.members = info.members
+
                     });
                 },
         components: {
@@ -96,13 +98,12 @@
                 this.$router.push("/circle/"+this.circleName);
             },
             onDelete: function(){
-                this.$http.get("http://localhost:8000/circle/"+this.circleName+"/active/"+this.activeId).then((data)=>{
-                    this.$http.post("http://localhost:8000/recovery",data.data).then(()=>{
-                        this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/delete/"+this.activeId).then(()=>{
-                            this.$router.push("/circle/"+this.circleName);
-                        })
+                this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{
+                    this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/delete/"+this.activeId).then(()=>{
+                        this.$router.push("/circle/"+this.circleName);
                     })
                 })
+            
             }
         }
     }

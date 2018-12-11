@@ -36,6 +36,7 @@
         </div>
 
         </v-container>
+        
 
     </div>
 </template>
@@ -81,7 +82,7 @@
                 })
             },
             onClear: function(){
-                this.$router.push("/circle/"+this.circleName+"/board/"+this.postType+"/show_notice/"+this.postNum);
+                history.back()
             },
             onSubmit: function(){
                 if(this.userName==undefined){
@@ -90,6 +91,7 @@
                 }
                 this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/create",{"title":this.title,
                     "contents":this.contents,"author":this.userName}).then((data)=>{
+                        alert("게시글이 업로드 됐습니다.")
                         this.$router.push("/circle/"+this.circleName);
                     })
             }

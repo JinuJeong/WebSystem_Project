@@ -6,6 +6,7 @@ const scheduleModel = require('../db/models/schedule')
 const boardModel = require('../db/models/board')
 const groupModel = require('../db/models/group')
 const activeModel = require('../db/models/active')
+const nodemailer = require('nodemailer');
 
 let circleName
 let postType
@@ -22,7 +23,7 @@ router.use("/:circleName/board/:postType",(req,res,next)=>{
 
 router.get("/:circleName/board/:postType",(req,res,next)=>{
     boardModel.find({"circleName":circleName,"postType":postType}).sort('-postNum').then((data)=>{
-        console.log(data)
+        
         res.send(data)
     })
 });
@@ -31,9 +32,48 @@ router.post("/:circleName/board/:postType/create",(req,res,next)=>{
     let value=req.body;
     value["circleName"]=req.params.circleName
     value["postType"]=postType
-    boardModel.create(value).then((data)=>{
+    boardModel.create(value).then(()=>{
+        if(value['postType']=='notice'){
+            circleModel.findOne({"name":value["circleName"]}).populate("members.user").exec().then((data)=>{
+                
+                let maillist=new Array()
+
+                for(let i =0;i<data.members.length;i++){
+                    maillist.push(data.members[i].user.ID)
+                }
+                 
+                let transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'ajoudong@gmail.com',  // gmail 계정 아이디를 입력
+                        pass: 'adong123'          // gmail 계정의 비밀번호를 입력
+                    }
+                });
+            
+                let mailOptions = {
+                    from: 'ajoudong@gmail.com',    // 발송 메일 주소 (위에서 작성한 gmail 계정 아이디)
+                    to: maillist ,                     // 수신 메일 주소
+                    subject: '안녕하세요, '+value['circleName']+'입니다. 공지 : '+req.body.title,   // 제목
+                    html: '<p>'+ req.body.contents +'</p>',
+                  
+                };
+        
+                transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                        console.log(error);
+                    }
+                    else {
+                        console.log('Email sent: ' + info.response);
+                        
+                    }
+                });
+                res.send("ok")
+            })
+            
+    }else{
         res.send("ok")
-    })
+    }
+})
 });
 
 router.get("/:circleName/board/:postType/:postNum",(req,res,next)=>{

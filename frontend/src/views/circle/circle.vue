@@ -197,6 +197,7 @@
           }  
         },
         created: function(){
+          console.log(this.$session.getAll())
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/notice").then((data)=>{
               for(let i=0;i<data.data.length && i<5 ;i++){
                 let date = data.data[i].date.split('T')[0]

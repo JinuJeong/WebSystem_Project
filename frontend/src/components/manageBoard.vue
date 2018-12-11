@@ -78,7 +78,7 @@
                 })
             },
             onClear: function(){
-                this.$router.push("/boards/"+this.boardName);
+                history.back()
             },
             onDelete: function(){
             

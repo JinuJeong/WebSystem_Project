@@ -47,6 +47,7 @@
                 userName: this.$session.getAll().username,
                 postType: this.$route.params.postType,
                 postNum: this.$route.params.postNum,
+                recovery : "",
             }
         },
         created: function(){
@@ -55,7 +56,7 @@
                     +this.postNum).then((data)=>{
                         this.contents=data.data.contents
                         this.title=data.data.title
-                        console.log(this.contents)
+                        this.recovery=data.data
                         if(this.userName==data.data.author) this.match=true;
                     })
             }
@@ -68,16 +69,15 @@
                 this.$router.push("/circle/"+this.circleName+"/board/"+this.postType+"/manage_notice/"+this.postNum);
             },
             onClear: function(){
-                this.$router.push("/circle/"+this.circleName);
+                history.back()
             },
             onDelete: function(){
-                this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/"+this.postNum).then((data)=>{
-                    this.$http.post("http://localhost:8000/recovery",data.data).then(()=>{
-                        this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/"+this.postNum+"/delete").then((data)=>{
-                        this.$router.push("/circle/"+this.circleName);
-                    })
-                    })
+                this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{
+                    this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/"+this.postNum+"/delete").then((data)=>{
+                    this.$router.push("/circle/"+this.circleName);
                 })
+                })
+                
             }
         }
     }

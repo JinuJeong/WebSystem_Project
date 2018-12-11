@@ -23,7 +23,7 @@
             </v-card>
             </v-flex>
             </v-layout>
-            <v-btn color="blue" @click="$router.push('/circle/'+circleName+'/manage_active/create')">새글작성</v-btn>
+            <v-btn v-if="auth==true" color="blue" @click="$router.push('/circle/'+circleName+'/manage_active/create')">새글작성</v-btn>
         </v-container>
         
     </div>
@@ -37,10 +37,12 @@
                 circleName: this.$route.params.circleName,
                 activelist: [],
                 images: [],
+                auth: false,
           }  
         },
         created: function(){
-          console.log(this.circleName)
+          if(this.$session.getAll().president==this.circleName) this.auth =true;
+          else if(this.postType=="board" && this.$session.getAll().circles.indexOf(this.circleName)>-1) this.auth = true;
 
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/active").then((data)=>{
               for(let i=0;i<data.data.length;i++){
