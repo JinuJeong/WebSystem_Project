@@ -11,12 +11,12 @@
             <v-layout style=" height : 300px;">
                 <v-flex style="width : 1px; max-width : 400px; height : 90%;">
                     <v-card dark color="white"  class="left-side-content"  v-if="beforeLogin">
-                        <v-card-text style="color : black; font-size : 4ch; text-align: center; "> <p >커뮤니티 이용을 위해 </p><p>Login을 해주세요</p></v-card-text>
-                        <v-btn color="blue-grey lighten-1" to="/login" bottom style="display: block; width : 70%; ">
-                        <p class="circle_button" style="color : white; font-size : 2.5ch; margin-top : 4%;">A-Dong Login</p>
+
+                        <v-btn color="blue-grey lighten-1" to="/login" bottom style="display: block; width : 90%; height:30% ">
+                        <p class="circle_button" style="color : white; font-size : 3.5ch; margin-top : 10%;">A-Dong Login</p>
                         </v-btn>
-                        <v-btn color="blue-grey lighten-1" to="/signup" bottom style="width : 70%;">
-                            <p class="circle_button" style="color : white; font-size : 2.5ch; margin-top : 4%;">회원가입</p>
+                        <v-btn color="blue-grey lighten-1" to="/signup" bottom style="display: block; width : 90%; height:30% ">
+                            <p class="circle_button" style="color : white; font-size : 3.5ch; margin-top : 10%;">회원가입</p>
                         </v-btn>
                     </v-card>
                     <v-card dark color="white"  class="left-side-content" v-if="!beforeLogin">

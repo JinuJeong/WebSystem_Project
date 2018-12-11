@@ -8,65 +8,52 @@
                 <form class="vue-form" @submit.prevent="submit">
 
                     <v-layout>
-                        <v-flex style="margin-right : 3%;">
-                             <md-field>
-                                <label>아이디 </label>
-                                <md-input v-model="id" placeholder="ID(___@ajou.ac.kr)"></md-input>
-                            </md-field>
-
+                        <v-flex style="margin-right : 3%; margin-bottom : 3%;">
+                                <v-text-field
+                                        label="ID"
+                                        v-model="id"
+                                        placeholder="please write email address"
+                                        :rules="emailRules"></v-text-field>
                         </v-flex>
 
                     </v-layout>
                     <v-layout>
-                        <v-flex style="margin-right : 3%;">
-                            <md-field>
-                                <label>패스워드 </label>
-                                <md-input v-model="password" type="password" placeholder="password"></md-input>
-                            </md-field>
-                        </v-flex>
-                        <v-flex >
-                            <md-field>
-                                <label>패스워드 확인 </label>
-                                <md-input v-model="password" type="password" placeholder="password"></md-input>
-                            </md-field>
+                        <v-flex style="margin-right : 3%; margin-bottom : 3%;">
+                            <v-text-field
+                                    label="password"
+                                    v-model="password"
+                                    type="password"
+                                    placeholder="password"
+                                    :rules="passwordRules"
+                            ></v-text-field>
                         </v-flex>
                     </v-layout>
 
                     <v-layout>
                         <v-flex style="margin-right : 3%;">
-                            <md-field>
-                                <label>이름</label>
-                                <md-input v-model="name" placeholder="name"></md-input>
-                            </md-field>
+                            <v-text-field label="이름" v-model="name" type="text" placeholder="name"></v-text-field>
                         </v-flex>
                         <v-flex>
-                            <md-field>
-                                <label>연락처</label>
-                                <md-input v-model="call" placeholder="call"></md-input>
-                            </md-field>
+                            <v-text-field label="연락처" v-model="call" type="tel" placeholder="tel"></v-text-field>
                         </v-flex>
                     </v-layout>
 
                     <v-layout>
                         <v-flex style="margin-right : 3%;">
-                                <md-field>
-                                    <label>별명</label>
-                                    <md-input v-model="nickname" placeholder="nickname"></md-input>
-                                </md-field>
+                            <v-text-field label="별명" v-model="nickname" type="text" placeholder="nickname"></v-text-field>
                         </v-flex>
                         <v-flex>
-                                <md-field>
-                                    <label>생년월일</label>
-                                    <md-input v-model="birth" type="number"  placeholder="data of birth"></md-input>
-                                </md-field>
+                            <v-text-field label="생년월일" v-model="birth" type="number" placeholder="date of birth"></v-text-field>
                         </v-flex>
                     </v-layout>
 
                     <v-layout>
-                        <md-field>
-                            <label>자기 소개</label>
-                            <md-textarea v-model="textarea"></md-textarea>
-                        </md-field>
+                        <v-textarea
+                                solo
+                                v-model="textarea"
+                                placeholder="introduce yourself"
+                                auto-grow
+                        ></v-textarea>
                     </v-layout>
                 </form>
 
@@ -76,46 +63,49 @@
                         <md-select v-model="department" name="department" id="department">
                             <md-optgroup label="정보통신대학">
                                 <md-option value="소프트웨어학과">소프트웨어학과</md-option>
-                                <md-option value="security">사이버보안학과</md-option>
-                                <md-option value="electric">전자공학과</md-option>
-                                <md-option value="media">미디어학과</md-option>
-                                <md-option value="Defense_digital">국방디지털융합학과</md-option>
+                                <md-option value="사이버보안학과">사이버보안학과</md-option>
+                                <md-option value="전자공학과">전자공학과</md-option>
+                                <md-option value="미디어학과">미디어학과</md-option>
+                                <md-option value="국방디지털융합학과">국방디지털융합학과</md-option>
                             </md-optgroup>
                             <md-optgroup label="공과대학">
-                                <md-option value="mechanical">기계공학과</md-option>
-                                <md-option value="Chemical">화학공학과</md-option>
-                                <md-option value="environmental">환경공학과</md-option>
-                                <md-option value="Advanced_Materials">신소재공학과</md-option>
+                                <md-option value="기계공학과">기계공학과</md-option>
+                                <md-option value="화학공학과">화학공학과</md-option>
+                                <md-option value="환경공학과">환경공학과</md-option>
+                                <md-option value="신소재공학과">신소재공학과</md-option>
                             </md-optgroup>
                             <md-optgroup label="자연과학대학">
-                                <md-option value="mathematical">수학과</md-option>
-                                <md-option value="Physics">물리학과</md-option>
+                                <md-option value="수학과">수학과</md-option>
+                                <md-option value="물리학과">물리학과</md-option>
                             </md-optgroup>
                             <md-optgroup label="경영대학">
-                                <md-option value="business">경영학과</md-option>
-                                <md-option value="e-business">e-business 학과</md-option>
+                                <md-option value="경영학과">경영학과</md-option>
+                                <md-option value="e-business 학과">e-business 학과</md-option>
                             </md-optgroup>
                             <md-optgroup label="인문대학">
-                                <md-option value="korean">국어국문학과</md-option>
-                                <md-option value="english">영어영문학과</md-option>
+                                <md-option value="국어국문학과">국어국문학과</md-option>
+                                <md-option value="영어영문학과">영어영문학과</md-option>
                             </md-optgroup>
                             <md-optgroup label="사회과학대학">
-                                <md-option value="Psychology">심리학과</md-option>
-                                <md-option value="Economics">경제학과</md-option>
+                                <md-option value="심리학과">심리학과</md-option>
+                                <md-option value="경제학과">경제학과</md-option>
                             </md-optgroup>
                             <md-optgroup label="의과대학">
-                                <md-option value="medicine">의예과</md-option>
+                                <md-option value="의예과">의예과</md-option>
                             </md-optgroup>
                             <md-optgroup label="간호대학">
-                                <md-option value="nursing">간호학과</md-option>
+                                <md-option value="간호학과">간호학과</md-option>
                             </md-optgroup>
                             <md-optgroup label="약학대학">
-                                <md-option value="Pharmacy">약학과</md-option>
+                                <md-option value="약학과">약학과</md-option>
                             </md-optgroup>
                         </md-select>
                     </md-field>
             </div>
 
+                :to
+                :value='{{mem
+                <md-option v-for="member in members" value="">mem</md-option>
             <div class="md-layout-item">
                 <md-field>
                     <label>관심분야</label>
@@ -147,7 +137,7 @@
         <md-dialog-confirm
             :md-active.sync="check"
             md-title="Check"
-            md-content="가입한 이메일을 통해 이메일 인증을 진행해 주세요. "
+            md-content="가입한 이메일을 통해 이메일 인증을 진행해 주세요."
             md-confirm-text="Check"
             md-cancel-text="Cancle"
             @md-cancel="onCancel"
@@ -173,19 +163,29 @@
             name        : null,
             textarea    : null,
             department  : null,
-            selectedInterest : [],
             call        : null,
+            nickname    : null,
+            selectedInterest : [],
+
             fail        : false,
             check       : false,
-            nickname    : null,
-            birth       : null
+
+            passwordRules: [
+                v => !!v || 'Name is required',
+                v => (v && v.length >= 6) || 'password must be less than 10 characters'
+            ],
+            emailRules: [
+                v => !!v || 'E-mail is required',
+                v => /.+@.+/.test(v) || 'E-mail must be valid'
+            ],
         }),
         
         methods:{
             signup:function(){
                 this.$http.post("http://localhost:8000/user/signup",
-                    {"ID":this.id, "password":this.password, "name":this.name, "department":this.department, "nickname":this.nickname,
-                    "call":this.call, "interest": this.selectedInterest, "birth": this.birth}).then((res)=>{
+                    {"ID":this.id, "password":this.password, "name":this.name, "department":this.department,
+                     "nickname":this.nickname, "call":this.call, "interest": this.selectedInterest, "birth": this.birth}).
+                then((res)=>{
                         console.log(res);
 
                         if(res.data.errmsg){
