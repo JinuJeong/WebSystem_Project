@@ -18,13 +18,13 @@
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list>
-            <v-btn v-if="match==true"
+            <v-btn v-if="match===true"
             @click="onEdit"
             >
             Edit
             </v-btn>
            <v-btn @click="onClear">close</v-btn>
-           <v-btn v-if="match==true" @click="onDelete">delete</v-btn>
+           <v-btn v-if="match===true" @click="onDelete">delete</v-btn>
         </div>
         </v-container>
     </div>
@@ -51,7 +51,7 @@
                 this.title = result.data.title
                 this.contents = result.data.contents
                 console.log(this.contents)
-                if(this.userName==result.data.author) this.match=true;
+                if(this.userName===result.data.author) this.match=true;
             })
         },
         components: {

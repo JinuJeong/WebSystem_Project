@@ -3,117 +3,116 @@
         <!--항상 상단에 떠있는 bar-->
         <header-bar></header-bar>
 
-        <v-container fluid grid-list-md style="padding : 5%">
-            <v-layout row wrap>
+        <v-btn color="blue-grey lighten-1" bottom style="width : 15px; margin : auto" to='/login'>
+            <p class="circle_button" style="color : white;">A-Dong Login</p>
+        </v-btn>
 
-                <v-flex xs4 d-flex style="width : 50px;">
-                    <v-btn color="blue-grey lighten-1" bottom style="width : 15px; margin : auto">
-                        <p class="circle_button" style="color : white;">가입 신청</p>
-                    </v-btn>
-                </v-flex>
-
-                <v-flex xs4 d-flex>
-                    <v-card>
-                        <v-card-title class="subheading font-weight-bold">공지사항</v-card-title>
-                        <v-divider></v-divider>
-                        <v-list v-for="notice in noticelists" :key="notice.postId">
-                            <v-list-tile
-                                    @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.postNum)">
-                                <v-list-tile-title v-text="notice.title"></v-list-tile-title>
-                                <v-list-tile-action>
-                                    <v-list-tile-action-text>{{notice.author}}</v-list-tile-action-text>
-                                    <v-list-tile-action-text>{{notice.date}}</v-list-tile-action-text>
-                                </v-list-tile-action>
-
-                            </v-list-tile>
-                        </v-list>
-                        <v-btn icon @click="$router.push('/circle/'+circleName+'/board/notice/show_notices')">
-                            <v-icon>add</v-icon>
+        <v-container style="margin-top : 2%; height : 1300px;">
+            <v-layout style=" height : 300px;">
+                <v-flex style="width : 1px; max-width : 400px; height : 90%;">
+                    <v-card dark color="white"  class="left-side-content"  v-if="beforeLogin">
+                        <v-card-text style="color : black; font-size : 4ch; text-align: center; "> <p >커뮤니티 이용을 위해 </p><p>Login을 해주세요</p></v-card-text>
+                        <v-btn color="blue-grey lighten-1" to="/login" bottom style="display: block; width : 70%; ">
+                        <p class="circle_button" style="color : white; font-size : 2.5ch; margin-top : 4%;">A-Dong Login</p>
+                        </v-btn>
+                        <v-btn color="blue-grey lighten-1" to="/signup" bottom style="width : 70%;">
+                            <p class="circle_button" style="color : white; font-size : 2.5ch; margin-top : 4%;">회원가입</p>
+                        </v-btn>
+                    </v-card>
+                    <v-card dark color="white"  class="left-side-content" v-if="!beforeLogin">
+                        <v-card-text style="color : black; font-size : 25px; text-align: center;"> <p> {{userDepartment}} {{userName}}님 </p></v-card-text>
+                        <v-btn color="blue-grey lighten-1" to="/mypage" bottom style="display: block; width : 70%; ">
+                            <p class="circle_button" style="color : white; font-size : 2.5ch; margin-top : 4%;">My page</p>
+                        </v-btn>
+                        <v-btn color="blue-grey lighten-1" v-on:click="logout" bottom style="width : 70%;">
+                            <p class="circle_button" style="color : white; font-size : 2.5ch; margin-top : 4%; ">로그아웃</p>
                         </v-btn>
                     </v-card>
                 </v-flex>
 
-                <v-flex xs4 d-flex>
-                    <v-card>
-                        <v-card-title class="subheading font-weight-bold">게시판</v-card-title>
-                        <v-divider></v-divider>
-                        <v-list v-for="board in boardlists" :key="board.date">
-                            <v-list-tile
-                                    @click="$router.push('/circle/'+circleName+'/board/board/show_notice/'+board.postNum)">
-                                <v-list-tile-title v-text="board.title"></v-list-tile-title>
-                                <v-list-tile-action>
-                                    <v-list-tile-action-text>{{board.author}}</v-list-tile-action-text>
-                                    <v-list-tile-action-text>{{board.date}}</v-list-tile-action-text>
-                                </v-list-tile-action>
+                <v-flex>
+                    <v-carousel style="height : 90%;">
+                        <v-carousel-item
+                                v-for="(item,i) in items"
+                                :key="i"
+                                :src="item.src"
+                        ></v-carousel-item>
+                    </v-carousel>
+                </v-flex>
+            </v-layout>
+            <v-layout style=" height : 400px;">
+                <v-flex style="max-width : 400px; height : 85%;">
+                    <v-card dark color="white" style=" width:95%; height:85%;" >
+                        <v-card-title style="color : black; font-size : 27px; text-align: center;"> <p> 학사 일정</p></v-card-title>
 
-                            </v-list-tile>
-                        </v-list>
-                        <v-btn icon @click="$router.push('/circle/'+circleName+'/board/board/show_notices')">
-                            <v-icon>add</v-icon>
-                        </v-btn>
+                        <ul style="text-align : left;">
+                            <li style="color : black;"><p>2019-1학기 재입학신청  12.03 (월) ~ 01.04 (금)</p> </li>
+                            <li style="color : black;"><p>2학기 수업평가 12.03 (월) ~ 12.28 (금)</p>  </li>
+                            <li style="color : black;"><p>보강일 12.17 (월) ~ 12.17 (월)</p></li>
+                            <li style="color : black;"><p>2학기 기말시험 12.18 (화)  ~ 12.24 (월)</p></li>
+                            <li style="color : black;"><p>동계방학 시작 2019-1 12.26 (수) ~ 12.26 (수)</p></li>
+                        </ul>
                     </v-card>
                 </v-flex>
-
-                <v-flex xs4 d-flex>
-                    <v-card>
-                        <v-card-title class="subheading font-weight-bold">스터디</v-card-title>
+                <v-flex style="height : 85%; width : 20%;">
+                    <v-card class="md-transparent" style="width : 100%; height:85%;">
+                        <v-card-title class="home-content-title"><router-link to="/boards/notice">공지사항</router-link></v-card-title>
                         <v-divider></v-divider>
-                        <v-list v-for="group in grouplists" :key="group.groupId">
-                            <v-list-tile
-                                    @click="$router.push('/circle/'+circleName+'/group/show_group/'+group.groupId)">
-                                <v-list-tile-title v-text="group.title"></v-list-tile-title>
-                                <v-list-tile-action>
-                                    <v-list-tile-action-text>{{group.start}}</v-list-tile-action-text>
-                                    <v-list-tile-action-text>{{group.end}}</v-list-tile-action-text>
-                                </v-list-tile-action>
-
+                        <v-list dense>
+                            <v-list-tile v-for="notice in noticeList">
+                                <v-list-tile-content class="rank-text jg">{{notice.title}}</v-list-tile-content>
+                                <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
                             </v-list-tile>
                         </v-list>
-                        <v-btn icon @click="$router.push('/circle/'+circleName+'/group/show_groups')">
-                            <v-icon>add</v-icon>
-                        </v-btn>
                     </v-card>
                 </v-flex>
-
-                <v-flex xs4 d-flex>
-                    <v-card>
-                        <v-card-title class="subheading font-weight-bold">활동</v-card-title>
+                <v-flex style="height : 85%; width : 25%;" >
+                    <v-card class="md-transparent" style="width : 100%; height:85%;">
+                        <v-card-title class="home-content-title"><router-link to="/boards/board">자유게시판</router-link></v-card-title>
                         <v-divider></v-divider>
-                        <v-list v-for="notice in noticelists" :key="notice.postId">
-                            <v-list-tile
-                                    @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.postNum)">
-                                <v-list-tile-title v-text="notice.title"></v-list-tile-title>
-                                <v-list-tile-action>
-                                    <v-list-tile-action-text>{{notice.author}}</v-list-tile-action-text>
-                                    <v-list-tile-action-text>{{notice.date}}</v-list-tile-action-text>
-                                </v-list-tile-action>
+                        <v-list dense>
+                            <v-list-tile v-for="board in boardList">
+                                <v-list-tile-content class="rank-text jg">{{board.title}}</v-list-tile-content>
+                                <v-list-tile-content class="align-end time-text">2분전</v-list-tile-content>
                             </v-list-tile>
                         </v-list>
-                        <v-btn icon @click="$router.push('/circle/'+circleName+'/board/notice/show_notices')">
-                            <v-icon>add</v-icon>
-                        </v-btn>
                     </v-card>
                 </v-flex>
+            </v-layout>
+            <v-layout style=" height : 400px; ">
+                <v-flex style="max-width : 400px; height : 85%;">
+                    <v-card dark color="blue-grey lighten-4"  class="left-side-content">
+                        <v-card-text style="color : black; font-size : 4ch; text-align: center;"> <p> 동아리방 사진</p></v-card-text>
 
-                <v-flex xs4 d-flex>
-                    <v-card v-if="this.president">
-                        <v-card-title class="subheading font-weight-bold">회원관리</v-card-title>
+                    </v-card>
+                </v-flex>
+                <v-flex style="height : 85%; width : 20%;">
+                    <v-card class="md-transparent" style="width : 100%; height:85%;">
+                        <v-card-title class="home-content-title"><router-link to="/circles" style="width : 50%;">동아리 정보</router-link></v-card-title>
                         <v-divider></v-divider>
-                        <div v-for="member in members" :key="member.id">
-                            {{member.name}} {{member.department}}
-                            <v-card-actions class="btn">
-                                <v-btn round color="blue" large v-on:click="change4=true">
-                                    <p class="circle_button">승인</p>
-                                </v-btn>
-                                <v-btn round color="blue" large v-on:click="change4=true">
-                                    <p class="circle_button">거절</p>
-                                </v-btn>
-                            </v-card-actions>
-                        </div>
+                        <v-list dense>
+                            <v-list-tile v-for="circle in CircleList">
+                                <v-list-tile-content class="rank-text jg">{{circle.name}}</v-list-tile-content>
+                                <v-list-tile-content class="align-end time-text">3분전</v-list-tile-content>
+                            </v-list-tile>
+                        </v-list>
+                    </v-card>
+                </v-flex>
+                <v-flex style="height : 85%; width:25%;" >
+                    <v-card class="md-transparent" style="width : 100%; height:85%;">
+                        <v-card-title class="home-content-title"><router-link to="/circles" style="width : 50%;">이달의 동아리</router-link></v-card-title>
+                        <v-divider></v-divider>
+                        <v-list dense>
+                            <v-list-tile v-for="circle in CircleList">
+                                <v-list-tile-content class="rank-text jg">{{circle.name}}</v-list-tile-content>
+                                <v-list-tile-content class="align-end time-text">4분전</v-list-tile-content>
+                            </v-list-tile>
+                        </v-list>
                     </v-card>
                 </v-flex>
             </v-layout>
         </v-container>
+
         <v-divider></v-divider>
         <footerBar></footerBar>
     </div>
@@ -125,16 +124,38 @@
 
     export default {
         name: 'home',
-
-        created() {
+        async created() {
             if (this.$session.exists()) {
                 this.beforeLogin = false;
+                this.showMenu = true;
+                this.userName = this.$session.getAll().username;
+                this.userDepartment = this.$session.getAll().userDepartment;
+
+                this.$http.get('http://localhost:8000/boards/notice').then((res) => {
+                    this.noticeList = res.data
+                })
+                this.$http.get('http://localhost:8000/boards/board').then((res) => {
+                    this.boardList = res.data
+                })
+                var circle = await this.$http.get('http://localhost:8000/circle/send/title').then((res) => {
+                    this.CircleList = res.data
+                })
             }
         },
-
         data () {
             return {
-                beforeLogin : true
+                noticeList : [],
+                boardList : [],
+                CircleList : [],
+
+                beforeLogin : true,
+                userName : "",
+                userDepartment : "",
+                items: [
+                    {
+                        src: "http://www.ajou.ac.kr/_resources/main/img/intro/UI/slogan_img01.png"
+                    }
+                ]
             }
         },
 
@@ -142,71 +163,27 @@
             headerBar,
             footerBar
         },
+
+        methods : {
+            logout: function(){
+                this.$session.destroy();
+                this.$router.push('/');
+                window.location.reload();
+            }
+        }
     }
 </script>
 
 <style>
-    .centered-container {
-        display: flex;
+    .left-side-content{
+        border:1px black solid;
+        width:95%;
+        height:85%;
+        display:flex;
+        flex-direction : column;
         align-items : center;
-        flex-direction: row;
+        justify-content : center;
         position: relative;
-        padding: 5%;
-        justify-content: space-around;
-        height: 80%;
-        width: 100%;
-    }
-
-    .first-container {
-        display : flex;
-        flex-direction : row;
-        justify-content: center;
-        align-items: center;
-        padding-top : 3%;
-        flex-wrap : nowrap;
-        height : 320px;
-        width : 80%;
-        max-width : 2000px;
-        background-color :white;
-    }
-
-    .second-container {
-        display : flex;
-        flex-direction : row;
-        justify-content: center;
-        align-items: center;
-        margin-top : 0.5px;
-        flex-wrap : nowrap;
-        height : 320px;
-        width : 80%;
-        max-width : 2000px;
-    }
-
-    .last-container {
-        display : flex;
-        flex-direction : row;
-        justify-content: center;
-        align-items: center;
-        margin-top : 0.5%;
-        margin-bottom : 5%;
-        flex-wrap : nowrap;
-        height : 100%;
-        width : 80%;
-        max-width : 2000px;
-    }
-
-    .second-group {
-        width : 100%;
-        height : 50%;
-        margin-right: 1%;
-        margin-bottom : 3%;
-    }
-
-    .group {
-        width : 100%;
-        height : 50%;
-        margin-right: 1%;
-        margin-bottom : 3%;
     }
 
     .home-content-title{
