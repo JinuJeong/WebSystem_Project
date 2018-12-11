@@ -57,7 +57,7 @@
                     v-model="contents"
                     ></v-textarea>
                 <v-btn color="blue" @click="onSubmit()">활동 추가</v-btn>
-                <v-btn color="blue" @click="plus=false">취소</v-btn>
+                <v-btn color="blue" @click="$router.push('/circle/'+circleName+'/active/show_active/'+activeId)">취소</v-btn>
                 </v-flex>
             </v-layout>
             <div v-for="member in members" :key="member.id">
@@ -165,7 +165,7 @@ export default{
                 if(this.activeId==undefined){
                     this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/create",
                     {"title":this.title,"contents":this.contents,"circleName":this.circleName,"start":this.date1,"end":this.date2
-                    ,"image":this.image,"author":this.userName,"files":this.files[0]})
+                    ,"image":this.image,"author":this.userName})
                     .then((data)=>{
                         this.$router.push("/circle/"+this.circleName);
                     })
@@ -173,7 +173,7 @@ export default{
                 else{
                     this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/update/"+this.activeId,
                     {"title":this.title,"contents":this.contents,"circleName":this.circleName,"start":this.date1,"end":this.date2
-                    ,"image":this.image,"author":this.userName,"files":this.files[0],"activeId":this.activeId})
+                    ,"image":this.image,"author":this.userName,"activeId":this.activeId})
                     .then((data)=>{
                         this.$router.push("/circle/"+this.circleName);
                     })

@@ -11,5 +11,5 @@ autoIncrement.initialize(mongoose.connection)
 
 module.exports = {
     mongoose,
-    autoIncrement: autoIncrement.plugin
+    autoIncrement: autoIncrement.plugin,
 }

@@ -123,6 +123,12 @@ router.get('/:circleName/schedule',(req,res)=>{
     })
 })
 
+router.get('/:circleName/schedule/:scheduleId',(req,res)=>{
+    scheduleModel.findOne({'scheduleId':req.params.scheduleId}).then((data)=>{
+        res.send(data)
+    })
+})
+
 router.post('/:circleName/schedule/create',(req,res)=>{
     scheduleModel.create(req.body).then((data)=>{
         res.send("ok")
@@ -203,7 +209,7 @@ router.get('/:circleName/active/:activeId',(req,res)=>{
 })
 
 router.post('/:circleName/active/delete/:activeId',(req,res)=>{
-    activeModel.deleteOne(req.body).then((data)=>{
+    activeModel.deleteOne({"activeId":req.params.activeId}).then((data)=>{
         res.send("ok")
     })
 })

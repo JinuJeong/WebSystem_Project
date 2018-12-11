@@ -59,6 +59,7 @@
           return{
                 circleName: this.$route.params.circleName,
                 grouplist: [],
+                search: "",
                 headers: [
                 { text: '번호', value: 'postNum', align: 'center'},
                 { text: '제목', value: 'title', align: 'center' },

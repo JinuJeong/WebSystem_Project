@@ -73,7 +73,7 @@
                     v-model="contents"
                     ></v-textarea>
                 <v-btn color="blue" @click="onSubmit()">그룹 추가</v-btn>
-                <v-btn color="blue" @click="plus=false">취소</v-btn>
+                <v-btn color="blue" @click="$router.push('/circle/'+circleName+'/group/show_group/'+groupId)">취소</v-btn>
                 </v-flex>
             </v-layout>
 

@@ -31,7 +31,7 @@
             Submit
             </v-btn>
            <v-btn @click="onClear">close</v-btn>
-           <v-btn v-if="match==true" @click="onDelete">delete</v-btn>
+           
         </v-form>
         </div>
 
@@ -81,12 +81,7 @@
                 })
             },
             onClear: function(){
-                this.$router.push("/circle/"+this.circleName);
-            },
-            onDelete: function(){
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/"+this.postNum+"/delete").then((data)=>{
-                    this.$router.push("/circle/"+this.circleName);
-                })
+                this.$router.push("/circle/"+this.circleName+"/board/"+this.postType+"/show_notice/"+this.postNum);
             },
             onSubmit: function(){
                 if(this.userName==undefined){

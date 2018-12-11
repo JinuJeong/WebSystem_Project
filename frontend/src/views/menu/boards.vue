@@ -5,7 +5,7 @@
         <v-container class="container">
             <v-flex xs12 sm10 offset-sm1>
                 <div class="centered-container">
-                    <v-card color="blue lighten-4">
+                    <v-card color="amber">
                         <v-card-title>
                             게시판
                             <v-spacer/>

@@ -225,7 +225,7 @@
                 let date = data.data[i].date.split('T')[0]
                 let board={"title":data.data[i].title,"contents":data.data[i].contents,
                 "date":date,"postNum":data.data[i].postNum,"author":data.data[i].author}
-                console.log(board)
+                
                 this.boardlists.push(board)
               }
           })
@@ -234,7 +234,7 @@
                 let group={"title":data.data[i].title,"contents":data.data[i].contents,
                 "start":data.data[i].start.substr(0,10),"end":data.data[i].end.substr(0,10),
                 "groupId":data.data[i].groupId,"teacher":data.data[i].teacher.name}
-                console.log(group)
+                
                 this.grouplists.push(group)
               }
           })
@@ -248,7 +248,7 @@
                 "date":start+" ~ "+end,"activeId":data.data[i].activeId,"image":data.data[i].image}
                 this.images.push(data.data[i].image)
                 this.activelist.push(active)
-                console.log(active)
+                
               }
               
           })

@@ -77,8 +77,12 @@
                 this.$router.push("/circle/"+this.circleName);
             },
             onDelete: function(){
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/delete/"+this.activeId).then((data)=>{
-                    this.$router.push("/circle/"+this.circleName);
+                this.$http.get("http://localhost:8000/circle/"+this.circleName+"/active/"+this.activeId).then((data)=>{
+                    this.$http.post("http://localhost:8000/recovery",data.data).then(()=>{
+                        this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/delete/"+this.activeId).then(()=>{
+                            this.$router.push("/circle/"+this.circleName);
+                        })
+                    })
                 })
             }
         }
