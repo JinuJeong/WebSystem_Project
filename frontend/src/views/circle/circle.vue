@@ -104,6 +104,32 @@
                
             </v-card>
           </v-flex>
+
+          <v-flex 
+              xs4
+              d-flex>
+            <v-card v-if="admin == 1">
+                <v-card-title class="subheading font-weight-bold">회원등록</v-card-title>
+                <v-divider></v-divider>
+                <div v-if="member.circleAuth==false" v-for="member in members" :key="member.id">
+                  <p>이메일 : {{member.user.ID}}</p>
+                  <p>이름 : {{member.user.name}}</p>
+                  <p>전공 : {{member.user.department}}</p>
+                    <v-card-actions class="btn">
+                        <v-btn round color="blue" large v-on:click="userin=member.user;accept()">
+                            <p class="circle_button">승인</p>
+                        </v-btn>
+                        <v-btn round color="blue" large v-on:click="userin=member.user;reject()">
+                            <p class="circle_button">거절</p>
+                        </v-btn>
+                    </v-card-actions>
+                </div>
+            </v-card>
+          </v-flex>
+
+
+
+
           <v-flex 
               xs4
               d-flex>
