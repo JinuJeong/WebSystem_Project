@@ -5,7 +5,7 @@
         <v-container class="container">
             <v-flex xs12 sm10 offset-sm1>
                 <div class="centered-container">
-                    <v-card color="cyan">
+                    <v-card color="blue lighten-4">
                         <v-card-title>
                             게시판
                             <v-spacer/>
@@ -21,10 +21,13 @@
                             :headers="headers"
                             :items="boards"
                             :search="search"
-                            disable-initial-sort
-                            next-icon="chevron_right"
-                            prev-icon ="chevron_left"
                             class="elevation-1"
+                            no-data-text="등록된 게시물이 없습니다."
+                            select-all="red"
+                            off-icon="add"
+                            prev-icon="chevron_left"
+                            next-icon="chevron_right"
+                            :rows-per-page-items="[10]"
                         >
                             <template slot="items" slot-scope="props">
                                 <td class="text-xs-center" @click="$router.push('/boards/'+boardName+'/show_notice/'+props.item.postNum)">{{ props.item.postNum }}</td>
@@ -60,7 +63,7 @@ export default {
         search: '',
         boardName: this.$route.params.boardName,
         headers: [
-          { text: '번호', value: 'postNum', align: 'center'},
+          { text: '번호', value: 'postNum', align: 'center' /*,sortable: false*/ },
           { text: '제목', value: 'title', align: 'center' },
           { text: '작성자', value: 'author', align: 'center' },
           { text: '등록일', value: 'date', align: 'center' },
@@ -79,6 +82,7 @@ export default {
     beforeRouteUpdate(to, from, next) {
         this.boards = []
         this.boardName = to.params.boardName
+        this.search = ''
         this.fetchData()
         next()
     },
@@ -86,16 +90,14 @@ export default {
         fetchData() {
             this.$http.get("http://localhost:8000/boards/"+this.boardName).then((result)=>{
                 for(let i=0;i<result.data.length;i++){
-                    if(this.boardName === result.data[i].postType){
+                    if(this.boardName == result.data[i].postType){
                         let date = result.data[i].date.split('T')[0]
                         let board={"postNum":result.data[i].postNum, "title":result.data[i].title,"author":result.data[i].author,"contents":result.data[i].contents,
                         "date":date,"full_date":result.data[i].date}
                         this.boards.push(board)
-                        console.log(board.postNum)
                     }
                 }         
             })
-            
         }
     }
 }

@@ -1,18 +1,20 @@
 const { mongoose, autoIncrement } = require('../mongo')
+const userModel = require('./user')
 
-const activeSchema = mongoose.Schema({
+const newActiveSchema = mongoose.Schema({
     activeId: {type: Number, unique: true},
     title: {type: String, required: true},
-    author: {type: String, required: true},
     start : {type: Date, required: true},
     end : {type: Date, required: true},
-    contents : {type: String, required : true},
-    image : {
-        type : String,
-    },
+    contents : {type: String, required: true},
+    image : { type: String },
     circleName: {type: String},
-    //postViews: {type: Number}
+    members: [{type: mongoose.Schema.Types.ObjectId, ref: 'user'}],
 });
+
+const activeSchema = mongoose.Schema({
+    activeList: [newActiveSchema]
+})
 
 activeSchema.plugin(autoIncrement, {
     model: 'active',

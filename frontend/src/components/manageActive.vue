@@ -60,16 +60,59 @@
                 <v-btn color="blue" @click="plus=false">취소</v-btn>
                 </v-flex>
             </v-layout>
+            <div v-for="member in members" :key="member.id">
+                {{member.user.name}}
+                {{member.circleAuth}}
+                {{member._id}}
+            </div>
+
+            <v-data-table
+                v-model="selected"
+                :headers="headers"
+                :items="members"
+                item-key="_id"
+                select-all
+                class="elevation-1"
+            >
+            <template slot="items" slot-scope="props">
+                <td>
+                    <v-checkbox
+                     v-model="props.selected"
+                     primary
+                     color="blue"
+                     off-icon="clear"
+                     on-icon="lens"
+                     hide-details
+                    ></v-checkbox>
+                </td>
+                <td>{{props.item.user.name}}</td>
+                <td class="text-xs-right">{{props.item.user.ID}}</td>
+            </template>
+            </v-data-table>
+            {{selected}}
 
         </v-container>
     </div>
 </template>
 <script>
 import headerBar from './header.vue'
-
+//          {{selected[0].user.name}}
 export default{
     data(){
         return{
+            selected: [],
+            headers: [
+            {
+                text: '동아리 멤버',
+                align: 'left',
+                sortable: false
+            },
+            {
+                text: 'ID',
+                value: 'ID',
+                align: 'right'
+            }
+            ],
             title : "",
             circleName: this.$route.params.circleName,
             date1 : Date,
@@ -80,6 +123,8 @@ export default{
             image: "",
             userName : this.$session.getAll().username,
             files: [],
+            circle: {},
+            members: [],
         }
     },
     created : function(){
@@ -92,6 +137,9 @@ export default{
             this.image=info.image
             this.contents=info.contents
             if(this.userName==data.data.author) this.match=true;
+        }),
+        this.$http.get("http://localhost:8000/circle/find/" + this.circleName).then((res) => {
+            this.members = res.data.members
         })
     }
     ,
