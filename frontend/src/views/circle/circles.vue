@@ -25,12 +25,15 @@
 
                     <md-card-content>
                         <p class="content-circle">분류 : {{circle.party}}</p>
-                        <p class="content-circle">동방 : {{circle.roomExistence}}</p>
+                        <p v-if="circle.roomExistence==1" class="content-circle">동방 : 있어요</p>
+                        <p v-if="circle.roomExistence==0" class="content-circle">동방 : 없어요</p>
                         <p class="content-circle">회장 이름 : {{circle.president.name}}</p>
                         <p class="content-circle">회장 연락처 : {{circle.president.call}}</p>
-                        <p class="content-circle">다른 학과 가입 여부 : {{circle.othersAccept}}</p>
+                        <p v-if="circle.othersAccept==1" class="content-circle">다른 학과 가입 여부 : 가능해요</p>
+                        <p v-if="circle.othersAccept==0" class="content-circle">다른 학과 가입 여부 : 불가해요</p>
                         <p class="content-circle">동아리(소학회) 규모 : {{circle.memberNumber}}</p>
                         <p class="content-circle">지도 교수님 :  {{circle.professor}}</p>
+                        <p class="content-circle">동아리 컨셉 : {{circle.concept}}</p>
                         <p class="content-circle">한줄 소개 : {{circle.introduce}}</p>
                     </md-card-content>
 
