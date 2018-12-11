@@ -3,10 +3,9 @@ const ttl = require('ttl')
 
 const recoverySchema = mongoose.Schema({
     recoveryId : {type: Number, unique: true},
-    createdAt: { type: Date, default: Date.now, expires: '5s' }
-},{ strict: false },{
-    timestamps: true
-  });
+    removeTime : {type: Date, default: Date.now},
+    },
+    { strict: false });
 
 // patientId 를 Auto Increment 필드로 지정
 recoverySchema.plugin(autoIncrement, {
@@ -14,6 +13,9 @@ recoverySchema.plugin(autoIncrement, {
     field: 'recoveryId',
     startAt: 1
 })
+
+recoverySchema.index({ removeTime: 1 }, { expireAfterSeconds : 180 });
+
 
 
 

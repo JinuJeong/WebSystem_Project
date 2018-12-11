@@ -190,20 +190,20 @@ router.post('/:circleName/group/delete/:groupId',(req,res)=>{
 //Active
 
 router.post('/:circleName/active/create',(req,res)=>{
-   
-    activeModel.create(req.body).then((data)=>{
+    console.log(req.body)
+    activeModel.create(req.body).then(()=>{
         res.send("ok")
     })
 })
 
 router.get('/:circleName/active',(req,res)=>{
-    activeModel.find({"circleName":req.params.circleName}).sort('-activeId').then((data)=>{
+    activeModel.find({"circleName":req.params.circleName}).populate('members').sort('-activeId').then((data)=>{
           res.send(data)
     })
 })
 
 router.get('/:circleName/active/:activeId',(req,res)=>{
-    activeModel.findOne({"activeId":req.params.activeId}).then((data)=>{
+    activeModel.findOne({"activeId":req.params.activeId}).populate('members').then((data)=>{
         res.send(data)
     })
 })

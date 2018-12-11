@@ -171,6 +171,9 @@
             <v-btn icon @click="$router.push('/circle/'+circleName+'/active/show_actives')">
               <v-icon>add</v-icon>
             </v-btn>
+            <v-btn @click="$router.push('/circle/'+circleName+'/active/personalActive')">
+              활동내역추출
+            </v-btn>            
             </v-card>
           </v-flex>
         </v-container>
