@@ -10,6 +10,8 @@ const activeModel = require('../db/models/active')
 let circleName
 let postType
 let model
+let name
+
 
 router.use("/:circleName/board/:postType",(req,res,next)=>{
     circleName=req.params.circleName
@@ -58,6 +60,15 @@ router.get('/send', (req, res) => {
 })
 });
 
+router.get('/send/title', (req, res) => {
+
+    console.log("/send/title!")
+
+    circleModel.find().limit(5).then((data)=>{
+        res.send(data)
+    })
+});
+
 router.post('/send/search', (req, res) => {
 
     if(req.body.search_select === "name") {
@@ -67,6 +78,11 @@ router.post('/send/search', (req, res) => {
     }
     else if(req.body.search_select === "professor") {
         circleModel.find({"professor": req.body.search_value}).populate('president').exec((err, data) => {
+            res.send(data)
+        })
+    }
+    else if(req.body.search_select === "subject") {
+        circleModel.find({"party": req.body.search_value}).populate('president').exec((err, data) => {
             res.send(data)
         })
     }
@@ -168,15 +184,34 @@ router.post('/:circleName/group/delete/:groupId',(req,res)=>{
 //Active
 
 router.post('/:circleName/active/create',(req,res)=>{
-    console.log(req.body)
+   
     activeModel.create(req.body).then((data)=>{
         res.send("ok")
     })
 })
 
 router.get('/:circleName/active',(req,res)=>{
-    activeModel.find().then((data)=>{
+    activeModel.find({"circleName":req.params.circleName}).then((data)=>{
+          res.send(data)
+    })
+})
+
+router.get('/:circleName/active/:activeId',(req,res)=>{
+    activeModel.findOne({"activeId":req.params.activeId}).then((data)=>{
         res.send(data)
+    })
+})
+
+router.post('/:circleName/active/delete/:activeId',(req,res)=>{
+    activeModel.deleteOne(req.body).then((data)=>{
+        res.send("ok")
+    })
+})
+
+router.post('/:circleName/active/update/:activeId',(req,res)=>{
+    activeModel.update({"activeId":req.body.activeId},req.body).then((data)=>{
+        console.log(req.body.contents)
+        res.send("ok")
     })
 })
 

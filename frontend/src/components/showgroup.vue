@@ -50,7 +50,7 @@
                 circleName: this.$route.params.circleName,
                 contents: "",
                 title:"",
-                match: "",
+                match: false,
                 groupId: this.$route.params.groupId,
                 titlelist: ["제목","제한수","시작","종료","동아리 이름","활동 분야","주최자","참여 수","최대 인원 수"],
                 datalist: []
@@ -64,7 +64,8 @@
                         this.datalist=[info.title,info.maxNumber,info.start.substr(0,10),info.end.substr(0,10),info.circleName,info.groupType,
                         info.teacher.name,info.memberNumber,info.maxNumber]
                         this.contents=info.contents
-                        if(this.userName==data.data.author) this.match=true;
+                       
+                        if(this.userName==data.data.author&&this.userName!=undefined) this.match=true;
                     })
             }
         ,

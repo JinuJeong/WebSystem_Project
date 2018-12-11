@@ -81,13 +81,13 @@ export default {
       this.$http.get('http://localhost:8000/circle/send').then((res) => {
         this.circles = res.data
       }).then(() => {
-          for(var i = 0; i < this.circles.length; i++){
-              if(this.circles[i].president.name == this.userName){
+          for(let i = 0; i < this.circles.length; i++){
+              if(this.circles[i].president.name === this.userName){
                 this.circleManage.push(this.circles[i])
                 this.exist = true
               }
-              for(var j = 0; j < this.circles[i].members.length; j++){
-                  if(this.circles[i].members[j].user.name == this.userName && this.circles[i].members[j].circleAuth == true)
+              for(let j = 0; j < this.circles[i].members.length; j++){
+                  if(this.circles[i].members[j].user.name === this.userName && this.circles[i].members[j].circleAuth === true)
                     this.signedCircles.push(this.circles[i])
               }
           }
