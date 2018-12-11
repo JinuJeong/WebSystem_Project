@@ -44,3 +44,10 @@ router.post("/:boardName/:postNum/update",(req,res,next)=>{
         res.send("ok");
     })
 })
+
+router.post("/:boardName/:postNum/cmtCreate", (req, res, next) => {
+    console.log(req.body)
+    boardModel.updateOne({ "postNum": req.params.postNum },{$push: { comment : req.body }}).then((data) => {
+        res.send("ok");
+    })
+})
