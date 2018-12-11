@@ -9,7 +9,7 @@ import Vuetify from 'vuetify'
 import VueSession from 'vue-session'
 
 //Use session
-Vue.use(VueSession);
+Vue.use(VueSession,{persist:true});
 Vue.use(VueMaterial);
 Vue.use(Vuetify, {
     iconfont: 'mdi'

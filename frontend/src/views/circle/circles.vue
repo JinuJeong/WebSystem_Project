@@ -46,12 +46,12 @@
 
                     <md-card-content>
                         <p class="content-circle">분류 : {{circle.party}}</p>
-                        <p v-if="circle.roomExistence==1" class="content-circle">동방 : 있어요</p>
-                        <p v-if="circle.roomExistence==0" class="content-circle">동방 : 없어요</p>
+                        <p v-if="circle.roomExistence == 1" class="content-circle">동방 : 있어요</p>
+                        <p v-if="circle.roomExistence == 0" class="content-circle">동방 : 없어요</p>
                         <p class="content-circle">회장 이름 : {{circle.president.name}}</p>
                         <p class="content-circle">회장 연락처 : {{circle.president.call}}</p>
-                        <p v-if="circle.othersAccept==1" class="content-circle">다른 학과 가입 여부 : 가능해요</p>
-                        <p v-if="circle.othersAccept==0" class="content-circle">다른 학과 가입 여부 : 불가해요</p>
+                        <p v-if="circle.othersAccept === 1" class="content-circle">다른 학과 가입 여부 : 가능해요</p>
+                        <p v-if="circle.othersAccept === 0" class="content-circle">다른 학과 가입 여부 : 불가해요</p>
                         <p class="content-circle">동아리(소학회) 규모 : {{circle.memberNumber}}</p>
                         <p class="content-circle">지도 교수님 :  {{circle.professor}}</p>
                         <p class="content-circle">동아리 컨셉 : {{circle.concept}}</p>
@@ -59,11 +59,11 @@
                     </md-card-content>
 
                     <v-card-actions>
-                        <v-btn color="blue-grey lighten-1" bottom style="width : 45%; margin : auto">
+                        <v-btn color="blue-grey lighten-1" bottom  :to="'/circle/' + circle.name" style="width : 45%; margin : auto">
                             <p class="circle_button">더 자세히</p>
                         </v-btn>
                         <v-btn color="blue-grey lighten-1" bottom style="width : 45%; margin : auto">
-                            <p class="circle_button" v-on:click="check=true;signcircle=circle">가입 신청</p>
+                            <p class="circle_button" v-on:click="check=true; signcircle=circle">가입 신청</p>
                         </v-btn>
                     </v-card-actions>
                     <md-dialog-confirm
@@ -74,8 +74,6 @@
                         md-cancel-text="Cancle"
                         @md-cancel="onCancel"
                         @md-confirm="onCheck" />
-    
-
                 </md-card>
                 </div>
             <md-dialog-confirm
@@ -93,6 +91,8 @@
                             :length="numOfPages"
                             color="blue-grey darken-2"
                             bottom
+                            next-icon="chevron_right"
+                            prev-icon ="chevron_left"
                      ></v-pagination>
                 </div>
             </md-content>

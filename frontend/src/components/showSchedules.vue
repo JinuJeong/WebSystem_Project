@@ -20,31 +20,51 @@
                         :events="getDate"
                     ></v-date-picker>
                 </v-flex>
-                <md-table class="mt-2">
-                <md-table-row>
-                    <md-table-head>일정 시작</md-table-head>
-                    <md-table-head>일정 마감</md-table-head>
-                    <md-table-head>일정 내용</md-table-head>
-                    <md-table-head>수정</md-table-head>
-                    <md-table-head>삭제</md-table-head>
-                </md-table-row>
-                <md-table-row v-for="schedule in schedulelists" :key="schedule.full_date">
-                    <md-table-cell>{{schedule.start}}</md-table-cell>
-                    <md-table-cell>{{schedule.end}}</md-table-cell>
-                    <md-table-cell>{{schedule.content}}</md-table-cell>
-                    <md-table-cell>
-                        <md-button  class="md-icon-button md-accent"
-                        @click="onModify(schedule.start,schedule.end,schedule.content,schedule.scheduleId)">
-                            <md-icon>edit</md-icon>
-                        </md-button>
-                    </md-table-cell>
-                    <md-table-cell>
-                        <md-button  class="md-icon-button md-accent" @click="onDelete(schedule.scheduleId)">
-                            <md-icon>clear</md-icon>
-                        </md-button>
-                    </md-table-cell>
-                </md-table-row>
-            </md-table>
+                <div class="centered-container">
+                    <v-card color="amber">
+                        <v-card-title>
+                            일정
+                            <v-spacer/>
+                            <v-text-field  
+                                v-model="search"
+                                append-icon="search"
+                                label="Search"
+                                single-line
+                                hide-details
+                            />
+                        </v-card-title>
+                        <v-data-table
+                            :headers="headers"
+                            :items="schedulelists"
+                            :search="search"
+                            disable-initial-sort
+                            next-icon="chevron_right"
+                            prev-icon ="chevron_left"
+                            class="elevation-1"
+                            :rows-per-page-items="[]"
+                        >
+                            <template slot="items" slot-scope="props">
+                                <td class="text-xs-center" >{{ props.item.start }}</td>
+                                <td class="text-xs-center" >{{ props.item.end }}</td>
+                                <td class="text-xs-center" >{{ props.item.content }}</td>
+                                <td class="text-xs-center"  @click="onModify(props.item.start,props.item.end,props.item.content,props.item.scheduleId)">
+                                    <md-button class="md-icon-button">
+                                        <md-icon>edit</md-icon>
+                                    </md-button>
+                                </td>
+                                <td class="text-xs-center" @click="onDelete(props.item.scheduleId)">
+                                    <md-button class="md-icon-button">
+                                        <md-icon>clear</md-icon>
+                                    </md-button>
+                                </td>
+                            </template>
+                            <v-alert slot="no-results" :value="true" color="black--text" icon="warning">
+                                Your search for "{{ search }}" found no results.
+                            </v-alert>
+                        </v-data-table>
+                    </v-card>
+                    </div>
+                
             </v-layout>
             <v-btn v-if="plus==false" color="blue" @click="plus=true">일정 추가</v-btn>
             </div>
@@ -158,7 +178,15 @@
                 content: "",
                 plus: false,
                 modify: false,
-                
+                search: "",
+                headers: [
+                { text: '일정 시작', value: 'start', align: 'center'},
+                { text: '일정 마감', value: 'end', align: 'center' },
+                { text: '일정 내용', value: 'content', align: 'center'},
+                { text: '수정',  align: 'center' },
+                { text: '삭제',  align: 'center' },
+                //{ text: '조회수', value: 'views', align: 'center' }
+                ],
           }  
         },
         created: function(){

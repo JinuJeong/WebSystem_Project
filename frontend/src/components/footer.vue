@@ -8,12 +8,7 @@
                 <v-btn to="/boards/notice" class="jg footer-link" color="black" flat round>
                     공지사항
                 </v-btn>
-                <v-btn to="/" class="jg footer-link" color="black" flat round>
-                    이용규칙
-                </v-btn>
-                <v-btn to="/" class="jg footer-link" color="black" flat round>
-                    개인정보처리방침
-                </v-btn>
+
                 <v-flex py-3 text-xs-center black--text xs12>
                     2018 Web System Design 9조 — <strong>A-Dong</strong>
                 </v-flex>

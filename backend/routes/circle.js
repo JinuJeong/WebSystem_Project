@@ -21,7 +21,7 @@ router.use("/:circleName/board/:postType",(req,res,next)=>{
 });
 
 router.get("/:circleName/board/:postType",(req,res,next)=>{
-    boardModel.find({"circleName":circleName,"postType":postType}).then((data)=>{
+    boardModel.find({"circleName":circleName,"postType":postType}).sort('-postNum').then((data)=>{
         console.log(data)
         res.send(data)
     })
@@ -118,7 +118,7 @@ router.get('/send/:name', (req, res) => {
 
 // Schedule Part
 router.get('/:circleName/schedule',(req,res)=>{
-    scheduleModel.find({'circle':req.params.circleName}).then((data)=>{
+    scheduleModel.find({'circle':req.params.circleName}).sort('-scheduleId').then((data)=>{
         res.send(data)
     })
 })
@@ -154,7 +154,7 @@ router.post('/:circleName/group/create',(req,res)=>{
 })
 
 router.get('/:circleName/group',(req,res)=>{
-    groupModel.find({'circleName':req.params.circleName}).populate("teacher").then((data)=>{
+    groupModel.find({'circleName':req.params.circleName}).populate("teacher").sort('-groupId').then((data)=>{
         res.send(data)
     })
 })
@@ -191,7 +191,7 @@ router.post('/:circleName/active/create',(req,res)=>{
 })
 
 router.get('/:circleName/active',(req,res)=>{
-    activeModel.find({"circleName":req.params.circleName}).then((data)=>{
+    activeModel.find({"circleName":req.params.circleName}).sort('-activeId').then((data)=>{
           res.send(data)
     })
 })

@@ -13,7 +13,8 @@ const userSchema = mongoose.Schema({
     interest: {type: String},
     birth: {type: Number},
     circles: [{type: mongoose.Schema.Types.ObjectId, ref: 'circle'}],
-    value: {type: Boolean, default: false}
+    value: {type: Boolean, default: false},
+    userType: {type: Number, default : 1}
 });
 
 //module exports to Routers ★★★★★★★★★★★★

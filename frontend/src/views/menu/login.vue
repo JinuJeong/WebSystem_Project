@@ -86,7 +86,7 @@
                     this.$session.start()
                     this.$session.set('username', res.data.name)
                     this.$session.set('userDepartment', res.data.department)
-                    console.log(this.$session.getAll());
+                    
                     this.$router.push('/')
                 })
             }
