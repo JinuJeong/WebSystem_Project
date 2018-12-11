@@ -135,8 +135,13 @@
 
                     <md-card-content>
                         <div v-for="circle in user.circles" :key="circle.id" >
-                        <p>동아리 이름 : {{circle.name}}</p>
-                        </div>
+                        <p>
+                            동아리 이름 : {{circle.name}}
+                            <v-btn round color="blue" large v-on:click="change3=false;circleout=circle;giveupCircle()" v-if="change3==true">
+                                <p class="circle_button">탈퇴</p>
+                            </v-btn>                            
+                        </p>
+                        </div>                     
                     </md-card-content>
                     <v-card-actions class="btn">
                         <v-btn round color="blue" large v-on:click="change3=true" v-if="change3==false">
@@ -231,7 +236,8 @@ export default {
             birth       : null,
             passwordValue: null,
             passwordCorrect: false,
-            passwordin: null             
+            passwordin: null,
+            circleout: {},             
         }
     },
     created () {//혹시 안 되면 서버 껐다 켜봐라
@@ -302,7 +308,14 @@ export default {
                     window.location.reload();                    
                 })
             }
-        }        
+        },
+        giveupCircle: function(){
+            this.$http.post('http://localhost:8000/circle/'+this.circleout.name+'/reject', this.user).then(() => {
+                this.$http.post('http://localhost:8000/user/'+this.user.name+'/reject', this.circleout)
+            }).then(() => {
+                this.$router.go(0)
+            })
+        }    
     }
 }
 </script>

@@ -80,15 +80,24 @@
                         <md-input v-model="othersAccept" placeholder="1 or 0"></md-input>
                     </md-field> 
                     <md-field>
-                        <label>동아리컨셉</label>
-                        <md-input v-model="concept"></md-input>
+                    <label>동아리컨셉</label>
+                    <md-select v-model="concept" multiple>
+                        <md-option value="music">음악</md-option>
+                        <md-option value="study">공부(Study)</md-option>
+                        <md-option value="exercise">운동</md-option>
+                        <md-option value="dance">춤</md-option>
+                        <md-option value="movie">영화 & 만화</md-option>
+                        <md-option value="trip">여행</md-option>
+                        <md-option value="contest">공모전</md-option>
+                    </md-select>
                     </md-field>
+
                     <md-field>
                         <label>동아리소개</label>
                         <md-textarea v-model="introduce"></md-textarea>
-                    </md-field>
+                    </md-field>   
                     <div class="actions md-layout md-alignment-center">
-                        <md-button class="md-raised md-primary md-alignment-center" v-on:click="check=true">신청하기</md-button>
+                        <md-button class="md-raised md-primary md-alignment-center" v-on:click="check=true">등록</md-button>
                         <md-button class="md-raised md-primary" href="/">홈으로</md-button>
                     </div>
             </md-content>
@@ -116,6 +125,7 @@ export default {
             name: null,
             autogrow: null,
             check: false,
+            concept: [],
         }
     },
     components: {
