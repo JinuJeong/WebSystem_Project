@@ -59,8 +59,8 @@
                         <v-card-title class="home-content-title"><router-link to="/boards/notice">공지사항</router-link></v-card-title>
                         <v-divider></v-divider>
                         <v-list dense>
-                            <v-list-tile v-for="notice in noticeList">
-                                <v-list-tile-content class="rank-text jg">{{notice.title}}</v-list-tile-content>
+                            <v-list-tile v-for="notice in noticeList" :key="notice._id">
+                                <v-list-tile-content v-on:click="pageOn(notice.postNum)" class="rank-text jg">{{notice.title}}</v-list-tile-content>
                                 <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
                             </v-list-tile>
                         </v-list>
@@ -71,8 +71,8 @@
                         <v-card-title class="home-content-title"><router-link to="/boards/board">자유게시판</router-link></v-card-title>
                         <v-divider></v-divider>
                         <v-list dense>
-                            <v-list-tile v-for="board in boardList">
-                                <v-list-tile-content class="rank-text jg">{{board.title}}</v-list-tile-content>
+                            <v-list-tile v-for="board in boardList" :key="board._id">
+                                <v-list-tile-content v-on:click="pageOn(board.postNum)" class="rank-text jg">{{board.title}}</v-list-tile-content>
                                 <v-list-tile-content class="align-end time-text">2분전</v-list-tile-content>
                             </v-list-tile>
                         </v-list>
@@ -169,6 +169,9 @@
                 this.$session.destroy();
                 this.$router.push('/');
                 window.location.reload();
+            },
+            pageOn: function(postNum){
+                this.$router.push('/boards/board/show_notice/' + postNum)
             }
         }
     }
