@@ -5,10 +5,10 @@ import Home from '../views/home/home'
 import NotFound from '../views/404'
 import SignUp from '../views/menu/signup'
 import Notice from '../views/menu/notice'
+import Schedules from '../views/menu/schedules'
 import Circles from '../views/circle/circles'
 import Circle from '../views/circle/circle'
 import CircleSignup from '../views/circle/circlesignup'
-import Board from '../views/menu/board'
 import Boards from '../views/menu/boards'
 import TimeLine from '../views/menu/timeline'
 import manageNotice from '../components/manageNotice'
@@ -23,6 +23,7 @@ import showGroup from '../components/showGroup'
 import showActive from '../components/showActive'
 import manageActive from '../components/manageActive'
 import showActives from '../components/showActives'
+
 
 import Vuetify from "vuetify";
 
@@ -60,8 +61,8 @@ export default new Router({
             component: Circles
         },
         {
-            path: '/board',
-            component: Board
+            path: '/schedules',
+            component: Schedules
         },
         {
             path: '/boards/:boardName',
