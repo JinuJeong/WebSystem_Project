@@ -141,6 +141,7 @@
                     this.CircleList = res.data
                 })
             }
+            
         },
         data () {
             return {
