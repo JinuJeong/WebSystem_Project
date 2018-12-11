@@ -9,6 +9,7 @@ import Schedules from '../views/menu/schedules'
 import Circles from '../views/circle/circles'
 import Circle from '../views/circle/circle'
 import CircleSignup from '../views/circle/circlesignup'
+import circleManage from '../views/circle/circleManage'
 import Boards from '../views/menu/boards'
 import TimeLine from '../views/menu/timeline'
 import manageNotice from '../components/manageNotice'
@@ -151,6 +152,10 @@ export default new Router({
         {
             path: '/circle/:circleName/active/personalActive',
             component: personalActive
+        },
+        {
+            path: '/circle/:circleName/circleManage',
+            component: circleManage
         }
     ]
 })

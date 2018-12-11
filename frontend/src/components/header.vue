@@ -16,7 +16,12 @@
                 <v-btn v-for="circle in circleManage" :key="circle.id" v-if="exist==true" v-on:click="clearPage()"
                 class="toolbar-item" flat :to="'/circle/' + circle.name"><p class="item-p">{{circle.name}}</p>
                 </v-btn>
-                
+                <v-btn v-if="exist==true&&badgeCount!=0" @click="showDialog = true" style="background-color: black">
+                    <v-badge color="red">
+                        <span slot="badge">{{badgeCount}}</span>
+                    <md-icon style="color:white">person_add</md-icon>
+                    </v-badge>
+                </v-btn>
             </v-toolbar-items>
 
             <v-spacer></v-spacer>
@@ -53,6 +58,25 @@
                 </md-list-item>
             </md-list>
         </md-drawer>
+
+        <md-dialog :md-active.sync="showDialog">
+            <md-dialog-title>동아리 신청 리스트</md-dialog-title>
+            <md-tabs md-dynamic-height>
+                <md-tab md-label="General">
+                    <div class="md-layout md-gutter" v-for="sign in badgeCircle" :key="sign._id">
+                        <p>{{sign[0].name}}</p>
+                        <p>{{sign[1].name}}</p>
+                        <v-btn round color="blue" large v-on:click="accept(sign[0], sign[1])">
+                            <p class="circle_button">승인</p>
+                        </v-btn>
+                        <v-btn round color="blue" large v-on:click="reject(sign[0], sign[1])">
+                            <p class="circle_button">거절</p>
+                        </v-btn>
+                    </div>
+                </md-tab>
+            </md-tabs>
+        </md-dialog>
+
     </div>
 </template>
 
@@ -62,6 +86,7 @@ export default {
   name: 'headerBar',
 
   data: () => ({
+    showDialog: false,
     showNavigation: false,
     showMenu : false,
     showSidepanel: false,
@@ -69,9 +94,11 @@ export default {
     userName: "",
     userDepartment : "",
     circles: [],
-    circleManage: [],
+    circleManage: [],//동아리관리자
     signedCircles: [],
-    exist: false
+    exist: false,
+    badgeCount: 0,
+    badgeCircle: []
   }),
   created () {
     if (this.$session.exists()) {
@@ -92,9 +119,22 @@ export default {
                     this.signedCircles.push(this.circles[i])
               }
           }
+      }).then(() => {
+        if(this.exist==true){
+            for(let i = 0; i < this.circleManage.length; i++){
+                for(let j = 0; j < this.circleManage[i].members.length; j++){
+                    if(this.circleManage[i].members[j].circleAuth == false){
+                        this.badgeCount = this.badgeCount + 1;
+                        var obj = []
+                        obj.push(this.circleManage[i])
+                        obj.push(this.circleManage[i].members[j].user)
+                        this.badgeCircle.push(obj)
+                    }
+                }
+            }
+        }
       })
     }
-    
   },
   components: {
     search
@@ -114,7 +154,18 @@ export default {
       },
       clearPage: function(){
        this.$router.go(0);   
-      }
+      },
+      accept: function(circle, user) {
+        this.$http.post('http://localhost:8000/circle/'+circle.name+'/accept', user)
+        this.$router.go(0)
+      },
+      reject: function(circle, user) {
+        this.$http.post('http://localhost:8000/circle/'+circle.name+'/reject', user).then(() => {
+        this.$http.post('http://localhost:8000/user/'+user.name+'/reject', circle)
+      }).then(() => {
+        this.$router.go(0)
+      })
+      },
   }
 }
 

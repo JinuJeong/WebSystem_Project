@@ -3,6 +3,7 @@
         <!--항상 상단에 떠있는 bar-->
         <header-bar></header-bar>
 
+
         <!--바탕이 되는 container-->
         <div class="centered-container">
             <h1 class="jg ajou-title"> 동아리/소학회 정보 </h1>
