@@ -62,9 +62,8 @@
                         <v-btn color="blue-grey lighten-1" bottom  :to="'/circle/' + circle.name" style="width : 45%; margin : auto">
                             <p class="circle_button">더 자세히</p>
                         </v-btn>
-                        <v-btn color="blue-grey lighten-1" bottom style="width : 45%; margin : auto"
-                        v-on:click="check=true; signcircle=circle">
-                            <p class="circle_button" >가입 신청</p>
+                        <v-btn v-on:click="check=true; signcircle=circle" color="blue-grey lighten-1" bottom style="width : 45%; margin : auto">
+                            <p class="circle_button">가입 신청</p>
                         </v-btn>
                     </v-card-actions>
                     <md-dialog-confirm
@@ -165,7 +164,10 @@
             },
             onCheck: function() {
                 this.userSignup()
+<<<<<<< HEAD
                 this.check = false
+=======
+>>>>>>> e89f8fd62c0d85d43e22a024f2cdc9ec87fc07f8
             },
             onCancle: function(){
                 this.check = false

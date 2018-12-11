@@ -3,8 +3,10 @@
         <headerBar></headerBar>
         <v-container class="mt-5">
 
-            <p>개인별 활동보고서</p>
-
+            <p id="title">{{circleName}} 개인별 활동보고서</p>
+            <p class="user">이름 : {{user.name}}</p>
+            <p class="user">ID : {{user.ID}}</p>
+            <p class="user">학과 : {{user.department}}</p>
             <v-data-table
                 :headers="headers"
                 :items="realActives"
@@ -85,5 +87,13 @@ export default {
 </script>
 
 <style>
-
+#title{
+    margin-top:20px;
+    text-align: center;
+    font-size: 30px;
+    padding: 30px;
+}
+.user{
+    font-size: 20px;
+}
 </style>
