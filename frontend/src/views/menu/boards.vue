@@ -10,6 +10,7 @@
                             게시판
                             <v-spacer/>
                             <v-text-field  
+                                color = "dark"
                                 v-model="search"
                                 append-icon="search"
                                 label="Search"
@@ -21,7 +22,11 @@
                             :headers="headers"
                             :items="boards"
                             :search="search"
+                            disable-initial-sort="false"
+                            next-icon="chevron_right"
+                            prev-icon ="chevron_left"
                             class="elevation-1"
+                            
                         >
                             <template slot="items" slot-scope="props">
                                 <td class="text-xs-center" @click="$router.push('/boards/'+boardName+'/show_notice/'+props.item.postNum)">{{ props.item.postNum }}</td>
@@ -57,7 +62,7 @@ export default {
         search: '',
         boardName: this.$route.params.boardName,
         headers: [
-          { text: '번호', value: 'postNum', align: 'center' /*,sortable: false*/ },
+          { text: '번호', value: 'postNum', align: 'center'},
           { text: '제목', value: 'title', align: 'center' },
           { text: '작성자', value: 'author', align: 'center' },
           { text: '등록일', value: 'date', align: 'center' },
@@ -88,9 +93,11 @@ export default {
                         let board={"postNum":result.data[i].postNum, "title":result.data[i].title,"author":result.data[i].author,"contents":result.data[i].contents,
                         "date":date,"full_date":result.data[i].date}
                         this.boards.push(board)
+                        console.log(board.postNum)
                     }
                 }         
             })
+            
         }
     }
 }
