@@ -42,18 +42,18 @@
             </v-layout>
             <v-layout style=" height : 400px;">
                 <v-flex style="max-width : 400px; height : 85%;">
-                    <v-card dark color="white" style=" width:95%; height:85%;" >
-                        <v-card-title style="color : black; font-size : 27px; text-align: center;"> <p> 학사 일정</p></v-card-title>
-
-                        <ul style="text-align : left;">
-                            <li style="color : black;"><p>2019-1학기 재입학신청  12.03 (월) ~ 01.04 (금)</p> </li>
-                            <li style="color : black;"><p>2학기 수업평가 12.03 (월) ~ 12.28 (금)</p>  </li>
-                            <li style="color : black;"><p>보강일 12.17 (월) ~ 12.17 (월)</p></li>
-                            <li style="color : black;"><p>2학기 기말시험 12.18 (화)  ~ 12.24 (월)</p></li>
-                            <li style="color : black;"><p>동계방학 시작 2019-1 12.26 (수) ~ 12.26 (수)</p></li>
-                        </ul>
+                    <v-card color="white" style=" width:95%; height:85%;" >
+                        <v-card-title class="home-content-title"><router-link to="/boards/notice">학사일정</router-link></v-card-title>
+                        <v-divider></v-divider>
+                        <v-list dense>
+                            <v-list-tile v-for="schedule in scheduleList">
+                                <v-list-tile-content class="rank-text jg">{{schedule.content}}</v-list-tile-content>
+                                <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
+                            </v-list-tile>
+                        </v-list>
                     </v-card>
                 </v-flex>
+                
                 <v-flex style="height : 85%; width : 20%;">
                     <v-card class="md-transparent" style="width : 100%; height:85%;">
                         <v-card-title class="home-content-title"><router-link to="/boards/notice">공지사항</router-link></v-card-title>
@@ -138,6 +138,9 @@
             this.$http.get('http://localhost:8000/boards/home/board').then((res) => {
                 this.boardList = res.data
             })
+            this.$http.get('http://localhost:8000/circle/Home/schedule').then((res)=>{
+                this.scheduleList = res.data
+            })
             var circle = await this.$http.get('http://localhost:8000/circle/send/title').then((res) => {
                 this.CircleList = res.data
             })
@@ -147,6 +150,7 @@
                 noticeList : [],
                 boardList : [],
                 CircleList : [],
+                scheduleList : [],
 
                 beforeLogin : true,
                 userName : "",
