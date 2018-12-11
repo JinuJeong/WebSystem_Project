@@ -54,7 +54,8 @@
                 groupId: this.$route.params.groupId,
                 userName: this.$session.getAll().username,
                 titlelist: ["제목","시작","종료","동아리 이름","활동 분야","주최자","참여 수","최대 인원 수"],
-                datalist: []
+                datalist: [],
+                recovery: "",
             }
         },
         created: function(){
@@ -65,7 +66,7 @@
                         this.datalist=[info.title,info.start.substr(0,10),info.end.substr(0,10),info.circleName,info.groupType,
                         info.teacher.name,info.memberNumber,info.maxNumber]
                         this.contents=info.contents
-                        console.log(this.userName)
+                        this.recovery = data.data
                         if(this.userName==info.teacher.name&&this.userName!=undefined) this.match=true;
                     })
             }
@@ -78,16 +79,15 @@
                 this.$router.push("/circle/"+this.circleName+"/manage_group/update/"+this.groupId);
             },
             onClear: function(){
-                this.$router.push("/circle/"+this.circleName);
+                history.back()
             },
             onDelete: function(){
-                this.$http.get("http://localhost:8000/circle/"+this.circleName+"/group/"+this.groupId).then((data)=>{
-                    this.$http.post("http://localhost:8000/recovery",data.data).then(()=>{
-                        this.$http.post("http://localhost:8000/circle/"+this.circleName+"/group/delete/"+this.groupId).then(()=>{
-                            this.$router.push("/circle/"+this.circleName);
-                        })
+                this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{
+                    this.$http.post("http://localhost:8000/circle/"+this.circleName+"/group/delete/"+this.groupId).then(()=>{
+                        this.$router.push("/circle/"+this.circleName);
                     })
                 })
+            
             }
         }
     }

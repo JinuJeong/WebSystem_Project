@@ -57,7 +57,7 @@
                     v-model="contents"
                     ></v-textarea>
                 <v-btn color="blue" @click="onSubmit()">활동 추가</v-btn>
-                <v-btn color="blue" @click="$router.push('/circle/'+circleName+'/active/show_active/'+activeId)">취소</v-btn>
+                <v-btn color="blue" @click="onBack()">취소</v-btn>
                 </v-flex>
             </v-layout>
 
@@ -180,6 +180,9 @@ export default{
                         this.$router.push("/circle/"+this.circleName);
                     })
                 }
+            },
+            onBack: function(){
+                history.back()
             },
             onFileChange(e) {
                 var files = e.target.files || e.dataTransfer.files;

@@ -4,7 +4,7 @@
         
         <v-container class="container">
             <button>
-            <i class="material-icons" @click="$router.push('/circle/'+circleName)">
+            <i class="material-icons" @click="onBack()">
             keyboard_backspace
             </i>
             </button>
@@ -46,7 +46,7 @@
                         </v-data-table>
                     </v-card>
                 </div>
-            <v-btn color="blue" @click="$router.push('/circle/'+circleName+'/manage_group/create')">새글작성</v-btn>
+            <v-btn v-if="auth==true" color="blue" @click="$router.push('/circle/'+circleName+'/manage_group/create')">새글작성</v-btn>
         </v-container>
         
     </div>
@@ -68,10 +68,13 @@
                 { text: '기간', value: 'date', align: 'center' },
                 //{ text: '조회수', value: 'views', align: 'center' }
                 ],
+                auth: false,
           }  
         },
         created: function(){
-          console.log(this.circleName)
+          if(this.$session.getAll().president==this.circleName) this.auth =true;
+          else if(this.postType=="board" && this.$session.getAll().circles.indexOf(this.circleName)>-1) this.auth = true;
+
 
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/group").then((data)=>{
               for(let i=0;i<data.data.length;i++){
@@ -87,6 +90,11 @@
         },
         components:{
             headerBar
+        },
+        methods:{
+            onBack:function(){
+                history.back()
+            }
         }
     }
 </script>

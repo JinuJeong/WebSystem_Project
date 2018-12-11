@@ -26,6 +26,16 @@ router.get('/find/:name', (req, res) => {
    })
 });
 
+router.get('/find/user/:userId',(req,res)=>{
+    console.log(req.params.userId)
+    userModel.findOne({"ID":req.params.userId}).populate({
+        path: 'circles',populate : {path: 'president'}
+    }).exec().then((user)=>{
+        console.log(user.circles[0])
+        res.send(user)
+    })
+})
+
 router.post('/signin',(req,res)=>{
     var session
     
@@ -60,9 +70,9 @@ router.post('/signup',(req,res)=>{
             }
             else {
                 console.log('Email sent: ' + info.response);
+                
             }
         });
-
         res.send(data)
     }).catch((err)=>{
         console.log(err)

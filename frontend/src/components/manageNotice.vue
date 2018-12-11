@@ -81,7 +81,7 @@
                 })
             },
             onClear: function(){
-                this.$router.push("/circle/"+this.circleName+"/board/"+this.postType+"/show_notice/"+this.postNum);
+                history.back()
             },
             onSubmit: function(){
                 if(this.userName==undefined){

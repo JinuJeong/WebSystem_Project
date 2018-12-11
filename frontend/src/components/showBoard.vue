@@ -51,6 +51,7 @@
                 cmtContent: "",
                 boardName: this.$route.params.boardName,
                 userName: this.$session.getAll().username,
+                recovery: "",
             }
         },
         created: function(){
@@ -59,6 +60,7 @@
                 this.title = result.data.title
                 this.contents = result.data.contents
                 console.log(this.contents)
+                this.recovery=result.data
                 if(this.userName==result.data.author) this.match=true;
             })
         },
@@ -73,9 +75,11 @@
                 this.$router.push("/boards/"+this.boardName);
             },
             onDelete: function(){
-                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/delete",{"title":this.title,
-                "contents":this.contents,"author":this.userName}).then((data)=>{
-                    this.$router.push("/boards/"+this.boardName);
+                this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{    
+                    this.$http.post("http://localhost:8000/boards/"+this.boardName+"/delete",{"title":this.title,
+                    "contents":this.contents,"author":this.userName}).then((data)=>{
+                        this.$router.push("/boards/"+this.boardName);
+                    })
                 })
             },
             onCmtSubmit: function(){
