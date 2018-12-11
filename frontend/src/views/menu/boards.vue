@@ -3,9 +3,9 @@
         <header-bar/>
         <br>
         <v-container class="container">
-            <v-flex xs12 sm10 offset-sm1>
+            <v-flex style="width:100%;">
                 <div class="centered-container">
-                    <v-card color="blue lighten-4">
+                    <v-card color="amber">
                         <v-card-title>
                             게시판
                             <v-spacer/>
@@ -21,10 +21,9 @@
                             :headers="headers"
                             :items="boards"
                             :search="search"
+                            disable-initial-sort
                             class="elevation-1"
                             no-data-text="등록된 게시물이 없습니다."
-                            select-all="red"
-                            off-icon="add"
                             prev-icon="chevron_left"
                             next-icon="chevron_right"
                             :rows-per-page-items="[10]"

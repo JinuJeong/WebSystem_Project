@@ -241,11 +241,14 @@
                 this.scheduleId=scheduleId;
             },
             onDelete:function(scheduleId){
-                
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/schedule/delete",{"scheduleId":scheduleId})
-                .then((data)=>{
-                    window.location.reload()
-                    return;
+                this.$http.get("http://localhost:8000/circle/"+this.circleName+"/schedule/"+scheduleId).then((data)=>{
+                    this.$http.post("http://localhost:8000/recovery",data.data).then(()=>{
+                        this.$http.post("http://localhost:8000/circle/"+this.circleName+"/schedule/delete",{"scheduleId":scheduleId})
+                        .then(()=>{
+                            window.location.reload()
+                            return;
+                        })
+                    })
                 })
             },
             // 데이트 설정 갯수 제안

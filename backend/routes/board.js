@@ -52,3 +52,11 @@ router.post("/:boardName/:postNum/cmtCreate", (req, res, next) => {
         res.send("ok");
     })
 })
+
+router.get("/:boardName/:postNum/cmtLoad", (req, res, next) => {
+    console.log(req.body)
+    boardModel.findOne({"postType" : req.params.boardName,"circleName":"Home","postNum":req.params.postNum}).then((data)=>{
+        console.log(data.comment)
+        res.send(data.comment)
+    })
+})

@@ -57,7 +57,7 @@
                     v-model="contents"
                     ></v-textarea>
                 <v-btn color="blue" @click="onSubmit()">활동 추가</v-btn>
-                <v-btn color="blue" @click="plus=false">취소</v-btn>
+                <v-btn color="blue" @click="$router.push('/circle/'+circleName+'/active/show_active/'+activeId)">취소</v-btn>
                 </v-flex>
             </v-layout>
 
@@ -162,7 +162,9 @@ export default{
                 }
             },
             onSubmit: function(){
-                if(this.activeId == undefined){ // 새로 만드는 거 if(this.activeId != this.$route.params.activeId)
+                
+                if(this.activeId == undefined){ 
+                    // 새로 만드는 거 if(this.activeId != this.$route.params.activeId)
                     this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/create",
                     {"title":this.title,"contents":this.contents,"circleName":this.circleName,"start":this.date1,"end":this.date2
                     ,"image":this.image, "members":this.selected})
