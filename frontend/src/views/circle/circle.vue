@@ -104,30 +104,26 @@
                
             </v-card>
           </v-flex>
-            <v-flex 
+          <v-flex 
               xs4
               d-flex>
-            <v-card v-if="this.president">
+            <v-card v-if="admin == 1">
                 <v-card-title class="subheading font-weight-bold">회원관리</v-card-title>
                 <v-divider></v-divider>
-                <div v-for="member in members" :key="member.id">
-                  {{member.name}} {{member.department}}
+                <div v-if="member.circleAuth==true" v-for="member in members" :key="member.id">
+                  <p>이메일 : {{member.user.ID}}</p>
+                  <p>이름 : {{member.user.name}}</p>
+                  <p>전공 : {{member.user.department}}</p>
+                  <p>전화번호 : {{member.user.call}}</p>
+                  <p>생일 : {{member.user.birth}}</p>
                     <v-card-actions class="btn">
-                        <v-btn round color="blue" large v-on:click="change4=true">
-                            <p class="circle_button">승인</p>
-                        </v-btn>
-                        <v-btn round color="blue" large v-on:click="change4=true">
-                            <p class="circle_button">거절</p>
+                        <v-btn round color="blue" large v-on:click="userin=member.user;reject()">
+                            <p class="circle_button">강퇴</p>
                         </v-btn>
                     </v-card-actions>
                 </div>
-                
             </v-card>
-            
-            
-          
           </v-flex>
-
         </v-layout>
         <v-flex >
             <v-card>
@@ -173,13 +169,12 @@
                 userName: null,
                 president: {},
                 circle: {},
-                members: []
-
+                members: [],
+                userin: {},
+                admin: null
           }  
         },
         created: function(){
-          console.log(this.circleName)
-          
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/notice").then((data)=>{
               for(let i=0;i<data.data.length && i<5 ;i++){
                 let date = data.data[i].date.split('T')[0]
@@ -241,14 +236,27 @@
                 if(this.circle.president.name === this.user.name){
                   this.president = this.user
                   this.members = this.circle.members
+                  this.admin = 1;
                 }
             })
           })
-        }
-        ,
+        },
         components: {
             headerBar
         },
+        methods: {
+          accept: function() {
+            this.$http.post('http://localhost:8000/circle/'+this.circleName+'/accept', this.userin)
+            this.$router.go(0)          
+          },
+          reject: function() {
+            this.$http.post('http://localhost:8000/circle/'+this.circleName+'/reject', this.userin).then(() => {
+              this.$http.post('http://localhost:8000/user/'+this.userin.name+'/reject', this.circle)
+            }).then(() => {
+              this.$router.go(0)
+            })     
+          }
+        }
     }
 </script>
 
@@ -257,4 +265,6 @@
     margin-top:20px;
     text-align: center;
   }
+
+  
 </style>

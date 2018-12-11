@@ -155,14 +155,24 @@ router.post("/:name/signupCircle", (req, res) => {
         return user
     }).then((user) => {
         user.circles.push(req.body)
-        user.save().then(() => {
-            console.log(user)
-            console.log(req.body.name)
-        })
+        user.save()
+
         res.send(user)
     }).catch((err) => {
         res.send("err")
         console.log("이미 동아리에 가입하셨습니다.")
+    })
+})
+
+router.post("/:name/reject", (req, res) => {
+    var name = req.params.name //거절 유저 이름
+    
+    userModel.findOne({name}).populate('circles').exec().then((user) => {
+        user.circles.pull({_id: req.body._id})
+        user.save()
+        console.log("User DB에서 삭제 완료")
+    }).then(() => {
+        res.end()
     })
 })
 module.exports = router;
