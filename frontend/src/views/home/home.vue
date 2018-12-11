@@ -81,9 +81,8 @@
             </v-layout>
             <v-layout style=" height : 400px; ">
                 <v-flex style="max-width : 400px; height : 85%;">
-                    <v-card dark color="blue-grey lighten-4"  class="left-side-content">
-                        <v-card-text style="color : black; font-size : 4ch; text-align: center;"> <p> 동아리방 사진</p></v-card-text>
-
+                    <v-card dark color="white"  class="left-side-content">
+                        <img src="../../assets/map.jpg" alt="Smiley face" >
                     </v-card>
                 </v-flex>
                 <v-flex style="height : 85%; width : 20%;">
@@ -130,17 +129,17 @@
                 this.showMenu = true;
                 this.userName = this.$session.getAll().username;
                 this.userDepartment = this.$session.getAll().userDepartment;
-
-                this.$http.get('http://localhost:8000/boards/notice').then((res) => {
-                    this.noticeList = res.data
-                })
-                this.$http.get('http://localhost:8000/boards/board').then((res) => {
-                    this.boardList = res.data
-                })
-                var circle = await this.$http.get('http://localhost:8000/circle/send/title').then((res) => {
-                    this.CircleList = res.data
-                })
             }
+
+            this.$http.get('http://localhost:8000/boards/home/notice').then((res) => {
+                this.noticeList = res.data
+            })
+            this.$http.get('http://localhost:8000/boards/home/board').then((res) => {
+                this.boardList = res.data
+            })
+            var circle = await this.$http.get('http://localhost:8000/circle/send/title').then((res) => {
+                this.CircleList = res.data
+            })
         },
         data () {
             return {

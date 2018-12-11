@@ -13,6 +13,13 @@ router.post("/:boardName/create",(req,res,next)=>{
 
 router.get("/:boardName/",(req,res,next)=>{
 
+    boardModel.find({"postType" : req.params.boardName}).sort( { "postNum": -1 }).then((data)=>{
+        res.send(data)
+    })
+});
+
+router.get("/home/:boardName/",(req,res,next)=>{
+
     console.log(req.params.boardName)
 
     boardModel.find({"postType" : req.params.boardName}).sort( { "postNum": -1 }).limit(5).then((data)=>{

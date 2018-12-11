@@ -7,40 +7,67 @@
             <md-content class="md-elevation-10">
                 <form class="vue-form" @submit.prevent="submit">
 
-                    <md-field>
-                        <label>아이디 </label>
-                        <md-input v-model="id" placeholder="ID(___@ajou.ac.kr)"></md-input>
-                    </md-field>
+                    <v-layout>
+                        <v-flex style="margin-right : 3%;">
+                             <md-field>
+                                <label>아이디 </label>
+                                <md-input v-model="id" placeholder="ID(___@ajou.ac.kr)"></md-input>
+                            </md-field>
 
-                    <md-field>
-                        <label>패스워드 </label>
-                        <md-input v-model="password" type="password" placeholder="password"></md-input>
-                    </md-field>
+                        </v-flex>
 
-                    <md-field>
-                        <label>이름</label>
-                        <md-input v-model="name" placeholder="name"></md-input>
-                    </md-field>
+                    </v-layout>
+                    <v-layout>
+                        <v-flex style="margin-right : 3%;">
+                            <md-field>
+                                <label>패스워드 </label>
+                                <md-input v-model="password" type="password" placeholder="password"></md-input>
+                            </md-field>
+                        </v-flex>
+                        <v-flex >
+                            <md-field>
+                                <label>패스워드 확인 </label>
+                                <md-input v-model="password" type="password" placeholder="password"></md-input>
+                            </md-field>
+                        </v-flex>
+                    </v-layout>
 
-                    <md-field>
-                        <label>연락처</label>
-                        <md-input v-model="call" placeholder="call"></md-input>
-                    </md-field>
+                    <v-layout>
+                        <v-flex style="margin-right : 3%;">
+                            <md-field>
+                                <label>이름</label>
+                                <md-input v-model="name" placeholder="name"></md-input>
+                            </md-field>
+                        </v-flex>
+                        <v-flex>
+                            <md-field>
+                                <label>연락처</label>
+                                <md-input v-model="call" placeholder="call"></md-input>
+                            </md-field>
+                        </v-flex>
+                    </v-layout>
 
-                    <md-field>
-                        <label>별명</label>
-                        <md-input v-model="nickname" placeholder="nickname"></md-input>
-                    </md-field>
+                    <v-layout>
+                        <v-flex style="margin-right : 3%;">
+                                <md-field>
+                                    <label>별명</label>
+                                    <md-input v-model="nickname" placeholder="nickname"></md-input>
+                                </md-field>
+                        </v-flex>
+                        <v-flex>
+                                <md-field>
+                                    <label>생년월일</label>
+                                    <md-input v-model="birth" type="number"  placeholder="data of birth"></md-input>
+                                </md-field>
+                        </v-flex>
+                    </v-layout>
 
-                    <md-field>
-                        <label>생년월일</label>
-                        <md-input v-model="birth" type="number"  placeholder="data of birth"></md-input>
-                    </md-field>
-
-                    <md-field>
-                        <label>자기 소개</label>
-                        <md-textarea v-model="textarea"></md-textarea>
-                    </md-field>
+                    <v-layout>
+                        <md-field>
+                            <label>자기 소개</label>
+                            <md-textarea v-model="textarea"></md-textarea>
+                        </md-field>
+                    </v-layout>
                 </form>
 
                 <div class="md-layout-item">

@@ -22,6 +22,7 @@
                             :items="boards"
                             :search="search"
                             class="elevation-1"
+                            color="blue"
                         >
                             <template slot="items" slot-scope="props">
                                 <td class="text-xs-center" @click="$router.push('/boards/'+boardName+'/show_notice/'+props.item.postNum)">{{ props.item.postNum }}</td>
@@ -83,7 +84,7 @@ export default {
         fetchData() {
             this.$http.get("http://localhost:8000/boards/"+this.boardName).then((result)=>{
                 for(let i=0;i<result.data.length;i++){
-                    if(this.boardName == result.data[i].postType){
+                    if(this.boardName === result.data[i].postType){
                         let date = result.data[i].date.split('T')[0]
                         let board={"postNum":result.data[i].postNum, "title":result.data[i].title,"author":result.data[i].author,"contents":result.data[i].contents,
                         "date":date,"full_date":result.data[i].date}
