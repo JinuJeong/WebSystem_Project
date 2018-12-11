@@ -66,10 +66,10 @@
                     <div class="md-layout md-gutter" v-for="sign in badgeCircle" :key="sign._id">
                         <p>{{sign[0].name}}</p>
                         <p>{{sign[1].name}}</p>
-                        <v-btn round color="blue" large v-on:click="accept(sign[0], sign[1])">
+                        <v-btn round color="blue" small v-on:click="accept(sign[0], sign[1])">
                             <p class="circle_button">승인</p>
                         </v-btn>
-                        <v-btn round color="blue" large v-on:click="reject(sign[0], sign[1])">
+                        <v-btn round color="blue" small v-on:click="reject(sign[0], sign[1])">
                             <p class="circle_button">거절</p>
                         </v-btn>
                     </div>
