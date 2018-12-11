@@ -37,7 +37,7 @@ router.post("/:circleName/board/:postType/create",(req,res,next)=>{
             circleModel.findOne({"name":value["circleName"]}).populate("members.user").exec().then((data)=>{
                 
                 let maillist=new Array()
-                
+
                 for(let i =0;i<data.members.length;i++){
                     maillist.push(data.members[i].user.ID)
                 }
@@ -69,8 +69,11 @@ router.post("/:circleName/board/:postType/create",(req,res,next)=>{
                 });
                 res.send("ok")
             })
-                
-    }})
+            
+    }else{
+        res.send("ok")
+    }
+})
 });
 
 router.get("/:circleName/board/:postType/:postNum",(req,res,next)=>{
