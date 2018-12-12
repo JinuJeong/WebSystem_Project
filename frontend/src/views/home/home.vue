@@ -43,7 +43,7 @@
             <v-layout style=" height : 400px;">
                 <v-flex style="max-width : 400px; height : 85%;">
                     <v-card color="white" style=" width:95%; height:85%;" >
-                        <v-card-title class="home-content-title"><router-link to="/boards/notice">학사일정</router-link></v-card-title>
+                        <v-card-title class="home-content-title"><router-link to="/schedules">학사일정</router-link></v-card-title>
                         <v-divider></v-divider>
                         <v-list dense>
                             <v-list-tile v-for="schedule in scheduleList" :key="schedule._id">

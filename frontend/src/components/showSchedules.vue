@@ -47,12 +47,12 @@
                                 <td class="text-xs-center" >{{ props.item.start }}</td>
                                 <td class="text-xs-center" >{{ props.item.end }}</td>
                                 <td class="text-xs-center" >{{ props.item.content }}</td>
-                                <td class="text-xs-center"  @click="onModify(props.item.start,props.item.end,props.item.content,props.item.scheduleId)">
+                                <td v-if="auth==true" class="text-xs-center"  @click="onModify(props.item.start,props.item.end,props.item.content,props.item.scheduleId)">
                                     <md-button class="md-icon-button">
                                         <md-icon>edit</md-icon>
                                     </md-button>
                                 </td>
-                                <td class="text-xs-center" @click="onDelete(props.item.scheduleId)">
+                                <td v-if="auth==true" class="text-xs-center" @click="onDelete(props.item.scheduleId)">
                                     <md-button class="md-icon-button">
                                         <md-icon>clear</md-icon>
                                     </md-button>
@@ -183,8 +183,7 @@
                 { text: '일정 시작', value: 'start', align: 'center'},
                 { text: '일정 마감', value: 'end', align: 'center' },
                 { text: '일정 내용', value: 'content', align: 'center'},
-                { text: '수정',  align: 'center' },
-                { text: '삭제',  align: 'center' },
+                
                 //{ text: '조회수', value: 'views', align: 'center' }
                 ],
                 auth:false,
@@ -192,9 +191,14 @@
           }  
         },
         created: function(){
-          if(this.$session.getAll().president==this.circleName) this.auth =true;
+          
+          if(this.$session.getAll().admin==true) this.auth=true;
+          else if(this.$session.getAll().president==this.circleName) this.auth =true;
           else if(this.postType=="board" && this.$session.getAll().circles.indexOf(this.circleName)>-1) this.auth = true;
-
+          
+          if(this.auth==true){
+            this.headers.push({text: '수정', align: 'center'},{text: '삭제', align: 'center'})
+          }
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/schedule").then((data)=>{
                     
                     for(let i=0;i<data.data.length;i++){

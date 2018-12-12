@@ -69,10 +69,12 @@
                     }).then(() => {
                         this.$http.get('http://localhost:8000/circle/find/' + this.circleName).then((res) => {
                             this.circle = res.data
-                            if(this.circle.president.name === this.user.name){
+                            if(this.$session.getAll().admin==true) this.match = true;
+                            else if(this.circle.president.name === this.user.name){
                                 this.president = this.user
                                 this.match = true
                             }
+
                         })
                     })
                     

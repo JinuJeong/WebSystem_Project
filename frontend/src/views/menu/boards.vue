@@ -41,7 +41,7 @@
                     </v-card>
                 </div>
                 <div class="text-xs-right">
-                    <v-btn color="primary" dark @click="$router.push('/boards/'+boardName+'/manage_notice/create')">새 글 작성</v-btn>
+                    <v-btn v-if="match==true"  @click="$router.push('/boards/'+boardName+'/manage_notice/create')">새 글 작성</v-btn>
                 </div>
             </v-flex>
         </v-container>
@@ -60,6 +60,7 @@ export default {
         widgets: false,
         checkbox: true,
         search: '',
+        math: false,
         boardName: this.$route.params.boardName,
         headers: [
           { text: '번호', value: 'postNum', align: 'center' /*,sortable: false*/ },
@@ -75,6 +76,7 @@ export default {
         headerBar
     },
     created() {
+        if(this.$session.getAll().admin==true) this.match=true;
         this.boardName = this.$route.params.boardName
         this.fetchData()
     },
