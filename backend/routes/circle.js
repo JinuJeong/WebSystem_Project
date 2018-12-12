@@ -145,7 +145,6 @@ router.get('/send', (req, res) => {
 router.get('/send/title', (req, res) => {
 
     console.log("/send/title!")
-
     circleModel.find().limit(5).then((data)=>{
         res.send(data)
     })
