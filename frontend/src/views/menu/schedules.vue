@@ -167,6 +167,7 @@
         data(){
           return{
                 match: false,
+                
                 circleName: this.$route.params.circleName,
                 schedulelists: [],
                 scheduleId: Number,
@@ -246,11 +247,15 @@
                 this.scheduleId=scheduleId;
             },
             onDelete:function(scheduleId){
-                
-                this.$http.post("http://localhost:8000/boards/schedule/delete",{"scheduleId":scheduleId})
-                .then((data)=>{
-                    window.location.reload()
-                    return;
+                this.$http.get("http://localhost:8000/circle/Home/schedule/"+scheduleId).then((data)=>{
+                    data.data["kind"] = "schedule"
+                    this.$http.post("http://localhost:8000/recovery",data.data).then(()=>{
+                    this.$http.post("http://localhost:8000/circle/Home/schedule/delete",{"scheduleId":scheduleId})
+                    .then((data)=>{
+                        window.location.reload()
+                        return;
+                    })
+                })
                 })
             },
             // 데이트 설정 갯수 제안

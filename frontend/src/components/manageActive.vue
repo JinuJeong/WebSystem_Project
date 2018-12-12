@@ -169,6 +169,7 @@ export default{
                     {"title":this.title,"contents":this.contents,"circleName":this.circleName,"start":this.date1,"end":this.date2
                     ,"image":this.image, "members":this.selected})
                     .then((data)=>{
+                        
                         this.$router.push("/circle/"+this.circleName);
                     })
                 }
@@ -177,6 +178,7 @@ export default{
                     {"title":this.title,"contents":this.contents,"circleName":this.circleName,"start":this.date1,"end":this.date2
                     ,"image":this.image, "activeId":this.activeId, "members":this.selected})
                     .then((data)=>{
+                        
                         this.$router.push("/circle/"+this.circleName);
                     })
                 }

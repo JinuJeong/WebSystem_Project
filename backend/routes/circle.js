@@ -279,9 +279,15 @@ router.post('/:circleName/active/create',(req,res)=>{
 })
 
 router.get('/:circleName/active',(req,res)=>{
-    activeModel.find({"circleName":req.params.circleName}).populate('members').sort('-activeId').then((data)=>{
-          res.send(data)
-    })
+    if(req.params.circleName=="Home"){
+        activeModel.find().populate('members').sort('-activeId').then((data)=>{
+            res.send(data)
+      })
+    }else{
+        activeModel.find({"circleName":req.params.circleName}).populate('members').sort('-activeId').then((data)=>{
+            res.send(data)
+        })
+    }
 })
 
 router.get('/:circleName/active/:activeId',(req,res)=>{

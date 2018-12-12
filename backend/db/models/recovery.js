@@ -3,6 +3,7 @@ const ttl = require('ttl')
 
 const recoverySchema = mongoose.Schema({
     recoveryId : {type: Number, unique: true},
+    kind : {type: String, required: true},
     removeTime : {type: Date, default: Date.now},
     },
     { strict: false });
@@ -14,7 +15,7 @@ recoverySchema.plugin(autoIncrement, {
     startAt: 1
 })
 
-recoverySchema.index({ removeTime: 1 }, { expireAfterSeconds : 180 });
+recoverySchema.index({ removeTime: 1 }, { expireAfterHours : 1 });
 
 
 

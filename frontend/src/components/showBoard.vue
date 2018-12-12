@@ -75,7 +75,7 @@
                 this.cmts = result.data.comment
                 console.log(this.contents)
                 this.recovery=result.data
-                if(this.userName==result.data.author) this.match=true;
+                if(this.$session.getAll().admin==true) this.match=true;
             })
         },
         components: {
@@ -89,9 +89,10 @@
                 this.$router.push("/boards/"+this.boardName);
             },
             onDelete: function(){
+                this.recovery['kind']='board'
+                
                 this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{    
-                    this.$http.post("http://localhost:8000/boards/"+this.boardName+"/delete",{"title":this.title,
-                    "contents":this.contents,"author":this.userName}).then((data)=>{
+                    this.$http.post("http://localhost:8000/boards/"+this.boardName+"/delete",{"postNum":this.postNum}).then((data)=>{
                         this.$router.push("/boards/"+this.boardName);
                     })
                 })

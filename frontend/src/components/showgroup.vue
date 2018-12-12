@@ -83,6 +83,7 @@
                 history.back()
             },
             onDelete: function(){
+                this.recovery['kind'] = "group"
                 this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{
                     this.$http.post("http://localhost:8000/circle/"+this.circleName+"/group/delete/"+this.groupId).then(()=>{
                         this.$router.push("/circle/"+this.circleName);

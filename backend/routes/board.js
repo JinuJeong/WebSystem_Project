@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const boardModel = require('../db/models/board')
-const schedule = require('../db/models/schedule')
 
 module.exports = router;
 

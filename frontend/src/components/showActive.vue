@@ -97,11 +97,14 @@
                 this.$router.push("/circle/"+this.circleName+"/manage_active/update/"+this.activeId);
             },
             onClear: function(){
+                
                 this.$router.push("/circle/"+this.circleName);
             },
             onDelete: function(){
+                this.recovery['kind'] = "active"
                 this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{
                     this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/delete/"+this.activeId).then(()=>{
+                        
                         this.$router.push("/circle/"+this.circleName);
                     })
                 })

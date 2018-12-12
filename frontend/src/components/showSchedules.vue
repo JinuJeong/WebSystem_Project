@@ -254,6 +254,7 @@
             },
             onDelete:function(scheduleId){
                 this.$http.get("http://localhost:8000/circle/"+this.circleName+"/schedule/"+scheduleId).then((data)=>{
+                    data.data["kind"] = "schedule"
                     this.$http.post("http://localhost:8000/recovery",data.data).then(()=>{
                         this.$http.post("http://localhost:8000/circle/"+this.circleName+"/schedule/delete",{"scheduleId":scheduleId})
                         .then(()=>{
