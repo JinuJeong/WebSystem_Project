@@ -21,7 +21,6 @@ const circleSchema = mongoose.Schema({
     concept: {type: String},
     introduce: {type: String},
     othersAccept: {type: Boolean},
-
 });
 
 circleSchema.plugin(autoIncrement, {

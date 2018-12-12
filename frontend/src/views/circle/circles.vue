@@ -9,7 +9,6 @@
 
             <!--그 위에 올려지는 하얀 container (elevation : 10)-->
             <md-content class="md-elevation-15">
-
                 <div class="content-end container-two" style="display : flex; justify-content : flex-end; flex-direction : row">
 
                     <v-form style="display : flex; justify-content: flex-end; flex-direction : row; width : 50%;">
@@ -26,14 +25,15 @@
 
                         <v-text-field v-model="search_value" required style="margin-top : 0.9%; margin-left : 3%;width : 70%;"></v-text-field>
 
-                        <v-btn @click="search()" style="width : 250px; margin-top : 1%;"> 검색 </v-btn>
+                        <v-btn @click="search()" style="width : 15%; margin-top : 1%;"> 검색 </v-btn>
+                        <v-btn v-on:click="circleSignup()" style="width : 15%; margin-top : 1%;">동아리 등록</v-btn>
                     </v-form>
                 </div>
 
                 <div class="container-one">
                 <md-card v-for="circle in calData" :key="circle.id" class = "md-elevation-8">
 
-                    <v-img v-if="circle.name === 'ANSI'"
+                    <v-img v-if="circle.name === 'DOIT'"
                             src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
                             aspect-ratio="2.75"
                     ></v-img>
@@ -97,7 +97,6 @@
                 </div>
             </md-content>
 
-            <v-btn v-on:click="circleSignup()">동아리 등록</v-btn>
         </div>
         <div>
             <footer-bar style="margin-top:17%"></footer-bar>

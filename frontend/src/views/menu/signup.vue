@@ -6,19 +6,19 @@
         <div class="centered-container">
             <md-content class="md-elevation-10">
                 <form class="vue-form" @submit.prevent="submit">
-
                     <v-layout>
-                        <v-flex style="margin-right : 3%; margin-bottom : 3%;">
+                        <v-flex style="margin-bottom : 3%;">
                                 <v-text-field
                                         label="ID"
                                         v-model="id"
                                         placeholder="please write email address"
-                                        :rules="emailRules"></v-text-field>
+                                        :rules="emailRules"
+                                        ></v-text-field>
                         </v-flex>
 
                     </v-layout>
                     <v-layout>
-                        <v-flex style="margin-right : 3%; margin-bottom : 3%;">
+                        <v-flex style=" margin-bottom : 3%;">
                             <v-text-field
                                     label="password"
                                     v-model="password"
@@ -31,19 +31,19 @@
 
                     <v-layout>
                         <v-flex style="margin-right : 3%;">
-                            <v-text-field label="이름" v-model="name" type="text" placeholder="name"></v-text-field>
+                            <v-text-field label="이름" v-model="name" type="text" placeholder="name" ></v-text-field>
                         </v-flex>
                         <v-flex>
                             <v-text-field label="연락처" v-model="call" type="tel" placeholder="tel"></v-text-field>
                         </v-flex>
                     </v-layout>
 
-                    <v-layout>
+                    <v-layout style="margin-bottom : 5%;">
                         <v-flex style="margin-right : 3%;">
                             <v-text-field label="별명" v-model="nickname" type="text" placeholder="nickname"></v-text-field>
                         </v-flex>
                         <v-flex>
-                            <v-text-field label="생년월일" v-model="birth" type="number" placeholder="date of birth"></v-text-field>
+                            <v-text-field label="학번" v-model="stuNum" type="number" placeholder="student number"></v-text-field>
                         </v-flex>
                     </v-layout>
 
@@ -101,11 +101,8 @@
                             </md-optgroup>
                         </md-select>
                     </md-field>
-            </div>
+                 </div>
 
-                :to
-                :value='{{mem
-                <md-option v-for="member in members" value="">mem</md-option>
             <div class="md-layout-item">
                 <md-field>
                     <label>관심분야</label>
@@ -131,7 +128,7 @@
         <md-dialog-alert
             :md-active.sync="fail"
             md-title="ALERT"
-            md-content="SignUp Failed"
+            md-content="회원가입 실패"
             md-confirm-text="DONE"/>
 
         <md-dialog-confirm
@@ -141,7 +138,7 @@
             md-confirm-text="Check"
             md-cancel-text="Cancle"
             @md-cancel="onCancel"
-            @md-confirm="onCheck" />
+            @md-confirm="onCheck"/>
         </div>
     </div>
 </template>
@@ -159,7 +156,7 @@
         data : () => ({
             id          : null,
             password    : null,
-            birth       : null,
+            stuNum      : null,
             name        : null,
             textarea    : null,
             department  : null,

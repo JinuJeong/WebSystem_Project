@@ -3,105 +3,116 @@
         <header-bar></header-bar>
         <div class="centered-container">
             <md-content class="md-elevation-10">
-                <form class="vue-form" @submit.prevent="submit">
-                    <md-field>
-                        <label>동아리명 </label>
-                        <md-input v-model="name"></md-input>
-                    </md-field>
-                       <div class="md-layout-item">
-                    <md-field>
-                        <label>소속 학과</label>
-                            <md-select v-model="department" name="department" id="department">
-                            <md-optgroup label="정보통신대학">
-                                <md-option value="software">소프트웨어학과</md-option>
-                                <md-option value="security">사이버보안학과</md-option>
-                                <md-option value="electric">전자공학과</md-option>
-                                <md-option value="media">미디어학과</md-option>
-                                <md-option value="Defense_digital">국방디지털융합학과</md-option>
-                            </md-optgroup>
-                            <md-optgroup label="공과대학">
-                                <md-option value="mechanical">기계공학과</md-option>
-                                <md-option value="Chemical">화학공학과</md-option>
-                                <md-option value="environmental">환경공학과</md-option>
-                                <md-option value="Advanced_Materials">신소재공학과</md-option>
-                            </md-optgroup>
-                            <md-optgroup label="자연과학대학">
-                                <md-option value="mathematical">수학과</md-option>
-                                <md-option value="Physics">물리학과</md-option>
-                            </md-optgroup>
-                            <md-optgroup label="경영대학">
-                                <md-option value="business">경영학과</md-option>
-                                <md-option value="e-business">e-business 학과</md-option>
-                            </md-optgroup>
-                            <md-optgroup label="인문대학">
-                                <md-option value="korean">국어국문학과</md-option>
-                                <md-option value="english">영어영문학과</md-option>
-                            </md-optgroup>
-                            <md-optgroup label="사회과학대학">
-                                <md-option value="Psychology">심리학과</md-option>
-                                <md-option value="Economics">경제학과</md-option>
-                            </md-optgroup>
-                            <md-optgroup label="의과대학">
-                                <md-option value="medicine">의예과</md-option>
-                            </md-optgroup>
-                            <md-optgroup label="간호대학">
-                                <md-option value="nursing">간호학과</md-option>
-                            </md-optgroup>
-                            <md-optgroup label="약학대학">
-                                <md-option value="Pharmacy">약학과</md-option>
-                            </md-optgroup>
-                        </md-select>
-                    </md-field>
-                </div>
-                </form>
-                <form>
-                    <md-field>
-                        <label>지도 교수</label>
-                        <md-input v-model="professor" placeholder="교수님 성함"></md-input>
-                    </md-field> 
-                    <md-field>
-                        <label>회장</label>
-                        <md-input v-model="presidentin" placeholder="회장 이름"></md-input>
-                    </md-field>                    
-                    <md-button class="md-raised md-primary md-alignment-center" v-on:click="find()">회장찾기</md-button> 
-                </form>
-                    {{this.president.ID}}
-                    {{exist}}
-                    <md-field>
-                        <label>회원수</label>
-                        <md-input v-model="number" type="number"></md-input>
-                    </md-field>
-                    <md-field>
-                        <label>동방 유무</label>
-                        <md-input v-model="roomExistence" placeholder="1 or 0"></md-input>
-                    </md-field> 
-                    <md-field>
-                        <label>다른 학과 가입 여부</label>
-                        <md-input v-model="othersAccept" placeholder="1 or 0"></md-input>
-                    </md-field> 
-                    <md-field>
-                    <label>동아리컨셉</label>
-                    <md-select v-model="concept" multiple>
-                        <md-option value="music">음악</md-option>
-                        <md-option value="study">공부(Study)</md-option>
-                        <md-option value="exercise">운동</md-option>
-                        <md-option value="dance">춤</md-option>
-                        <md-option value="movie">영화 & 만화</md-option>
-                        <md-option value="trip">여행</md-option>
-                        <md-option value="contest">공모전</md-option>
-                    </md-select>
-                    </md-field>
 
-                    <md-field>
-                        <label>동아리소개</label>
-                        <md-textarea v-model="introduce"></md-textarea>
-                    </md-field>   
-                    <div class="actions md-layout md-alignment-center">
-                        <md-button class="md-raised md-primary md-alignment-center" v-on:click="check=true">등록</md-button>
-                        <md-button class="md-raised md-primary" href="/">홈으로</md-button>
+                <v-layout>
+                    <v-flex style="text-align : center; margin-bottom : 5%;">
+                        <h1> 동아리 등록 </h1>
+                    </v-flex>
+                </v-layout>
+
+                <form class="vue-form" @submit.prevent="submit">
+                    <v-layout>
+                        <v-flex style="margin-bottom : 3%;">
+                            <v-text-field
+                                label="동아리명"
+                                v-model="name"
+                            ></v-text-field>
+                        </v-flex>
+                    </v-layout>
+
+                    <v-layout>
+                        <v-flex style="margin-right : 3%;">
+                            <v-text-field label="지도 교수" v-model="professor" type="text"></v-text-field>
+                        </v-flex>
+                        <v-flex d-inline-flex>
+                            <v-text-field label="회장" v-model="presidentin" type="text" style="width:100%;"></v-text-field>
+                            <v-btn v-on:click="find()" style="width:15%;">회장찾기</v-btn>
+                        </v-flex>
+                    </v-layout>
+
+                    <v-layout style="margin-bottom : 5%;">
+                        <v-flex style="margin-right : 3%;">
+                            <v-checkbox on-icon="radio_button_checked" off-icon="radio_button_unchecked" label="동방 여부" v-model="roomExistence"></v-checkbox>
+                        </v-flex>
+                        <v-flex>
+                            <v-checkbox on-icon="radio_button_checked" off-icon="radio_button_unchecked" label="타과 가입여부" v-model="othersAccept"></v-checkbox>
+                        </v-flex>
+                        <v-flex>
+                            <v-text-field label="회원수" v-model="number" type="number" style="width:100%;"></v-text-field>
+                        </v-flex>
+                    </v-layout>
+
+                    <div class="md-layout-item">
+                        <md-field>
+                            <label>소속 학과</label>
+                                <md-select v-model="department" name="department" id="department">
+                                <md-optgroup label="정보통신대학">
+                                    <md-option value="software">소프트웨어학과</md-option>
+                                    <md-option value="security">사이버보안학과</md-option>
+                                    <md-option value="electric">전자공학과</md-option>
+                                    <md-option value="media">미디어학과</md-option>
+                                    <md-option value="Defense_digital">국방디지털융합학과</md-option>
+                                </md-optgroup>
+                                <md-optgroup label="공과대학">
+                                    <md-option value="mechanical">기계공학과</md-option>
+                                    <md-option value="Chemical">화학공학과</md-option>
+                                    <md-option value="environmental">환경공학과</md-option>
+                                    <md-option value="Advanced_Materials">신소재공학과</md-option>
+                                </md-optgroup>
+                                <md-optgroup label="자연과학대학">
+                                    <md-option value="mathematical">수학과</md-option>
+                                    <md-option value="Physics">물리학과</md-option>
+                                </md-optgroup>
+                                <md-optgroup label="경영대학">
+                                    <md-option value="business">경영학과</md-option>
+                                    <md-option value="e-business">e-business 학과</md-option>
+                                </md-optgroup>
+                                <md-optgroup label="인문대학">
+                                    <md-option value="korean">국어국문학과</md-option>
+                                    <md-option value="english">영어영문학과</md-option>
+                                </md-optgroup>
+                                <md-optgroup label="사회과학대학">
+                                    <md-option value="Psychology">심리학과</md-option>
+                                    <md-option value="Economics">경제학과</md-option>
+                                </md-optgroup>
+                                <md-optgroup label="의과대학">
+                                    <md-option value="medicine">의예과</md-option>
+                                </md-optgroup>
+                                <md-optgroup label="간호대학">
+                                    <md-option value="nursing">간호학과</md-option>
+                                </md-optgroup>
+                                <md-optgroup label="약학대학">
+                                    <md-option value="Pharmacy">약학과</md-option>
+                                </md-optgroup>
+                                </md-select>
+                        </md-field>
+
+                        <md-field>
+                            <label>동아리컨셉</label>
+                            <md-select v-model="concept" multiple>
+                                <md-option value="music">음악</md-option>
+                                <md-option value="study">공부(Study)</md-option>
+                                <md-option value="exercise">운동</md-option>
+                                <md-option value="dance">춤</md-option>
+                                <md-option value="movie">영화 & 만화</md-option>
+                                <md-option value="trip">여행</md-option>
+                                <md-option value="contest">공모전</md-option>
+                            </md-select>
+                        </md-field>
+                        <md-field>
+                            <label>동아리소개</label>
+                            <md-textarea v-model="introduce"></md-textarea>
+                        </md-field>
                     </div>
+                </form>
+
+                <div class="actions md-layout md-alignment-center">
+                    <v-btn raised class="action-button jg" color="blue-grey lighten-1" v-on:click="check=true">등록</v-btn>
+                    <v-btn raised class="action-button jg" color="blue-grey lighten-1" to="/" style="color : white;">홈으로</v-btn>
+                </div>
             </md-content>
         </div>
+
         <md-dialog-confirm
         :md-active.sync="check"
         md-title="Check"
@@ -126,6 +137,9 @@ export default {
             autogrow: null,
             check: false,
             concept: [],
+            roomExistence : false,
+            othersAccept : false,
+            items: ['Foo', 'Bar', 'Fizz', 'Buzz']
         }
     },
     components: {
@@ -183,6 +197,11 @@ export default {
                 margin-top : 100px;
             }
         }
+    }
+
+    .action-button{
+        width : 30%;
+        color : white;
     }
 
 </style>

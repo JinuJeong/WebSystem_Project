@@ -1,10 +1,10 @@
 <template>
   <div id='search'>
     <md-dialog :md-active.sync="showDialog">
-      <md-dialog-title>Preferences</md-dialog-title>
+      <md-dialog-title>바로가기</md-dialog-title>
 
       <md-tabs md-dynamic-height>
-        <md-tab md-label="General">
+        <md-tab md-label="동아리">
           <div>
             <div class="md-layout md-gutter">
               <div class="md-layout-item">
@@ -29,8 +29,8 @@
               </div>
               <div class="md-layout-item" v-else>
                 <md-field>
-                  <label>동아리 이름</label>
-                  <md-select v-model="circle_name" name="circle" id="circle">
+                  <label>중앙동아리 이름</label>
+                  <md-select v-model="central_circle_name" name="circle" id="circle">
                   <md-option v-for="circle in circles" v-bind:value="circle.value" :key="circle.value">
                     {{ circle.name }}
                   </md-option>
@@ -50,8 +50,8 @@
               </div>
               <div class="md-layout-item" v-if="circle_kind==='small_circle'">
                 <md-field>
-                  <label>동아리 이름</label>
-                  <md-select v-model="circle" name="circle" id="circle">
+                  <label>소학회 이름</label>
+                  <md-select v-model="small_circle_name" name="circle" id="circle">
                     <md-option v-for="circle in circles" v-show="circle.parent===major" v-bind:value="circle.value" :key="circle.value">
                       {{ circle.name }}
                     </md-option>
@@ -59,14 +59,13 @@
                 </md-field>
               </div>
             </div>
-            <md-button class="md-primary md-raised" @click="movie = 'pulp-fiction'">Set Pulp Fiction</md-button>
           </div>
         </md-tab>
       </md-tabs>
 
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showDialog = false">Close</md-button>
-        <md-button class="md-primary" @click="showDialog = false">Save</md-button>
+        <md-button class="md-primary" @click="go">이동</md-button>
+        <md-button class="md-primary" @click="showDialog = false">닫기</md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -79,37 +78,53 @@
 <script>
 export default {
   name: 'search',
-  data: () => ({
-    showDialog: false,
-    circles_kind: [
-      {name: '중앙동아리', value: 'central_circle'},
-      {name: '소학회', value: 'small_circle'}
-    ],
-    colleges: [
-      {name: '정통대', parent: 'small_circle', value: 'information'},
-      {name: '자연대', parent: 'small_circle', value: 'nature'},
-      {name: '공대', parent: 'small_circle', value: 'technology'},
-      {name: '간호대', parent: 'small_circle', value: 'nurse'}
-    ],
-    majors: [
-      {name: '소프트웨어학과', parent: 'information', value: 'software'},
-      {name: '사이버보안학과', parent: 'information', value: ''},
-      {name: '전자과', parent: 'information', value: ''},
-      {name: '미디어학과', parent: 'information', value: ''},
-      {name: '기계공학과', parent: 'technology', value: ''},
-      {name: '화학과', parent: 'nature', value: ''}
-    ],
-    circles: [
-      {name: '한터', parent: 'software', value: 'hantor'},
-      {name: '안씨', parent: 'software', value: ''},
-      {name: '세미콜론', parent: 'software', value: ''}
-    ],
-    circle_kind: String,
-    college: String,
-    major: String,
-    circle: String,
-    circle_name: String,
-  })
+  data: () => {
+      return {
+          showDialog: false,
+          circles_kind: [
+              {name: '중앙동아리', value: 'central_circle'},
+              {name: '소학회', value: 'small_circle'}
+          ],
+          colleges: [
+              {name: '정통대', parent: 'small_circle', value: 'information'},
+              {name: '자연대', parent: 'small_circle', value: 'nature'},
+              {name: '공대', parent: 'small_circle', value: 'technology'},
+              {name: '간호대', parent: 'small_circle', value: 'nurse'}
+          ],
+          majors: [
+              {name: '소프트웨어학과', parent: 'information', value: 'software'},
+              {name: '사이버보안학과', parent: 'information', value: 'security'},
+              {name: '전자과', parent: 'information', value: 'electric'},
+              {name: '미디어학과', parent: 'information', value: 'media'},
+              {name: '기계공학과', parent: 'technology', value: 'mechanic'},
+              {name: '화학과', parent: 'nature', value: 'chemical'}
+          ],
+          circles: [
+              {name: '한터', parent: 'software', value: '한터'},
+              {name: '안씨', parent: 'software', value: '안씨'},
+              {name: '세미콜론', parent: 'software', value: '세미콜론'}
+          ],
+          circle_kind: String,
+          college: String,
+          major: String,
+          small_circle_name : String,
+          central_circle_name: String,
+      }
+  },
+
+  methods : {
+      go : function(){
+          this.showDialog = false;
+
+
+          if(this.circle_kind === 'central_circle') {
+              this.$router.push("/circle/" + this.central_circle_name) //중앙동아리
+          }
+          else if(this.circle_kind  === 'small_circle'){
+              this.$router.push("/circle/" + this.small_circle_name)
+          }
+      }
+  }
 }
 </script>
 
