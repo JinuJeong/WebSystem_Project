@@ -136,18 +136,11 @@
             <v-card v-if="admin == 1">
                 <v-card-title class="subheading font-weight-bold">회원관리</v-card-title>
                 <v-divider></v-divider>
-                <div v-if="member.circleAuth==true" v-for="member in members" :key="member.id">
-                  <p>이메일 : {{member.user.ID}}</p>
-                  <p>이름 : {{member.user.name}}</p>
-                  <p>전공 : {{member.user.department}}</p>
-                  <p>전화번호 : {{member.user.call}}</p>
-                  <p>생일 : {{member.user.birth}}</p>
-                    <v-card-actions class="btn">
-                        <v-btn round color="blue" large v-on:click="userin=member.user;reject()">
-                            <p class="circle_button">강퇴</p>
+                  <v-card-actions class="btn">
+                        <v-btn round color="blue" large v-on:click="managePage(circleName)">
+                            <p class="circle_button">관리페이지</p>
                         </v-btn>
-                    </v-card-actions>
-                </div>
+                  </v-card-actions>
             </v-card>
           </v-flex>
         </v-layout>
@@ -170,6 +163,9 @@
               </v-layout>
             <v-btn icon @click="$router.push('/circle/'+circleName+'/active/show_actives')">
               <v-icon>add</v-icon>
+            </v-btn>
+            <v-btn @click="$router.push('/circle/'+circleName+'/active/personalActive')">
+              활동내역추출
             </v-btn>
             </v-card>
           </v-flex>
@@ -201,6 +197,7 @@
           }  
         },
         created: function(){
+          console.log(this.$session.getAll())
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/notice").then((data)=>{
               for(let i=0;i<data.data.length && i<5 ;i++){
                 let date = data.data[i].date.split('T')[0]
@@ -225,7 +222,7 @@
                 let date = data.data[i].date.split('T')[0]
                 let board={"title":data.data[i].title,"contents":data.data[i].contents,
                 "date":date,"postNum":data.data[i].postNum,"author":data.data[i].author}
-                console.log(board)
+                
                 this.boardlists.push(board)
               }
           })
@@ -234,7 +231,7 @@
                 let group={"title":data.data[i].title,"contents":data.data[i].contents,
                 "start":data.data[i].start.substr(0,10),"end":data.data[i].end.substr(0,10),
                 "groupId":data.data[i].groupId,"teacher":data.data[i].teacher.name}
-                console.log(group)
+                
                 this.grouplists.push(group)
               }
           })
@@ -248,7 +245,7 @@
                 "date":start+" ~ "+end,"activeId":data.data[i].activeId,"image":data.data[i].image}
                 this.images.push(data.data[i].image)
                 this.activelist.push(active)
-                console.log(active)
+                
               }
               
           })
@@ -280,7 +277,10 @@
               this.$http.post('http://localhost:8000/user/'+this.userin.name+'/reject', this.circle)
             }).then(() => {
               this.$router.go(0)
-            })     
+            })
+          },
+          managePage: function(name) {
+            this.$router.push('/circle/'+name+'/circleManage')
           }
         }
     }

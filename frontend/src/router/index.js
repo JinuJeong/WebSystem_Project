@@ -9,6 +9,7 @@ import Schedules from '../views/menu/schedules'
 import Circles from '../views/circle/circles'
 import Circle from '../views/circle/circle'
 import CircleSignup from '../views/circle/circlesignup'
+import circleManage from '../views/circle/circleManage'
 import Boards from '../views/menu/boards'
 import TimeLine from '../views/menu/timeline'
 import manageNotice from '../components/manageNotice'
@@ -23,7 +24,7 @@ import showGroup from '../components/showGroup'
 import showActive from '../components/showActive'
 import manageActive from '../components/manageActive'
 import showActives from '../components/showActives'
-
+import personalActive from '../components/personalActive'
 
 import Vuetify from "vuetify";
 
@@ -148,5 +149,13 @@ export default new Router({
             path: '/circle/:circleName/manage_active/update/:activeId',
             component: manageActive
         },
+        {
+            path: '/circle/:circleName/active/personalActive',
+            component: personalActive
+        },
+        {
+            path: '/circle/:circleName/circleManage',
+            component: circleManage
+        }
     ]
 })

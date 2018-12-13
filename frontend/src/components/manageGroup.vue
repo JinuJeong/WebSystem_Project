@@ -73,7 +73,7 @@
                     v-model="contents"
                     ></v-textarea>
                 <v-btn color="blue" @click="onSubmit()">그룹 추가</v-btn>
-                <v-btn color="blue" @click="plus=false">취소</v-btn>
+                <v-btn color="blue" @click="onBack()">취소</v-btn>
                 </v-flex>
             </v-layout>
 
@@ -132,6 +132,9 @@ export default{
                 if(this.dates.length>2){
                     this.dates.splice(2,1)
                 }
+            },
+            onBack(){
+                history.back()
             },
             onSubmit: function(){
                 if(this.groupId==undefined){

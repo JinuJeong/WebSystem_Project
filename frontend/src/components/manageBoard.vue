@@ -78,9 +78,10 @@
                 })
             },
             onClear: function(){
-                this.$router.push("/boards/"+this.boardName);
+                history.back()
             },
             onDelete: function(){
+            
                 this.$http.post("http://localhost:8000/boards/"+this.boardName+"/delete",{"title":this.title,
                 "contents":this.contents,"author":this.userName}).then((data)=>{
                     this.$router.push("/boards/"+this.boardName);

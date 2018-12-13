@@ -5,6 +5,7 @@ require('./db/mongo') //connect db
 const circle = require('./routes/circle')
 const user = require('./routes/user')
 const board = require('./routes/board')
+const recovery = require('./routes/recovery')
 
 const app = express()
 app.use((req, res, next) =>{
@@ -22,5 +23,6 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use('/circle', circle)
 app.use('/user', user)
 app.use('/boards', board)
+app.use('/recovery',recovery)
 
 module.exports = app

@@ -31,11 +31,12 @@
             Submit
             </v-btn>
            <v-btn @click="onClear">close</v-btn>
-           <v-btn v-if="match==true" @click="onDelete">delete</v-btn>
+           
         </v-form>
         </div>
 
         </v-container>
+        
 
     </div>
 </template>
@@ -81,12 +82,7 @@
                 })
             },
             onClear: function(){
-                this.$router.push("/circle/"+this.circleName);
-            },
-            onDelete: function(){
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/"+this.postNum+"/delete").then((data)=>{
-                    this.$router.push("/circle/"+this.circleName);
-                })
+                history.back()
             },
             onSubmit: function(){
                 if(this.userName==undefined){
@@ -95,6 +91,7 @@
                 }
                 this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/create",{"title":this.title,
                     "contents":this.contents,"author":this.userName}).then((data)=>{
+                        alert("게시글이 업로드 됐습니다.")
                         this.$router.push("/circle/"+this.circleName);
                     })
             }

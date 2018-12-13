@@ -14,13 +14,20 @@
                 <p>{{contents}}</p>
             </v-list-tile-content>
             </v-list-tile>
+
+
+            <v-subheader>MEMBERS</v-subheader>
+            <v-list-tile v-for="member in members" :key="member._id">
+               <p>{{member.name}}</p>
+            </v-list-tile>
+
+
             <v-subheader>Date</v-subheader>
             <v-list-tile>
             <v-list-tile-content>
                 <p>{{date}}</p>
             </v-list-tile-content>
             </v-list-tile>
-            
             </v-list>
                 
         
@@ -32,7 +39,6 @@
             
            <v-btn @click="onClear">close</v-btn>
            <v-btn v-if="match==true" @click="onDelete">delete</v-btn>
-        
         </v-container>
     </div>
 </template>
@@ -49,23 +55,38 @@
                 date:"",
                 activeId: this.$route.params.activeId,
                 userName:this.$session.getAll().username,
-                match: Boolean,
                 image: "",
+                president: {},
+                circle: {},
+                match: Boolean,
+                members: [],
+                recovery: "",           
             }
         },
         created: function(){
+                    this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {
+                        this.user = res.data
+                    }).then(() => {
+                        this.$http.get('http://localhost:8000/circle/find/' + this.circleName).then((res) => {
+                            this.circle = res.data
+                            if(this.circle.president.name === this.user.name){
+                                this.president = this.user
+                                this.match = true
+                            }
+                        })
+                    })
                     
                     this.$http.get("http://localhost:8000/circle/"+this.circleName+"/active/"+this.activeId).then((data)=>{
-                        console.log(data.data)
+                        this.recovery=data.data
                         let info=data.data
                         this.title=info.title
                         this.date = info.start.substr(0,10)+" ~ "+info.end.substr(0,10)
                         this.contents=info.contents
                         this.image = info.image
-                        if(this.userName==data.data.author) this.match=true;
-                    })
-            }
-        ,
+                        this.members = info.members
+
+                    });
+                },
         components: {
             headerBar
         },
@@ -77,9 +98,12 @@
                 this.$router.push("/circle/"+this.circleName);
             },
             onDelete: function(){
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/delete/"+this.activeId).then((data)=>{
-                    this.$router.push("/circle/"+this.circleName);
+                this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{
+                    this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/delete/"+this.activeId).then(()=>{
+                        this.$router.push("/circle/"+this.circleName);
+                    })
                 })
+            
             }
         }
     }

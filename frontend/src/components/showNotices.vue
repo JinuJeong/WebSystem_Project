@@ -4,7 +4,7 @@
         
         <v-container class="container">
             <button>
-            <i class="material-icons" @click="$router.push('/circle/'+circleName)">
+            <i class="material-icons" @click="onBack()">
             keyboard_backspace
             </i>
             </button>
@@ -44,7 +44,7 @@
                         </v-data-table>
                     </v-card>
                 </div>
-            <v-btn color="" @click="$router.push('/circle/'+circleName+'/board/'+postType+'/manage_notice/create')">새글작성</v-btn>
+            <v-btn  v-if="auth==true" @click="$router.push('/circle/'+circleName+'/board/'+postType+'/manage_notice/create')">새글작성</v-btn>
         </v-container>
         
     </div>
@@ -67,10 +67,12 @@
                 { text: '등록일', value: 'date', align: 'center' },
                 //{ text: '조회수', value: 'views', align: 'center' }
                 ],
+                auth: false,  // 새글작성 권한
           }  
         },
         created: function(){
-          console.log(this.circleName)
+          if(this.$session.getAll().president==this.circleName) this.auth =true;
+          else if(this.postType=="board" && this.$session.getAll().circles.indexOf(this.circleName)>-1) this.auth = true;
 
           if(this.postType=="notice") this.kind_head="공지사항"
           else if(this.postType="board") this.kind_head="게시판"
@@ -87,7 +89,13 @@
         },
         components:{
             headerBar
+        },
+        methods:{
+            onBack:function(){
+                history.back();
+            }
         }
+        
     }
 </script>
 

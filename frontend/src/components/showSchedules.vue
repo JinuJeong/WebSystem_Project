@@ -5,7 +5,7 @@
         <v-container class="container">
             
             <button>
-                <i class="material-icons" @click="$router.push('/circle/'+circleName)">
+                <i class="material-icons" @click="onBack">
                 keyboard_backspace
                 </i>
             </button>
@@ -66,7 +66,7 @@
                     </div>
                 
             </v-layout>
-            <v-btn v-if="plus==false" color="blue" @click="plus=true">일정 추가</v-btn>
+            <v-btn v-if="plus==false && auth==true" color="blue" @click="plus=true">일정 추가</v-btn>
             </div>
             <v-divider></v-divider>
             
@@ -187,10 +187,14 @@
                 { text: '삭제',  align: 'center' },
                 //{ text: '조회수', value: 'views', align: 'center' }
                 ],
+                auth:false,
+              
           }  
         },
         created: function(){
-          console.log(this.circleName)
+          if(this.$session.getAll().president==this.circleName) this.auth =true;
+          else if(this.postType=="board" && this.$session.getAll().circles.indexOf(this.circleName)>-1) this.auth = true;
+
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/schedule").then((data)=>{
                     
                     for(let i=0;i<data.data.length;i++){
@@ -201,6 +205,7 @@
                         ,"scheduleId":data.data[i].scheduleId
                         }
                         this.schedulelists.push(date)
+                        
                     }
                     console.log(this.schedulelists[0]);
                     
@@ -216,6 +221,9 @@
                 }
                 return 0;
                 
+            },
+            onBack: function(){
+                history.back()
             },
             onSubmit:function(){
                 this.$http.post("http://localhost:8000/circle/"+this.circleName+"/schedule/create",
@@ -241,11 +249,14 @@
                 this.scheduleId=scheduleId;
             },
             onDelete:function(scheduleId){
-                
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/schedule/delete",{"scheduleId":scheduleId})
-                .then((data)=>{
-                    window.location.reload()
-                    return;
+                this.$http.get("http://localhost:8000/circle/"+this.circleName+"/schedule/"+scheduleId).then((data)=>{
+                    this.$http.post("http://localhost:8000/recovery",data.data).then(()=>{
+                        this.$http.post("http://localhost:8000/circle/"+this.circleName+"/schedule/delete",{"scheduleId":scheduleId})
+                        .then(()=>{
+                            window.location.reload()
+                            return;
+                        })
+                    })
                 })
             },
             // 데이트 설정 갯수 제안

@@ -3,6 +3,7 @@
         <!--항상 상단에 떠있는 bar-->
         <header-bar></header-bar>
 
+
         <!--바탕이 되는 container-->
         <div class="centered-container">
             <h1 class="jg ajou-title"> 동아리/소학회 정보 </h1>
@@ -62,8 +63,8 @@
                         <v-btn color="blue-grey lighten-1" bottom  :to="'/circle/' + circle.name" style="width : 45%; margin : auto">
                             <p class="circle_button">더 자세히</p>
                         </v-btn>
-                        <v-btn color="blue-grey lighten-1" bottom style="width : 45%; margin : auto">
-                            <p class="circle_button" v-on:click="check=true; signcircle=circle">가입 신청</p>
+                        <v-btn v-on:click="check=true; signcircle=circle" color="blue-grey lighten-1" bottom style="width : 45%; margin : auto">
+                            <p class="circle_button">가입 신청</p>
                         </v-btn>
                     </v-card-actions>
                     <md-dialog-confirm
@@ -161,9 +162,8 @@
             circleSignup(){
                 this.$router.push('/circlesignup')
             },
-            onCheck: async function() {
-                await this.userSignup()
-                this.check = false
+            onCheck: function() {
+                this.userSignup()
             },
             onCancle: function(){
                 this.check = false

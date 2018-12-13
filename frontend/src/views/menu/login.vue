@@ -86,9 +86,20 @@
                     this.$session.start()
                     this.$session.set('username', res.data.name)
                     this.$session.set('userDepartment', res.data.department)
+                    let circles=new Array();
+                    this.$http.get("http://localhost:8000/user/find/user/"+this.login.ID).then((data)=>{
+                        let user = data.data
+                        console.log(user)
+                        for(let i =0; i<user.circles.length;i++){
+                            if(user.circles[i].president.ID==this.login.ID) this.$session.set('president',user.circles[i].name);
+                            circles.push(user.circles[i].name)
+                        }
+                        this.$session.set('circles',circles);
+                        this.$router.push('/');
+                    })
                     
-                    this.$router.push('/')
                 })
+                
             }
         }
     };
