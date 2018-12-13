@@ -152,7 +152,7 @@
                         <v-btn round color="blue" large v-on:click="change3=false" v-if="change3==true">
                             <p class="circle_button">수정 취소</p>
                         </v-btn>                               
-                        <v-btn round color="blue" large  v-if="change3==true">
+                        <v-btn round color="blue" large v-on:click="change3=false" v-if="change3==true">
                             <p class="circle_button">수정 완료</p>
                         </v-btn>                  
                     </v-card-actions>

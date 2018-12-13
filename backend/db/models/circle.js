@@ -2,26 +2,25 @@ const { mongoose, autoIncrement} = require('../mongo')
 const userModel = require('./user')
 
 const circleSchema = mongoose.Schema({
+    auth: {type: Boolean, default: false},
     circleNum: {
         type: Number,
         unique: true
     },
-    name: {type: String, unique: true},
-    party: {type: String},
-    roomExistence: {type: Boolean},
+    name: {type: String, unique: true, required: true},
+    party: {type: String, required: true},
+    roomExistence: {type: Boolean, required: true},
     roomLocation: {type: Number},
-    president: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
-    vicePresident: {type: mongoose.Schema.Types.ObjectId},
-    professor: {type: String},
-    memberNumber: {type: Number},
+    president: {type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true},
+    professor: {type: String, required: true},
+    memberNumber: {type: Number, required: true},
     members: [{
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
         circleAuth: {type: Boolean, default: false}
     }],
-    concept: {type: String},
-    introduce: {type: String},
-    othersAccept: {type: Boolean},
-
+    concept: {type: String, required: true},
+    introduce: {type: String, required: true},
+    othersAccept: {type: Boolean, required: true},
 });
 
 circleSchema.plugin(autoIncrement, {

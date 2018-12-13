@@ -100,12 +100,13 @@
                         <md-button class="md-raised md-primary md-alignment-center" v-on:click="check=true">등록</md-button>
                         <md-button class="md-raised md-primary" href="/">홈으로</md-button>
                     </div>
+            {{err}}
             </md-content>
         </div>
         <md-dialog-confirm
         :md-active.sync="check"
         md-title="Check"
-        md-content="정말 동아리를 등록하시겠습니까?"
+        md-content="동아리는 관리자의 승인 후 웹페이지에 등록됩니다."
         md-confirm-text="Check"
         md-cancel-text="Cancle"
         @md-cancel="onCancel"
@@ -122,10 +123,12 @@ export default {
             circle: {},
             president: {},
             exist: "",
+            exist_num: 0,
             name: null,
             autogrow: null,
             check: false,
             concept: [],
+            err: Number,
         }
     },
     components: {
@@ -136,11 +139,27 @@ export default {
             this.circle = {name: this.name, party: this.department, memberNumber: this.number
             , concept: this.concept, introduce: this.introduce, president: this.president, professor: this.professor
             , roomExistence: this.roomExistence, othersAccept: this.othersAccept}
-            this.$http.post('http://localhost:8000/circle/register', this.circle) 
+            this.$http.post('http://localhost:8000/circle/register', this.circle).then((res) => {
+                if(res.data === "err")
+                    this.err = 1
+                else
+                    this.err = 0
+            }).then(() => {
+                if(this.err == 0)
+                    this.$router.push('/circles')
+                
+                if(this.exist_num == 0){
+                    alert("회장을 입력해주세요.")
+                    onCancle()
+                }
+                else if(this.err == 1){
+                    alert("양식을 모두 작성해주세요.")
+                    onCancle();
+                }
+            })
         },
-        onCheck: async function() {
-            await this.register()
-            await this.$router.push('/circles')
+        onCheck: function() {
+                this.register()
         },
         onCancle: function() {
             this.check = false
@@ -149,14 +168,17 @@ export default {
             this.$http.get('http://localhost:8000/user/find/' + this.presidentin).then((res) => {
                 this.president = res.data
             }).then(() => {
-                if(this.president)
+                if(this.president){
                     this.exist = "위 아이디로 회원이 등록되어 있습니다."
-                else
+                    this.exist_num = 1
+                }
+                else{
                     this.exist = "해당하는 아이디가 존재하지 않습니다."
+                    this.exist_num = 0
+                }
             })
         }
     }
-
 }
 </script>
 

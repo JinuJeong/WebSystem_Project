@@ -172,7 +172,12 @@ router.post('/send/search', (req, res) => {
 router.post('/register', (req, res) => {
    console.log(req.body)
    circleModel.create(req.body).then((circle) => {
+       userModel.update({"ID":req.body.president})
+       console.log("동아리 신청 완료")
        res.send(circle)
+   }).catch((err) => {
+       console.log("err")
+       res.send("err")
    })
 });
 
@@ -183,19 +188,6 @@ router.get('/find/:name', (req, res) => {
        res.send(circle)
    })
 });
-/*
-router.get('/send/:name', (req, res) => {
-    console.log(req.params.name)
-    circlename = req.params.name
-    circleModel.find().populate('president').exec((err, data) => {
-        console.log(data)
-    })
-    circleModel.findOne({name: circlename}).populate('president').exec((err, data) => {
-        console.log("회장이름 갑니다."+ data.president.name)
-        res.send(data.president.name)
-    })
-})
-*/
 
 // Schedule Part
 router.get('/:circleName/schedule',(req,res)=>{
@@ -331,10 +323,9 @@ router.post('/:name/signupCircle', (req, res) => {
     })
 })
 
-router.post('/:name/accept', (req, res) => { //동아리 승인
+router.post('/:name/accept', (req, res) => { //동아리 가입 승인
     var name = req.params.name // 동아리 이름
-    var user                 // req.body user 정보
-    var _id
+
     circleModel.findOne({name}).populate('members.user').exec().then((circle) => {
         for(var i = 0; i < circle.members.length; i++){
             console.log(circle.members[i].user.name)
@@ -370,4 +361,28 @@ router.post('/:name/reject', (req, res) => {
         res.end()
     })
 })
+
+router.post('/:circleName/acceptCircle', (req, res) => {
+    var circleName = req.params.circleName
+
+    circleModel.findOne({"name": circleName}).then((circle) => {
+        circle.auth = true
+        circle.save()
+        console.log("동아리 신청 승인 완료")
+    }).then(() => {
+        res.end()
+    })
+});
+
+router.post('/:circleName/rejectCircle', (req, res) => {
+    var circleName = req.params.circleName
+    
+    circleModel.deleteOne({"name": circleName}).then(() => {
+        console.log("동아리 DB에서 삭제완료")
+    }).then(() => {
+        res.end()
+    })
+});
+
+
 module.exports = router;

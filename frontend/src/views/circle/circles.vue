@@ -114,7 +114,12 @@
         name: 'circles',
         created (){
             this.$http.get('http://localhost:8000/circle/send').then((res) => {
-                this.circles = res.data
+                this.allCircles = res.data
+            }).then(() => {
+                for(var i = 0; i < this.allCircles.length; i++){
+                    if(this.allCircles[i].auth == true)
+                        this.circles.push(this.allCircles[i])
+                }
             })
             this.userName = this.$session.getAll().username
             this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {
@@ -133,6 +138,7 @@
                 search_select : null,
 
                 items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+                allCircles: [],
                 circles: [],
                 signcircle: {},
                 user: {},
@@ -177,7 +183,10 @@
                         this.$http.post('http://localhost:8000/circle/' + this.signcircle.name + '/signupCircle/', this.user)
                     }
                     else{
-                        alert("이미 동아리에 가입하셨습니다.")
+                        if(this.$session.exists())
+                            alert("이미 동아리에 가입하셨습니다.")
+                        else
+                            alert("로그인해주세요.")
                     }
                 })
             },
