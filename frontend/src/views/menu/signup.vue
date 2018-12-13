@@ -15,8 +15,9 @@
                                         placeholder="please write email address"
                                         :rules="emailRules"></v-text-field>
                         </v-flex>
-
+                     <v-btn @click="onDup">중복 확인</v-btn>
                     </v-layout>
+                   
                     <v-layout>
                         <v-flex style="margin-right : 3%; margin-bottom : 3%;">
                             <v-text-field
@@ -29,6 +30,16 @@
                         </v-flex>
                     </v-layout>
 
+                    <v-layout>
+                        <v-flex style="margin-right : 3%; margin-bottom : 3%;">
+                            <v-text-field
+                                    label="studentId"
+                                    v-model="studentId"
+                                    type="number"
+                                    placeholder="studentId"
+                            ></v-text-field>
+                        </v-flex>
+                    </v-layout>
                     <v-layout>
                         <v-flex style="margin-right : 3%;">
                             <v-text-field label="이름" v-model="name" type="text" placeholder="name"></v-text-field>
@@ -163,7 +174,7 @@
             call        : null,
             nickname    : null,
             selectedInterest : [],
-
+            studentId : null,
             fail        : false,
             check       : false,
 
@@ -180,15 +191,18 @@
         methods:{
             signup:function(){
                 this.$http.post("http://localhost:8000/user/signup",
-                    {"ID":this.id, "password":this.password, "name":this.name, "department":this.department,
+                    {"ID":this.id, "password":this.password, "name":this.name, "department":this.department,"studentId":this.studentId,
                      "nickname":this.nickname, "call":this.call, "interest": this.selectedInterest, "birth": this.birth}).
                 then((res)=>{
-                        console.log(res);
-
-                        if(res.data.errmsg){
-                            this.fail = true;
-                            return res.status;
-                }
+                        
+                        if(res.data.errors){
+                            let errors = res.data.errors
+                            for(let error in errors){
+                                alert(error+"를 입력해주세요")
+                                return ;
+                            }
+                            return ;
+                        }
                         else{
                             this.$router.push('/login');
                         }
@@ -200,6 +214,17 @@
             },
             onCancle: function(){
                 return 0;
+            },
+            onDup: function(){
+                this.$http.get("http://localhost:8000/user/dup/"+this.id).then((data)=>{
+                    console.log(data.data)
+                    if(!data.data){
+                        alert("사용가능한 아이디입니다.")
+                    }
+                    else{
+                        alert("중복된 아이디입니다.")
+                    }
+                })
             }
         }
 

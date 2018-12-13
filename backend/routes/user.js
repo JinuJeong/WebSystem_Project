@@ -14,10 +14,6 @@ router.get('/send', (req, res) => {
     })
 });
 
-router.post('/create', (req, res) => {
-
-});
-
 router.get('/find/:name', (req, res) => {
    var name = req.params.name
 
@@ -33,6 +29,12 @@ router.get('/find/user/:userId',(req,res)=>{
     }).exec().then((user)=>{
         console.log(user.circles[0])
         res.send(user)
+    })
+})
+
+router.get('/dup/:userId',(req,res)=>{
+    userModel.findOne({"ID":req.params.userId}).then((data)=>{
+        res.send(data)
     })
 })
 
@@ -73,10 +75,9 @@ router.post('/signup',(req,res)=>{
                 
             }
         });
-        res.send(data)
+        res.send("ok")
     }).catch((err)=>{
-        console.log(err)
-        res.send(err)
+        res.send(err);
     })
 });
 

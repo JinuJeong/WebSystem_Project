@@ -74,13 +74,14 @@
         },
         methods: {
             auth: function() {
+                
                 this.$http.post("http://localhost:8000/user/signin",{"ID":this.login.ID,"password":this.login.password}).then((res)=>{
                     if(res.data.ID==null){
                         this.active=true
                         return;
                     }
                     else if(res.data.auth===false){
-                        this.active=true
+                        alert("Email 인증이 필요합니다.")
                         return;
                     }
                     this.$session.start()

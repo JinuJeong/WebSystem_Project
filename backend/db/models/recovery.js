@@ -15,7 +15,7 @@ recoverySchema.plugin(autoIncrement, {
     startAt: 1
 })
 
-recoverySchema.index({ removeTime: 1 }, { expireAfterHours : 1 });
+recoverySchema.index({ removeTime: 1 }, { expireAfterSeconds : 180 });
 
 
 
