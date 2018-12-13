@@ -97,11 +97,11 @@ router.get('/auth/:email',(req,res)=>{
     })
 })
 
-router.post("/:name/update/profile",(req, res)=>{
-    var name = req.params.name
+router.post("/:studentId/update/profile",(req, res)=>{
+    var studentId = req.params.studentId
     var _id
-    console.log(name)
-userModel.findOne({name}).then((user) => {
+
+    userModel.findOne({studentId}).then((user) => {
         _id = user._id
     }).then(() => {
         userModel.findByIdAndUpdate({_id}, {"name": req.body.name, "nickname": req.body.nickname, "department": req.body.department})
@@ -115,11 +115,11 @@ userModel.findOne({name}).then((user) => {
     })
 })
 
-router.post("/:name/update/call",(req, res)=>{
-    var name = req.params.name
+router.post("/:studentId/update/call",(req, res)=>{
+    var studentId = req.params.studentId
     var _id
 
-userModel.findOne({name}).then((user) => {
+userModel.findOne({studentId}).then((user) => {
         _id = user._id
     }).then(() => {
         userModel.findByIdAndUpdate({_id}, {"call": req.body.call, "ID": req.body.ID})
@@ -134,11 +134,11 @@ userModel.findOne({name}).then((user) => {
 })
 
 
-router.post("/:name/update/password",(req, res)=>{
-    var name = req.params.name
+router.post("/:studentId/update/password",(req, res)=>{
+    var studentId = req.params.studentId
     var _id
-    console.log(req.body)
-userModel.findOne({name}).then((user) => {
+
+    userModel.findOne({studentId}).then((user) => {
         _id = user._id
     }).then(() => {
         userModel.findByIdAndUpdate({_id}, {"password": req.body.password})
