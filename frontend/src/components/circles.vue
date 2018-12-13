@@ -197,7 +197,7 @@ import headerBar from './header.vue'
 
 export default {
     created () {//혹시 안 되면 서버 껐다 켜봐라
-        this.$http.get('http://localhost:8000/circle/send').then((res) => {
+        this.$http.get('http://adong.cf:8000/circle/send').then((res) => {
             this.circles = res.data
         })
     },

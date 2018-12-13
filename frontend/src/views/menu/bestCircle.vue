@@ -41,7 +41,7 @@
           }  
         },
         created: function(){
-          this.$http.get("http://localhost:8000/circle/active/get").then((data)=>{
+          this.$http.get("http://adong.cf:8000/circle/active/get").then((data)=>{
               let actives = data.data;
               let templist=[]
               for(let i =0; i<actives.length; i++){

@@ -99,7 +99,7 @@ export default{
         }
     },
     created : function(){
-        this.$http.get("http://localhost:8000/circle/"+this.circleName+"/group/"+this.groupId).then((data)=>{
+        this.$http.get("http://adong.cf:8000/circle/"+this.circleName+"/group/"+this.groupId).then((data)=>{
             console.log(data)
             let info=data.data
             this.title=info.title
@@ -143,7 +143,7 @@ export default{
             },
             onSubmit: function(){
                 if(this.groupId==undefined){
-                    this.$http.post("http://localhost:8000/circle/"+this.circleName+"/group/create",
+                    this.$http.post("http://adong.cf:8000/circle/"+this.circleName+"/group/create",
                     {"title":this.title,"contents":this.contents,"teacher":this.teacher,"maxNumber":this.maxNumber,
                     "circleName":this.circleName, "groupType":this.groupType,"start":this.date1,"end":this.date2})
                     .then((data)=>{
@@ -151,7 +151,7 @@ export default{
                     })
                 }
                 else{
-                    this.$http.post("http://localhost:8000/circle/"+this.circleName+"/group/update/"+this.groupId,
+                    this.$http.post("http://adong.cf:8000/circle/"+this.circleName+"/group/update/"+this.groupId,
                     {"title":this.title,"contents":this.contents,"teacher":this.teacher,"maxNumber":this.maxNumber,
                     "circleName":this.circleName, "groupType":this.groupType,"start":this.date1,"end":this.date2})
                     .then((data)=>{

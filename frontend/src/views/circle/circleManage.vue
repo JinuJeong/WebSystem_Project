@@ -66,7 +66,7 @@ export default{
         }
     },
     created: function (){
-        this.$http.get('http://localhost:8000/circle/find/' + this.circleName).then((res) => {
+        this.$http.get('http://adong.cf:8000/circle/find/' + this.circleName).then((res) => {
             this.circle = res.data
             for(var i = 0; i < res.data.members.length; i++){
                 if(res.data.members[i].circleAuth == true)
@@ -79,8 +79,8 @@ export default{
     },
     methods: {
         reject: function() {
-            this.$http.post('http://localhost:8000/circle/'+this.circleName+'/reject', this.userout).then(() => {
-                this.$http.post('http://localhost:8000/user/'+this.userout.studentId+'/reject', this.circle)
+            this.$http.post('http://adong.cf:8000/circle/'+this.circleName+'/reject', this.userout).then(() => {
+                this.$http.post('http://adong.cf:8000/user/'+this.userout.studentId+'/reject', this.circle)
             }).then(() => {
             this.$router.go(0)
             })

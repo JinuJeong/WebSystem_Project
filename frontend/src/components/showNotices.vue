@@ -80,7 +80,7 @@
           if(this.postType=="notice") this.kind_head="공지사항"
           else if(this.postType="board") this.kind_head="게시판"
 
-          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType).then((data)=>{
+          this.$http.get("http://adong.cf:8000/circle/"+this.circleName+"/board/"+this.postType).then((data)=>{
               for(let i=0;i<data.data.length;i++){
                 let date = data.data[i].date.split('T')[0]
                 let notice={"title":data.data[i].title,"contents":data.data[i].contents,

@@ -151,7 +151,7 @@
         },
         created: function(){
             console.log(this.date)
-            this.$http.get("http://localhost:8000/boards/"+this.postType+"/"+this.postNum).then((result)=>{
+            this.$http.get("http://adong.cf:8000/boards/"+this.postType+"/"+this.postNum).then((result)=>{
                 this.title = result.data.title
                 this.contents = result.data.contents
                 this.cmts = result.data.comment
@@ -177,16 +177,16 @@
             onDelete: function(){
                 this.recovery['kind']='board'
                 
-                this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{    
-                    this.$http.post("http://localhost:8000/boards/"+this.postType+"/delete",{"postNum":this.postNum}).then((data)=>{
+                this.$http.post("http://adong.cf:8000/recovery",this.recovery).then(()=>{    
+                    this.$http.post("http://adong.cf:8000/boards/"+this.postType+"/delete",{"postNum":this.postNum}).then((data)=>{
                         this.$router.push("/boards/"+this.postType);
                     })
                 })
             },
             onCmtSubmit: function(){
-                this.$http.post("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/cmtCreate",[{"postNum":this.postNum,
+                this.$http.post("http://adong.cf:8000/boards/"+this.postType+"/"+this.postNum+"/cmtCreate",[{"postNum":this.postNum,
                 "cmtContent":this.cmtContent,"author":this.userName,"circleName":"Home", "postType":this.postType}]).then((data)=>{
-                    this.$http.get("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/cmtLoad").then((result)=>{
+                    this.$http.get("http://adong.cf:8000/boards/"+this.postType+"/"+this.postNum+"/cmtLoad").then((result)=>{
                         this.cmts = result.data;
                         this.cmtContent = '';
                     })
@@ -194,8 +194,8 @@
             },
             onCmtDelete: function(){
                 console.log(this.date)
-                this.$http.post("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/cmtDelete/"+this._id).then((data)=>{
-                    this.$http.get("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/cmtLoad").then((result)=>{
+                this.$http.post("http://adong.cf:8000/boards/"+this.postType+"/"+this.postNum+"/cmtDelete/"+this._id).then((data)=>{
+                    this.$http.get("http://adong.cf:8000/boards/"+this.postType+"/"+this.postNum+"/cmtLoad").then((result)=>{
                         this.cmts = result.data;
                         this.cmtContent = '';
                     })
@@ -207,9 +207,9 @@
             onCmtChange: function(){
                 console.log(this.cmtContent)
                 this.isCmtChanging = '';
-                this.$http.post("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/cmtChange/"+this._id,
+                this.$http.post("http://adong.cf:8000/boards/"+this.postType+"/"+this.postNum+"/cmtChange/"+this._id,
                 {"cmtContent":this.cmtContent}).then((data)=>{
-                    this.$http.get("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/cmtLoad").then((result)=>{
+                    this.$http.get("http://adong.cf:8000/boards/"+this.postType+"/"+this.postNum+"/cmtLoad").then((result)=>{
                         this.cmts = result.data;
                         this.cmtContent = '';
                     })
@@ -217,7 +217,7 @@
             },
             cmtChangeCancel: function(){
                 this.isCmtChanging = '';
-                this.$http.get("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/cmtLoad").then((result)=>{
+                this.$http.get("http://adong.cf:8000/boards/"+this.postType+"/"+this.postNum+"/cmtLoad").then((result)=>{
                     this.cmts = result.data;
                     this.cmtContent = '';
                 })

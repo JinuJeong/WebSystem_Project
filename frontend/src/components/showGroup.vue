@@ -60,7 +60,7 @@
         },
         created: function(){
                     
-                    this.$http.get("http://localhost:8000/circle/"+this.circleName+"/group/"+this.groupId).then((data)=>{
+                    this.$http.get("http://adong.cf:8000/circle/"+this.circleName+"/group/"+this.groupId).then((data)=>{
                         let info=data.data
                         this.title=info.title
                         this.datalist=[info.title,info.start.substr(0,10),info.end.substr(0,10),info.circleName,info.groupType,
@@ -84,8 +84,8 @@
             },
             onDelete: function(){
                 this.recovery['kind'] = "group"
-                this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{
-                    this.$http.post("http://localhost:8000/circle/"+this.circleName+"/group/delete/"+this.groupId).then(()=>{
+                this.$http.post("http://adong.cf:8000/recovery",this.recovery).then(()=>{
+                    this.$http.post("http://adong.cf:8000/circle/"+this.circleName+"/group/delete/"+this.groupId).then(()=>{
                         this.$router.push("/circle/"+this.circleName);
                     })
                 })

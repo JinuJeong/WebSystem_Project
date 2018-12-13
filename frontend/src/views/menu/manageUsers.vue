@@ -212,7 +212,7 @@ export default {
     },
     methods: {
         fetchData() {
-            this.$http.get("http://localhost:8000/user/send").then((result)=>{
+            this.$http.get("http://adong.cf:8000/user/send").then((result)=>{
                 this.users=result.data
             })
             if(this.$session.getAll().admin==false) router.push('/NotFound')
@@ -232,7 +232,7 @@ export default {
                this.modify=true;
         },
         onDup: function(){
-                this.$http.get("http://localhost:8000/user/dup/"+this.id).then((data)=>{
+                this.$http.get("http://adong.cf:8000/user/dup/"+this.id).then((data)=>{
                     
                     if(!data.data){
                         alert("사용가능한 아이디입니다.")
@@ -249,7 +249,7 @@ export default {
                     alert("중복확인 해주세요");
                     return ;
                 }
-                this.$http.post("http://localhost:8000/user/update/"+this.user.studentId,this.user).
+                this.$http.post("http://adong.cf:8000/user/update/"+this.user.studentId,this.user).
                 then((res)=>{
                         
                         if(res.data.errors){
@@ -268,7 +268,7 @@ export default {
             
         },
         onDelete: function(userstudentId){
-            this.$http.delete('http://localhost:8000/user/' + userstudentId + '/delete')
+            this.$http.delete('http://adong.cf:8000/user/' + userstudentId + '/delete')
                 .then((res) => {
                     alert("삭제 되었습니다.")
                     window.location.reload();                    

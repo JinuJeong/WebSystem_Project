@@ -77,7 +77,7 @@ router.post('/signup',(req,res)=>{
             to: email ,                     // 수신 메일 주소
             subject: '안녕하세요, A-Dong입니다. 이메일 인증을 해주세요.',   // 제목
             html: '<p>아래의 링크를 클릭해주세요 !</p>' +
-          "<a href='http://localhost:8000/user/auth/"+email+"'>인증하기</a>"
+          "<a href='http://adong.cf:8000/user/auth/"+email+"'>인증하기</a>"
         };
 
         transporter.sendMail(mailOptions, function(error, info){

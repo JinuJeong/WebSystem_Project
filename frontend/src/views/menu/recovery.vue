@@ -95,7 +95,7 @@ export default {
     },
     methods: {
         fetchData() {
-            this.$http.get("http://localhost:8000/recovery/get").then((data)=>{
+            this.$http.get("http://adong.cf:8000/recovery/get").then((data)=>{
                 let info =data.data
                 let contents
                 
@@ -120,7 +120,7 @@ export default {
                 }
             }
 
-            this.$http.post("http://localhost:8000/recovery/restore",restore).then(()=>{
+            this.$http.post("http://adong.cf:8000/recovery/restore",restore).then(()=>{
                 window.location.reload()
             })
         },

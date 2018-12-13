@@ -47,7 +47,7 @@
           else if(this.$session.getAll().president==this.circleName) this.auth =true;
           else if(this.postType=="board" && this.$session.getAll().circles.indexOf(this.circleName)>-1) this.auth = true;
 
-          this.$http.get("http://localhost:8000/circle/Home/active").then((data)=>{
+          this.$http.get("http://adong.cf:8000/circle/Home/active").then((data)=>{
               for(let i=0;i<data.data.length;i++){
                 let start = data.data[i].start.split('T')[0]
                 let end = data.data[i].start.split('T')[0]
