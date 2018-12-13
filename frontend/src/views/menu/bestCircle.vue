@@ -28,6 +28,12 @@
                     </div>
                 </v-card-title>
             </v-card>
+            <bars
+                :data="actives[active['index']]"
+                :gradient="['#ffbe88', '#ff93df']"
+                :barWidth="5"
+                :growDuration="1">
+            </bars>
             </v-flex>
             </v-layout>
             
@@ -43,6 +49,7 @@
           return{
                 circleName: this.$route.params.circleName,
                 activelist: [],
+                actives: [],
                 images: [],
                 auth: false,
                 progress: true,
@@ -51,9 +58,11 @@
         created: function(){
           this.$http.get("http://adong.cf:8000/circle/active/get").then((data)=>{
               let actives = data.data;
-              let templist=[]
+              let templist=[];
+            console.log(data.data)
               for(let i =0; i<actives.length; i++){
                   if(!(actives[i].circleName in templist)){
+                      this.actives.push([])
                       let obj = {"num_members": actives[i].members.length,"num_actives":1}
                       templist[actives[i].circleName] = obj
                   }else{
@@ -70,7 +79,16 @@
               
               for(let i =0; i<sortlist.length&& i<5;i++){
                   templist[sortlist[i]]["name"]=sortlist[i];
+                  templist[sortlist[i]]["index"]=i;
                   this.activelist.push(templist[sortlist[i]]);
+                  this.actives.push([]);
+                  this.actives[i].push(0)
+                  for(let j=0; j<actives.length; j++){
+                      if(templist[sortlist[i]]["name"]==actives[j].circleName){
+                        this.actives[i].push(actives[j].members.length)
+                      }
+                  }
+                  console.log(this.actives)
               }
               
               
