@@ -48,7 +48,8 @@
                     </v-card>
                 </div>
                 <div class="text-xs-right">
-                    <v-btn v-if="match==true"  @click="$router.push('/boards/'+boardName+'/manage_notice/create')">새 글 작성</v-btn>
+                    <v-btn v-if="boardName == 'notice'&&match==true" dark @click="$router.push('/boards/'+boardName+'/manage_notice/create')">새 글 작성</v-btn>
+                    <v-btn v-if="boardName == 'board'" dark @click="$router.push('/boards/'+boardName+'/manage_notice/create')">새 글 작성</v-btn>
                 </div>
             </v-flex>
         </v-container>
@@ -67,7 +68,7 @@ export default {
         widgets: false,
         checkbox: true,
         search: '',
-        math: false,
+        match: false,
         boardName: this.$route.params.boardName,
         headers: [
           { text: '번호', value: 'postNum', align: 'center' /*,sortable: false*/ },

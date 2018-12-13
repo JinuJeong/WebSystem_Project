@@ -23,22 +23,38 @@
             </v-list>
             <v-divider/>
             <div v-for="cmt in cmts" v-bind:key="cmt._id">
-                <v-textarea
-                    readonly
-                    auto-grow
-                    box
-                    :label="cmt.author"
-                    v-model="cmt.cmtContent"
-                    class="textarea"
-                    rows="1"
-                />
-                <v-btn flat small color="inherit" class="button" @click="_id=cmt._id; onCmtDelete();">댓글 삭제</v-btn>
+                <div v-if="isCmtChanging!=cmt._id">
+                    <v-textarea
+                        readonly
+                        auto-grow
+                        box
+                        :label="cmt.author"
+                        v-model="cmt.cmtContent"
+                        class="textarea"
+                        rows="1"
+                    />
+                    <v-btn flat small color="inherit" class="button" @click="_id=cmt._id; setIsCmtChanging();">댓글 수정</v-btn>
+                    <v-btn flat small color="inherit" class="button" @click="_id=cmt._id; onCmtDelete();">댓글 삭제</v-btn>
+                </div>
+                <div v-else>
+                    <v-textarea
+                        auto-grow
+                        box
+                        :label="cmt.author"
+                        v-model="cmt.cmtContent"
+                        color="blue"
+                        class="textarea"
+                        rows="1"
+                    />
+                    <v-btn flat small color="inherit" class="button" @click="_id=cmt._id; cmtContent=cmt.cmtContent; onCmtChange();">수정 완료</v-btn>
+                    <v-btn flat small color="inherit" class="button" @click="_id=cmt._id; cmtChangeCancel();">취소</v-btn>
+                </div>
             </div>
             <v-textarea
                 outline
                 auto-grow
                 v-model="cmtContent"
-                counter="10"
+                color="blue"
                 class="textarea"
                 rows="1"
                 placeholder="새 댓글 작성"
@@ -66,7 +82,8 @@
                 userName: this.$session.getAll().username,
                 recovery: "",
                 cmts: [],
-                _id: ""
+                _id: "",
+                isCmtChanging: ""
             }
         },
         created: function(){
@@ -115,6 +132,27 @@
                         this.cmts = result.data;
                         this.cmtContent = '';
                     })
+                })
+            },
+            setIsCmtChanging: function(){
+                this.isCmtChanging = this._id;
+            },
+            onCmtChange: function(){
+                console.log(this.cmtContent)
+                this.isCmtChanging = '';
+                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtChange/"+this._id,
+                {"cmtContent":this.cmtContent}).then((data)=>{
+                    this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtLoad").then((result)=>{
+                        this.cmts = result.data;
+                        this.cmtContent = '';
+                    })
+                })
+            },
+            cmtChangeCancel: function(){
+                this.isCmtChanging = '';
+                this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtLoad").then((result)=>{
+                    this.cmts = result.data;
+                    this.cmtContent = '';
                 })
             }
         }

@@ -68,3 +68,11 @@ router.post("/:boardName/:postNum/cmtDelete/:_id", (req, res, next) => {
         res.send("ok");
     })
 })
+
+router.post("/:boardName/:postNum/cmtChange/:_id", (req, res, next) => {
+    console.log(req.body.cmtContent)
+    boardModel.updateOne({ "postNum": req.params.postNum, "comment._id": req.params._id },
+    {"comment.$.cmtContent": req.body.cmtContent}).then((data) => {
+        res.send("ok");
+    })
+})
