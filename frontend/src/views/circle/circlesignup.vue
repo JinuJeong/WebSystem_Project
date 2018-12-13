@@ -108,8 +108,8 @@
         md-title="Check"
         md-content="동아리는 관리자의 승인 후 웹페이지에 등록됩니다."
         md-confirm-text="Check"
-        md-cancel-text="Cancle"
-        @md-cancel="onCancel"
+        md-cancle-text="Cancle"
+        @md-cancle="onCancle"
         @md-confirm="onCheck" />
     </div>
 </template>
@@ -129,6 +129,13 @@ export default {
             check: false,
             concept: [],
             err: Number,
+            introduce: "",
+            othersAccept: "",
+            roomExistence: "",
+            number: "",
+            presidentin: "",
+            professor: "",
+            department: "",
         }
     },
     components: {
@@ -166,6 +173,7 @@ export default {
         },
         find: function () {
             this.$http.get('http://localhost:8000/user/find/' + this.presidentin).then((res) => {
+                console.log(res.data)
                 this.president = res.data
             }).then(() => {
                 if(this.president){

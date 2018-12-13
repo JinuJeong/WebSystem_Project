@@ -147,8 +147,8 @@
             md-title="Check"
             md-content="가입한 이메일을 통해 이메일 인증을 진행해 주세요."
             md-confirm-text="Check"
-            md-cancel-text="Cancle"
-            @md-cancel="onCancel"
+            md-cancle-text="Cancle"
+            @md-cancle="onCancle"
             @md-confirm="onCheck" />
         </div>
     </div>
