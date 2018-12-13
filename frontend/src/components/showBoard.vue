@@ -59,7 +59,7 @@
                 rows="1"
                 placeholder="새 댓글 작성"
             />
-            <v-btn flat small color="inherit" :disabled="cmtContent==''" @click="onCmtSubmit">댓글 작성</v-btn>            
+            <v-btn flat small color="inherit" :disabled="cmtContent==''" @click="onCmtSubmit">댓글 작성</v-btn>      
         </div>
         </v-container>
     </div>
@@ -78,7 +78,7 @@
                 match: false,
                 cmtMatch: false,
                 cmtContent: "",
-                boardName: this.$route.params.boardName,
+                postType: this.$route.params.postType,
                 userName: this.$session.getAll().username,
                 recovery: "",
                 cmts: [],
@@ -88,7 +88,7 @@
         },
         created: function(){
             console.log(this.date)
-            this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum).then((result)=>{
+            this.$http.get("http://localhost:8000/boards/"+this.postType+"/"+this.postNum).then((result)=>{
                 this.title = result.data.title
                 this.contents = result.data.contents
                 this.cmts = result.data.comment
@@ -102,24 +102,24 @@
         },
         methods:{
             onEdit: function(){
-                this.$router.push("/boards/"+this.boardName+"/manage_notice/"+this.postNum);
+                this.$router.push("/boards/"+this.postType+"/manage_notice/"+this.postNum);
             },
             onClear: function(){
-                this.$router.push("/boards/"+this.boardName);
+                this.$router.push("/boards/"+this.postType);
             },
             onDelete: function(){
                 this.recovery['kind']='board'
                 
                 this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{    
-                    this.$http.post("http://localhost:8000/boards/"+this.boardName+"/delete",{"postNum":this.postNum}).then((data)=>{
-                        this.$router.push("/boards/"+this.boardName);
+                    this.$http.post("http://localhost:8000/boards/"+this.postType+"/delete",{"postNum":this.postNum}).then((data)=>{
+                        this.$router.push("/boards/"+this.postType);
                     })
                 })
             },
             onCmtSubmit: function(){
-                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtCreate",[{"postNum":this.postNum,
-                "cmtContent":this.cmtContent,"author":this.userName,"circleName":"Home", "postType":this.boardName}]).then((data)=>{
-                    this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtLoad").then((result)=>{
+                this.$http.post("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/cmtCreate",[{"postNum":this.postNum,
+                "cmtContent":this.cmtContent,"author":this.userName,"circleName":"Home", "postType":this.postType}]).then((data)=>{
+                    this.$http.get("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/cmtLoad").then((result)=>{
                         this.cmts = result.data;
                         this.cmtContent = '';
                     })
@@ -127,8 +127,8 @@
             },
             onCmtDelete: function(){
                 console.log(this.date)
-                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtDelete/"+this._id).then((data)=>{
-                    this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtLoad").then((result)=>{
+                this.$http.post("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/cmtDelete/"+this._id).then((data)=>{
+                    this.$http.get("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/cmtLoad").then((result)=>{
                         this.cmts = result.data;
                         this.cmtContent = '';
                     })
@@ -140,9 +140,9 @@
             onCmtChange: function(){
                 console.log(this.cmtContent)
                 this.isCmtChanging = '';
-                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtChange/"+this._id,
+                this.$http.post("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/cmtChange/"+this._id,
                 {"cmtContent":this.cmtContent}).then((data)=>{
-                    this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtLoad").then((result)=>{
+                    this.$http.get("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/cmtLoad").then((result)=>{
                         this.cmts = result.data;
                         this.cmtContent = '';
                     })
@@ -150,7 +150,7 @@
             },
             cmtChangeCancel: function(){
                 this.isCmtChanging = '';
-                this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtLoad").then((result)=>{
+                this.$http.get("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/cmtLoad").then((result)=>{
                     this.cmts = result.data;
                     this.cmtContent = '';
                 })

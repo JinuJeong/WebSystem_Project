@@ -73,7 +73,7 @@ export default new Router({
             component: Schedules
         },
         {
-            path: '/boards/:boardName',
+            path: '/boards/:postType',
             component: Boards
         },
         {
@@ -117,11 +117,11 @@ export default new Router({
             component: mypage
         },
         {
-            path: '/boards/:boardName/manage_notice/:postNum',
+            path: '/boards/:postType/manage_notice/:postNum',
             component: manageBoard
         },
         {
-            path: '/boards/:boardName/show_notice/:postNum',
+            path: '/boards/:postType/show_notice/:postNum',
             component: showBoard
         },
         {
