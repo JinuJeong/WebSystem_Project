@@ -5,6 +5,7 @@ import Home from '../views/home/home'
 import NotFound from '../views/404'
 import SignUp from '../views/menu/signup'
 import Notice from '../views/menu/notice'
+import recovery from '../views/menu/recovery'
 import Schedules from '../views/menu/schedules'
 import Circles from '../views/circle/circles'
 import Circle from '../views/circle/circle'
@@ -25,6 +26,7 @@ import showActive from '../components/showActive'
 import manageActive from '../components/manageActive'
 import showActives from '../components/showActives'
 import personalActive from '../components/personalActive'
+
 
 import Vuetify from "vuetify";
 
@@ -60,6 +62,10 @@ export default new Router({
         {
             path: '/circles',
             component: Circles
+        },
+        {
+            path : '/recovery',
+            component: recovery
         },
         {
             path: '/schedules',

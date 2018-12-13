@@ -13,10 +13,7 @@
                 <form class="vue-form" @submit.prevent="submit">
                     <v-layout>
                         <v-flex style="margin-bottom : 3%;">
-                            <v-text-field
-                                label="동아리명"
-                                v-model="name"
-                            ></v-text-field>
+                            <v-text-field label="동아리명" v-model="name"></v-text-field>
                         </v-flex>
                     </v-layout>
 
@@ -25,8 +22,10 @@
                             <v-text-field label="지도 교수" v-model="professor" type="text"></v-text-field>
                         </v-flex>
                         <v-flex d-inline-flex>
-                            <v-text-field label="회장" v-model="presidentin" type="text" style="width:100%;"></v-text-field>
+                            <v-text-field label="회장 학번" v-model="presidentin" type="text" style="width:100%;"></v-text-field>
                             <v-btn v-on:click="find()" style="width:15%;">회장찾기</v-btn>
+                            {{this.president.ID}}
+                            {{exist}}
                         </v-flex>
                     </v-layout>
 
@@ -47,29 +46,29 @@
                             <label>소속 학과</label>
                                 <md-select v-model="department" name="department" id="department">
                                 <md-optgroup label="정보통신대학">
-                                    <md-option value="software">소프트웨어학과</md-option>
-                                    <md-option value="security">사이버보안학과</md-option>
-                                    <md-option value="electric">전자공학과</md-option>
-                                    <md-option value="media">미디어학과</md-option>
-                                    <md-option value="Defense_digital">국방디지털융합학과</md-option>
+                                    <md-option value="소프트웨어학과">소프트웨어학과</md-option>
+                                    <md-option value="사이버보안학과">사이버보안학과</md-option>
+                                    <md-option value="전자공학과">전자공학과</md-option>
+                                    <md-option value="미디어학과">미디어학과</md-option>
+                                    <md-option value="국방디지털학과">국방디지털융합학과</md-option>
                                 </md-optgroup>
                                 <md-optgroup label="공과대학">
-                                    <md-option value="mechanical">기계공학과</md-option>
-                                    <md-option value="Chemical">화학공학과</md-option>
-                                    <md-option value="environmental">환경공학과</md-option>
-                                    <md-option value="Advanced_Materials">신소재공학과</md-option>
+                                    <md-option value="기계공학과">기계공학과</md-option>
+                                    <md-option value="화학공학과">화학공학과</md-option>
+                                    <md-option value="환경공학과">환경공학과</md-option>
+                                    <md-option value="신소재공학과">신소재공학과</md-option>
                                 </md-optgroup>
                                 <md-optgroup label="자연과학대학">
-                                    <md-option value="mathematical">수학과</md-option>
-                                    <md-option value="Physics">물리학과</md-option>
+                                    <md-option value="수학과">수학과</md-option>
+                                    <md-option value="물리학과">물리학과</md-option>
                                 </md-optgroup>
                                 <md-optgroup label="경영대학">
-                                    <md-option value="business">경영학과</md-option>
-                                    <md-option value="e-business">e-business 학과</md-option>
+                                    <md-option value="경영학과">경영학과</md-option>
+                                    <md-option value="e-business 학과">e-business 학과</md-option>
                                 </md-optgroup>
                                 <md-optgroup label="인문대학">
-                                    <md-option value="korean">국어국문학과</md-option>
-                                    <md-option value="english">영어영문학과</md-option>
+                                    <md-option value="국어국문학과">국어국문학과</md-option>
+                                    <md-option value="영어영문학과">영어영문학과</md-option>
                                 </md-optgroup>
                                 <md-optgroup label="사회과학대학">
                                     <md-option value="Psychology">심리학과</md-option>
@@ -116,13 +115,14 @@
         <md-dialog-confirm
         :md-active.sync="check"
         md-title="Check"
-        md-content="정말 동아리를 등록하시겠습니까?"
+        md-content="동아리는 관리자의 승인 후 웹페이지에 등록됩니다."
         md-confirm-text="Check"
-        md-cancel-text="Cancle"
-        @md-cancel="onCancel"
+        md-cancle-text="Cancle"
+        @md-cancle="onCancle"
         @md-confirm="onCheck" />
     </div>
 </template>
+
 <script>
 import headerBar from '../../components/header'
     
@@ -133,13 +133,19 @@ export default {
             circle: {},
             president: {},
             exist: "",
+            exist_num: 0,
             name: null,
             autogrow: null,
             check: false,
             concept: [],
-            roomExistence : false,
-            othersAccept : false,
-            items: ['Foo', 'Bar', 'Fizz', 'Buzz']
+            err: Number,
+            introduce: "",
+            othersAccept: false,
+            roomExistence: false,
+            number: "",
+            presidentin: "",
+            professor: "",
+            department: "",
         }
     },
     components: {
@@ -150,27 +156,48 @@ export default {
             this.circle = {name: this.name, party: this.department, memberNumber: this.number
             , concept: this.concept, introduce: this.introduce, president: this.president, professor: this.professor
             , roomExistence: this.roomExistence, othersAccept: this.othersAccept}
-            this.$http.post('http://localhost:8000/circle/register', this.circle) 
+            this.$http.post('http://localhost:8000/circle/register', this.circle).then((res) => {
+                if(res.data === "err")
+                    this.err = 1
+                else
+                    this.err = 0
+            }).then(() => {
+                if(this.err == 0)
+                    this.$router.push('/circles')
+                
+                if(this.exist_num == 0){
+                    alert("회장을 입력해주세요.")
+                    this.onCancle()
+                }
+                else if(this.err == 1){
+                    alert("양식을 모두 작성해주세요.")
+                    onCancle();
+                }
+            })
         },
-        onCheck: async function() {
-            await this.register()
-            await this.$router.push('/circles')
+        onCheck: function() {
+                this.register()
         },
         onCancle: function() {
             this.check = false
         },
         find: function () {
-            this.$http.get('http://localhost:8000/user/find/' + this.presidentin).then((res) => {
+            console.log(this.presidentin)
+            this.$http.get('http://localhost:8000/user/findById/' + this.presidentin).then((res) => {
+                console.log(res.data)
                 this.president = res.data
             }).then(() => {
-                if(this.president)
+                if(this.president){
                     this.exist = "위 아이디로 회원이 등록되어 있습니다."
-                else
+                    this.exist_num = 1
+                }
+                else{
                     this.exist = "해당하는 아이디가 존재하지 않습니다."
+                    this.exist_num = 0
+                }
             })
         }
     }
-
 }
 </script>
 

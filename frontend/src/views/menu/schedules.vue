@@ -48,12 +48,12 @@
                                 <td class="text-xs-center" >{{ props.item.start }}</td>
                                 <td class="text-xs-center" >{{ props.item.end }}</td>
                                 <td class="text-xs-center" >{{ props.item.content }}</td>
-                                <td class="text-xs-center"  @click="onModify(props.item.start,props.item.end,props.item.content,props.item.scheduleId)">
+                                <td v-if="match==true" class="text-xs-center"  @click="onModify(props.item.start,props.item.end,props.item.content,props.item.scheduleId)">
                                     <md-button class="md-icon-button">
                                         <md-icon>edit</md-icon>
                                     </md-button>
                                 </td>
-                                <td class="text-xs-center" @click="onDelete(props.item.scheduleId)">
+                                <td v-if="match==true" class="text-xs-center" @click="onDelete(props.item.scheduleId)">
                                     <md-button class="md-icon-button">
                                         <md-icon>clear</md-icon>
                                     </md-button>
@@ -67,7 +67,7 @@
                     </div>
                 
             </v-layout>
-            <v-btn v-if="plus==false" color="blue" @click="plus=true">일정 추가</v-btn>
+            <v-btn v-if="plus==false && match==true" color="blue" @click="plus=true">일정 추가</v-btn>
             </div>
             <v-divider></v-divider>
             
@@ -166,6 +166,8 @@
     export default {
         data(){
           return{
+                match: false,
+                
                 circleName: this.$route.params.circleName,
                 schedulelists: [],
                 scheduleId: Number,
@@ -184,14 +186,17 @@
                 { text: '일정 시작', value: 'start', align: 'center'},
                 { text: '일정 마감', value: 'end', align: 'center' },
                 { text: '일정 내용', value: 'content', align: 'center'},
-                { text: '수정',  align: 'center' },
-                { text: '삭제',  align: 'center' },
+                
                 //{ text: '조회수', value: 'views', align: 'center' }
                 ],
           }  
         },
         created: function(){
-          console.log(this.circleName)
+          if(this.$session.getAll().admin==true) this.match=true
+          if(this.match==true){
+              this.headers.push({ text: '수정',  align: 'center' })
+              this.headers.push({ text: '삭제',  align: 'center' })
+          }
           this.$http.get("http://localhost:8000/circle/Home/schedule").then((data)=>{
                     
                     for(let i=0;i<data.data.length;i++){
@@ -242,11 +247,15 @@
                 this.scheduleId=scheduleId;
             },
             onDelete:function(scheduleId){
-                
-                this.$http.post("http://localhost:8000/boards/schedule/delete",{"scheduleId":scheduleId})
-                .then((data)=>{
-                    window.location.reload()
-                    return;
+                this.$http.get("http://localhost:8000/circle/Home/schedule/"+scheduleId).then((data)=>{
+                    data.data["kind"] = "schedule"
+                    this.$http.post("http://localhost:8000/recovery",data.data).then(()=>{
+                    this.$http.post("http://localhost:8000/circle/Home/schedule/delete",{"scheduleId":scheduleId})
+                    .then((data)=>{
+                        window.location.reload()
+                        return;
+                    })
+                })
                 })
             },
             // 데이트 설정 갯수 제안

@@ -74,18 +74,24 @@
         },
         methods: {
             auth: function() {
+                
                 this.$http.post("http://localhost:8000/user/signin",{"ID":this.login.ID,"password":this.login.password}).then((res)=>{
                     if(res.data.ID==null){
                         this.active=true
                         return;
                     }
                     else if(res.data.auth===false){
-                        this.active=true
+                        alert("Email 인증이 필요합니다.")
                         return;
                     }
                     this.$session.start()
+                    if (res.data.admin==true)
+                        this.$session.set('admin',true)
+                    else 
+                        this.$session.set('admin',false)
                     this.$session.set('username', res.data.name)
                     this.$session.set('userDepartment', res.data.department)
+                    this.$session.set('userstudentId', res.data.studentId)
                     let circles=new Array();
                     this.$http.get("http://localhost:8000/user/find/user/"+this.login.ID).then((data)=>{
                         let user = data.data

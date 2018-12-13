@@ -3,18 +3,17 @@
         <header-bar/>
         <br>
         <v-container class="container">
-            <v-flex style="width:100%;">
             <button>
             <i class="material-icons" @click="onBack()">
             keyboard_backspace
             </i>
             </button>
-            <h1 class="text-md-center">A-dong {{kind_head}}</h1>
+            <h1 class="text-md-center">복구</h1>
+            <v-flex style="width:100%;">
                 <div class="mt-5">
                     <v-card color="amber">
                         <v-card-title>
-                            <h2 v-if="boardName == 'notice'">공지사항</h2>
-                            <h2 v-else-if="boardName == 'board'">자유 게시판</h2>
+                            복구
                             <v-spacer/>
                             <v-text-field  
                                 v-model="search"
@@ -26,7 +25,7 @@
                         </v-card-title>
                         <v-data-table
                             :headers="headers"
-                            :items="boards"
+                            :items="recoverylist"
                             :search="search"
                             disable-initial-sort
                             class="elevation-1"
@@ -36,10 +35,17 @@
                             :rows-per-page-items="[10]"
                         >
                             <template slot="items" slot-scope="props">
-                                <td class="text-xs-center" @click="$router.push('/boards/'+boardName+'/show_notice/'+props.item.postNum)">{{ props.item.postNum }}</td>
-                                <td class="text-xs-center" @click="$router.push('/boards/'+boardName+'/show_notice/'+props.item.postNum)">{{ props.item.title }}</td>
-                                <td class="text-xs-center" @click="$router.push('/boards/'+boardName+'/show_notice/'+props.item.postNum)">{{ props.item.author }}</td>
-                                <td class="text-xs-center" @click="$router.push('/boards/'+boardName+'/show_notice/'+props.item.postNum)">{{ props.item.date }}</td>
+                                <td class="text-xs-center" >{{ props.item.recoveryId }}</td>
+                                <td class="text-xs-center" >{{ props.item.kind }}</td>
+                                <td class="text-xs-center" >{{ props.item.title }}</td>
+                                <td class="text-xs-center" >{{ props.item.contents }}</td>
+                                <td class="text-xs-center" >{{ props.item.author }}</td>
+                                <td class="text-xs-center" >{{ props.item.removeTime }}</td>
+                                <td class="text-xs-center"  @click="onRecovery(props.item.recoveryId)">
+                                    <md-button class="md-icon-button">
+                                        <md-icon>restore</md-icon>
+                                    </md-button>
+                                </td>
                             </template>
                             <v-alert slot="no-results" :value="true" color="black--text" icon="warning">
                                 Your search for "{{ search }}" found no results.
@@ -47,9 +53,7 @@
                         </v-data-table>
                     </v-card>
                 </div>
-                <div class="text-xs-right">
-                    <v-btn v-if="match==true"  @click="$router.push('/boards/'+boardName+'/manage_notice/create')">새 글 작성</v-btn>
-                </div>
+                
             </v-flex>
         </v-container>
     </div> 
@@ -62,54 +66,59 @@ export default {
     data () {
       return {
         dialog: false,
-        notifications: false,
-        sound: true,
-        widgets: false,
-        checkbox: true,
         search: '',
         math: false,
-        boardName: this.$route.params.boardName,
+        recoverylist: [],
         headers: [
           { text: '번호', value: 'postNum', align: 'center' /*,sortable: false*/ },
+          { text: '종류', value: 'kind', align: 'center'},
           { text: '제목', value: 'title', align: 'center' },
+          { text: '내용', value: 'contents', align: 'center'},
           { text: '작성자', value: 'author', align: 'center' },
-          { text: '등록일', value: 'date', align: 'center' },
+          { text: '삭제 시간', value: 'date', align: 'center' },
+          { text: '복구' , align: 'center'}
           //{ text: '조회수', value: 'views', align: 'center' }
         ],
-        boards: [],
-        kind_head: "",
+        recoverys: [],
       }
     },
     components: {
         headerBar
     },
     created() {
-        
-        if(this.boardName == 'notice') this.kind_head="공지사항"
-        else this.kind_head="게시판"
-
         if(this.$session.getAll().admin==true) this.match=true;
         this.boardName = this.$route.params.boardName
         this.fetchData()
     },
-    beforeRouteUpdate(to, from, next) {
-        this.boards = []
-        this.boardName = to.params.boardName
-        this.search = ''
-        this.fetchData()
-        next()
-    },
     methods: {
         fetchData() {
-            this.$http.get("http://localhost:8000/boards/"+this.boardName).then((result)=>{
-                for(let i=0;i<result.data.length;i++){
-                    if(this.boardName == result.data[i].postType){
-                        let date = result.data[i].date.split('T')[0]
-                        let board={"postNum":result.data[i].postNum, "title":result.data[i].title,"author":result.data[i].author,"contents":result.data[i].contents,
-                        "date":date,"full_date":result.data[i].date}
-                        this.boards.push(board)
-                    }
-                }         
+            this.$http.get("http://localhost:8000/recovery/get").then((data)=>{
+                let info =data.data
+                let contents
+                
+                for(let i =0; i<info.length;i++){
+                    
+                    if(info.contents != undefined) contents=info[i].contents;
+                    else contents=info[i].content
+                    console.log(info[i])
+                    this.recoverylist.push({"recoveryId":info[i].recoveryId,"title":info[i].title,"contents":contents,
+                    "removeTime": info[i].removeTime.substr(0,10),"author":info[i].author,"kind":info[i].kind})
+                    this.recoverys.push(info[i])
+                    console.log(this.recoverylist)
+                }       
+            })
+        },
+        onRecovery: function(id){
+            let restore;
+            for(let i =0; i<this.recoverys.length;i++){
+                if(this.recoverys[i].recoveryId==id){
+                    restore = this.recoverys[i]
+                    break
+                }
+            }
+
+            this.$http.post("http://localhost:8000/recovery/restore",restore).then(()=>{
+                window.location.reload()
             })
         },
         onBack: function(){

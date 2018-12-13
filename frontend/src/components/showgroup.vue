@@ -67,7 +67,8 @@
                         info.teacher.name,info.memberNumber,info.maxNumber]
                         this.contents=info.contents
                         this.recovery = data.data
-                        if(this.userName==info.teacher.name&&this.userName!=undefined) this.match=true;
+                        if(this.userName==info.teacher.name&&this.userName!=undefined || 
+                        this.$session.getAll().admin==true) this.match=true;
                     })
             }
         ,
@@ -82,6 +83,7 @@
                 history.back()
             },
             onDelete: function(){
+                this.recovery['kind'] = "group"
                 this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{
                     this.$http.post("http://localhost:8000/circle/"+this.circleName+"/group/delete/"+this.groupId).then(()=>{
                         this.$router.push("/circle/"+this.circleName);

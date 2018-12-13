@@ -22,7 +22,7 @@
                 <v-btn v-if="match==true" @click="onDelete">delete</v-btn>    
             </v-list>
             <v-divider/>
-            <div v-for="cmt in cmts" v-bind:key="cmt.id">
+            <div v-for="cmt in cmts" v-bind:key="cmt._id">
                 <v-textarea
                     readonly
                     auto-grow
@@ -32,6 +32,7 @@
                     class="textarea"
                     rows="1"
                 />
+                <v-btn flat small color="inherit" class="button" @click="_id=cmt._id; onCmtDelete();">댓글 삭제</v-btn>
             </div>
             <v-textarea
                 outline
@@ -64,7 +65,8 @@
                 boardName: this.$route.params.boardName,
                 userName: this.$session.getAll().username,
                 recovery: "",
-                cmts: []
+                cmts: [],
+                _id: ""
             }
         },
         created: function(){
@@ -75,7 +77,7 @@
                 this.cmts = result.data.comment
                 console.log(this.contents)
                 this.recovery=result.data
-                if(this.userName==result.data.author) this.match=true;
+                if(this.$session.getAll().admin==true) this.match=true;
             })
         },
         components: {
@@ -89,9 +91,10 @@
                 this.$router.push("/boards/"+this.boardName);
             },
             onDelete: function(){
+                this.recovery['kind']='board'
+                
                 this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{    
-                    this.$http.post("http://localhost:8000/boards/"+this.boardName+"/delete",{"title":this.title,
-                    "contents":this.contents,"author":this.userName}).then((data)=>{
+                    this.$http.post("http://localhost:8000/boards/"+this.boardName+"/delete",{"postNum":this.postNum}).then((data)=>{
                         this.$router.push("/boards/"+this.boardName);
                     })
                 })
@@ -99,7 +102,16 @@
             onCmtSubmit: function(){
                 this.$http.post("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtCreate",[{"postNum":this.postNum,
                 "cmtContent":this.cmtContent,"author":this.userName,"circleName":"Home", "postType":this.boardName}]).then((data)=>{
-                    this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtLoad",).then((result)=>{
+                    this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtLoad").then((result)=>{
+                        this.cmts = result.data;
+                        this.cmtContent = '';
+                    })
+                })
+            },
+            onCmtDelete: function(){
+                console.log(this.date)
+                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtDelete/"+this._id).then((data)=>{
+                    this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtLoad").then((result)=>{
                         this.cmts = result.data;
                         this.cmtContent = '';
                     })
@@ -117,5 +129,8 @@
 .textarea {
     margin-top: 10px;
     margin-bottom: -30px;
+}
+.button {
+    margin-bottom: 0px;
 }
 </style>

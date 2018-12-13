@@ -1,7 +1,7 @@
 <template>
     <div class="circles">
         <!--항상 상단에 떠있는 bar-->
-        <header-bar></header-bar>
+        <header-bar class="mb-5"></header-bar>
 
 
         <!--바탕이 되는 container-->
@@ -27,7 +27,7 @@
                         <v-text-field v-model="search_value" required style="margin-top : 0.9%; margin-left : 3%;width : 70%;"></v-text-field>
 
                         <v-btn @click="search()" style="width : 15%; margin-top : 1%;"> 검색 </v-btn>
-                        <v-btn v-on:click="circleSignup()" style="width : 15%; margin-top : 1%;">동아리 등록</v-btn>
+                        <v-btn v-on:click="circleSignup()" style="width : 15%; margin-top : 1%;">동아리 신청</v-btn>
                     </v-form>
                 </div>
 
@@ -72,8 +72,8 @@
                         md-title="사전 공지"
                         md-content="동아리 회장의 승인 후 이용 가능합니다."
                         md-confirm-text="Check"
-                        md-cancel-text="Cancle"
-                        @md-cancel="onCancel"
+                        md-cancle-text="Cancle"
+                        @md-cancle="onCancle"
                         @md-confirm="onCheck" />
                 </md-card>
                 </div>
@@ -83,7 +83,7 @@
                 md-content="정말 동아리에 가입하시겠습니까?"
                 md-confirm-text="Check"
                 md-cancel-text="Cancle"
-                @md-cancel="onCancel"
+                @md-cancel="onCancle"
                 @md-confirm="onCheck" />
 
                 <div class="content-end container-two" style="display : flex; justify-items : center; flex-direction : column">
@@ -113,12 +113,20 @@
         name: 'circles',
         created (){
             this.$http.get('http://localhost:8000/circle/send').then((res) => {
-                this.circles = res.data
+                this.allCircles = res.data
+            }).then(() => {
+                console.log(this.allCircles)
+                for(var i = 0; i < this.allCircles.length; i++){
+                    if(this.allCircles[i].auth == true)
+                        this.circles.push(this.allCircles[i])
+                }
             })
             this.userName = this.$session.getAll().username
-            this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {
+            this.userstudentId = this.$session.getAll().userstudentId;
+            this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
                 this.user = res.data
             })
+
         },
         data() {
             return {
@@ -132,6 +140,7 @@
                 search_select : null,
 
                 items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+                allCircles: [],
                 circles: [],
                 signcircle: {},
                 user: {},
@@ -169,14 +178,17 @@
                 this.check = false
             },
             userSignup: function() {
-                this.$http.post('http://localhost:8000/user/' + this.user.name + '/signupCircle', this.signcircle)
+                this.$http.post('http://localhost:8000/user/' + this.userstudentId + '/signupCircle', this.signcircle)
                 .then((res) => {
 
                     if(res.data !== "err"){
                         this.$http.post('http://localhost:8000/circle/' + this.signcircle.name + '/signupCircle/', this.user)
                     }
                     else{
-                        alert("이미 동아리에 가입하셨습니다.")
+                        if(this.$session.exists())
+                            alert("이미 동아리에 가입하셨습니다.")
+                        else
+                            alert("로그인해주세요.")
                     }
                 })
             },

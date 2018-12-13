@@ -152,7 +152,7 @@
                         <v-btn round color="blue" large v-on:click="change3=false" v-if="change3==true">
                             <p class="circle_button">수정 취소</p>
                         </v-btn>                               
-                        <v-btn round color="blue" large  v-if="change3==true">
+                        <v-btn round color="blue" large v-on:click="change3=false" v-if="change3==true">
                             <p class="circle_button">수정 완료</p>
                         </v-btn>                  
                     </v-card-actions>
@@ -242,9 +242,11 @@ export default {
     },
     created () {//혹시 안 되면 서버 껐다 켜봐라
         this.userName = this.$session.getAll().username
-        this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {
+        this.userstudentId = this.$session.getAll().userstudentId;
+        this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
             this.user = res.data
         })
+
     },
     name: 'mypage',
     components: {
@@ -262,7 +264,8 @@ export default {
 
         },
         changeProfile: function() {
-            this.$http.post('http://localhost:8000/user/' + this.user.name + '/update/profile',
+            if(this.name != null && this.nickname != null && this.department != null){
+            this.$http.post('http://localhost:8000/user/' + this.userstudentId + '/update/profile',
             {"name":this.name, "nickname":this.nickname, "department":this.department})
             .then((res) => {
                 this.change1 = false
@@ -270,24 +273,29 @@ export default {
                 this.$session.set('username', res.data.name)
                 this.$session.set('userDepartment', res.data.department)
                 this.user = res.data
-                this.$router.go(0)     
             })
+            } else {
+                alert("모두 입력해주세요.")
+            }
         },
         changeCall: function() {
-            this.$http.post('http://localhost:8000/user/' + this.user.name + '/update/call',
+            if(this.call != null && this.id != null){
+            this.$http.post('http://localhost:8000/user/' + this.userstudentId + '/update/call',
             {"call":this.call, "ID":this.id})
             .then((res) => {
                 this.change2 = false
                 this.$session.start()
                 this.$session.set('username', res.data.name)
                 this.$session.set('userDepartment', res.data.department)
-                this.user = res.data
-                this.$router.go(0)     
-            })            
+                this.user = res.data  
+            })
+            } else {
+                alert("모두 입력해주세요.")
+            }
         },
         changePassword: function() {
             if(this.passwordCorrect==true){
-                this.$http.post('http://localhost:8000/user/' + this.user.name + '/update/password',
+                this.$http.post('http://localhost:8000/user/' + this.userstudentId + '/update/password',
                 {"password":this.passwordin})
                 .then((res) => {
                     this.change4 = false
@@ -301,7 +309,7 @@ export default {
         },
         deleteUser: function() {
             if(this.passwordCorrect==true){
-                this.$http.delete('http://localhost:8000/user/' + this.user.name + '/delete')
+                this.$http.delete('http://localhost:8000/user/' + this.userstudentId + '/delete')
                 .then((res) => {
                     this.$session.destroy();
                     this.$router.push('/');
@@ -311,7 +319,7 @@ export default {
         },
         giveupCircle: function(){
             this.$http.post('http://localhost:8000/circle/'+this.circleout.name+'/reject', this.user).then(() => {
-                this.$http.post('http://localhost:8000/user/'+this.user.name+'/reject', this.circleout)
+                this.$http.post('http://localhost:8000/user/'+this.userstudentId+'/reject', this.circleout)
             }).then(() => {
                 this.$router.go(0)
             })

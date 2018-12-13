@@ -23,8 +23,7 @@
                 <v-list-tile>
                   <v-list-tile-title v-text="schedule.content"></v-list-tile-title>
                   <v-list-tile-action>
-                  <v-list-tile-action-text>{{schedule.start}}</v-list-tile-action-text>
-                  <v-list-tile-action-text>{{schedule.end}}</v-list-tile-action-text>
+                  <v-list-tile-action-text>{{schedule.start.substr(0,10)}} ~ {{schedule.end.substr(0,10)}}</v-list-tile-action-text>
                   </v-list-tile-action>
                 </v-list-tile>
                 </v-list>
@@ -40,13 +39,13 @@
             <v-card>
                 <v-card-title class="subheading font-weight-bold">공지사항</v-card-title>
                 <v-divider></v-divider>
-                <v-list v-for="notice in noticelists" :key="notice.postId">
+                <v-list v-for="notice in noticelists" :key="notice.postNum">
                   <v-list-tile
                   @click="$router.push('/circle/'+circleName+'/board/notice/show_notice/'+notice.postNum)">
                     <v-list-tile-title v-text="notice.title"></v-list-tile-title>
                     <v-list-tile-action>
                     <v-list-tile-action-text>{{notice.author}}</v-list-tile-action-text>
-                    <v-list-tile-action-text>{{notice.date}}</v-list-tile-action-text>
+                    <v-list-tile-action-text>{{notice.date.substr(0,10)}}</v-list-tile-action-text>
                     </v-list-tile-action>
                             
                 </v-list-tile>
@@ -70,7 +69,7 @@
                     <v-list-tile-title v-text="board.title"></v-list-tile-title>
                     <v-list-tile-action>
                     <v-list-tile-action-text>{{board.author}}</v-list-tile-action-text>
-                    <v-list-tile-action-text>{{board.date}}</v-list-tile-action-text>
+                    <v-list-tile-action-text>{{board.date.substr(0,10)}}</v-list-tile-action-text>
                     </v-list-tile-action>
                             
                 </v-list-tile>
@@ -92,8 +91,7 @@
                   @click="$router.push('/circle/'+circleName+'/group/show_group/'+group.groupId)">
                     <v-list-tile-title v-text="group.title"></v-list-tile-title>
                     <v-list-tile-action>
-                    <v-list-tile-action-text>{{group.start}}</v-list-tile-action-text>
-                    <v-list-tile-action-text>{{group.end}}</v-list-tile-action-text>
+                    <v-list-tile-action-text>{{group.start.substr(0,10)}} ~ {{group.end.substr(0,10)}}</v-list-tile-action-text>
                     </v-list-tile-action>
                             
                 </v-list-tile>
@@ -155,7 +153,7 @@
                       <v-card-title>
                         <div>
                             <h3>{{active.title}}</h3>
-                            <span>{{active.date}}</span>
+                            <span>{{active.start.substr(0,10)}} ~ {{active.end.substr(0,10)}}</span>
                         </div>
                       </v-card-title>
                   </v-card>
@@ -199,60 +197,32 @@
         created: function(){
           console.log(this.$session.getAll())
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/notice").then((data)=>{
-              for(let i=0;i<data.data.length && i<5 ;i++){
-                let date = data.data[i].date.split('T')[0]
-                let notice={"title":data.data[i].title,"contents":data.data[i].contents,
-                "date":date,"postNum":data.data[i].postNum,"author":data.data[i].author}
-                this.noticelists.push(notice)
-              }
+              for(let i =0; i<5 && i<data.data.length;i++) this.noticelists.push(data.data[i])
           })
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/schedule").then((data)=>{
-                    
-                    for(let i=0;i<data.data.length && i<5;i++){
-                        let schedule ={"start": data.data[i].start.substr(0,10)
-                        ,"end":data.data[i].end.substr(0,10)
-                        ,"content":data.data[i].content
-                        ,"scheduleId":data.data[i].scheduleId}
-                        this.schedulelists.push(schedule)
-                    }
+              for(let i=0;i<data.data.length && i<5;i++) this.schedulelists.push(data.data[i])
                     
           })
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/board").then((data)=>{
-              for(let i=0;i<data.data.length && i<5; i++){
-                let date = data.data[i].date.split('T')[0]
-                let board={"title":data.data[i].title,"contents":data.data[i].contents,
-                "date":date,"postNum":data.data[i].postNum,"author":data.data[i].author}
-                
-                this.boardlists.push(board)
-              }
+              for(let i =0; i<5 && i<data.data.length;i++) this.boardlists.push(data.data[i])
           })
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/group").then((data)=>{
-              for(let i=0;i<data.data.length && i<5;i++){
-                let group={"title":data.data[i].title,"contents":data.data[i].contents,
-                "start":data.data[i].start.substr(0,10),"end":data.data[i].end.substr(0,10),
-                "groupId":data.data[i].groupId,"teacher":data.data[i].teacher.name}
-                
-                this.grouplists.push(group)
-              }
+              for(let i=0;i<data.data.length && i<5;i++) this.grouplists.push(data.data[i])
           })
           
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/active").then((data)=>{
               
               for(let i=0;i<data.data.length && i<5;i++){
-                let start = data.data[i].start.split('T')[0]
-                let end = data.data[i].end.split('T')[0]
-                let active={"title":data.data[i].title,"contents":data.data[i].contents,
-                "date":start+" ~ "+end,"activeId":data.data[i].activeId,"image":data.data[i].image}
                 this.images.push(data.data[i].image)
-                this.activelist.push(active)
-                
+                this.activelist.push(data.data[i])
               }
               
           })
           
           this.userName = this.$session.getAll().username
-          this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {
-              this.user = res.data
+          this.userstudentId = this.$session.getAll().userstudentId;
+          this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
+            this.user = res.data
           }).then(() => {
             this.$http.get('http://localhost:8000/circle/find/' + this.circleName).then((res) => {
                 this.circle = res.data
@@ -274,7 +244,7 @@
           },
           reject: function() {
             this.$http.post('http://localhost:8000/circle/'+this.circleName+'/reject', this.userin).then(() => {
-              this.$http.post('http://localhost:8000/user/'+this.userin.name+'/reject', this.circle)
+              this.$http.post('http://localhost:8000/user/'+this.userstudentId+'/reject', this.circle)
             }).then(() => {
               this.$router.go(0)
             })

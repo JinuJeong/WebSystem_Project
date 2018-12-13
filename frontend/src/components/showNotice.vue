@@ -51,13 +51,14 @@
             }
         },
         created: function(){
-                    console.log(this.date)
                     this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/"
                     +this.postNum).then((data)=>{
                         this.contents=data.data.contents
                         this.title=data.data.title
                         this.recovery=data.data
-                        if(this.userName==data.data.author) this.match=true;
+
+                        if(this.$session.getAll().president ==this.circleName || this.$session.getAll().admin==true) this.match=true;
+                        console.log(this.match)
                     })
             }
         ,
@@ -72,6 +73,7 @@
                 history.back()
             },
             onDelete: function(){
+                this.recovery['kind'] = 'board'
                 this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{
                     this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/"+this.postNum+"/delete").then((data)=>{
                     this.$router.push("/circle/"+this.circleName);

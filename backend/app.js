@@ -7,6 +7,7 @@ const user = require('./routes/user')
 const board = require('./routes/board')
 const recovery = require('./routes/recovery')
 
+
 const app = express()
 app.use((req, res, next) =>{
     res.header("Access-Control-Allow-Origin", "*")
@@ -24,5 +25,6 @@ app.use('/circle', circle)
 app.use('/user', user)
 app.use('/boards', board)
 app.use('/recovery',recovery)
+
 
 module.exports = app

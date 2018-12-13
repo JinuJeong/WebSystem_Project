@@ -8,23 +8,30 @@ router.use('/',(req, res, next)=>{
     console.log("user start")
     next()
 })
+
 router.get('/send', (req, res) => {
     userModel.find().then((user) => {
         res.send(user)
     })
 });
 
-router.post('/create', (req, res) => {
-
-});
-
+/*
 router.get('/find/:name', (req, res) => {
    var name = req.params.name
 
    userModel.findOne({name}).populate('circles').exec().then((user) => {
+       console.log(user);
        res.send(user)
    })
 });
+*/
+router.get('/findById/:studentId', (req, res) => {
+    var studentId = req.params.studentId
+
+    userModel.findOne({studentId}).populate('circles').exec().then((user) => {
+        res.send(user)
+    })
+})
 
 router.get('/find/user/:userId',(req,res)=>{
     console.log(req.params.userId)
@@ -33,6 +40,12 @@ router.get('/find/user/:userId',(req,res)=>{
     }).exec().then((user)=>{
         console.log(user.circles[0])
         res.send(user)
+    })
+})
+
+router.get('/dup/:userId',(req,res)=>{
+    userModel.findOne({"ID":req.params.userId}).then((data)=>{
+        res.send(data)
     })
 })
 
@@ -73,10 +86,9 @@ router.post('/signup',(req,res)=>{
                 
             }
         });
-        res.send(data)
+        res.send("ok")
     }).catch((err)=>{
-        console.log(err)
-        res.send(err)
+        res.send(err);
     })
 });
 
@@ -88,11 +100,11 @@ router.get('/auth/:email',(req,res)=>{
     })
 })
 
-router.post("/:name/update/profile",(req, res)=>{
-    var name = req.params.name
+router.post("/:studentId/update/profile",(req, res)=>{
+    var studentId = req.params.studentId
     var _id
-    console.log(name)
-userModel.findOne({name}).then((user) => {
+
+    userModel.findOne({studentId}).then((user) => {
         _id = user._id
     }).then(() => {
         userModel.findByIdAndUpdate({_id}, {"name": req.body.name, "nickname": req.body.nickname, "department": req.body.department})
@@ -106,11 +118,11 @@ userModel.findOne({name}).then((user) => {
     })
 })
 
-router.post("/:name/update/call",(req, res)=>{
-    var name = req.params.name
+router.post("/:studentId/update/call",(req, res)=>{
+    var studentId = req.params.studentId
     var _id
 
-userModel.findOne({name}).then((user) => {
+userModel.findOne({studentId}).then((user) => {
         _id = user._id
     }).then(() => {
         userModel.findByIdAndUpdate({_id}, {"call": req.body.call, "ID": req.body.ID})
@@ -125,11 +137,11 @@ userModel.findOne({name}).then((user) => {
 })
 
 
-router.post("/:name/update/password",(req, res)=>{
-    var name = req.params.name
+router.post("/:studentId/update/password",(req, res)=>{
+    var studentId = req.params.studentId
     var _id
-    console.log(req.body)
-userModel.findOne({name}).then((user) => {
+
+    userModel.findOne({studentId}).then((user) => {
         _id = user._id
     }).then(() => {
         userModel.findByIdAndUpdate({_id}, {"password": req.body.password})
@@ -143,20 +155,18 @@ userModel.findOne({name}).then((user) => {
     })
 })
 
-router.delete("/:name/delete", (req, res) => {
-    var name = req.params.name
-    var _id
+router.delete("/:studentId/delete", (req, res) => {
+    var studentId = req.params.studentId
 
-    userModel.deleteOne({name}).then(() => {
+    userModel.deleteOne({studentId}).then(() => {
         res.end()
     })
 })
 
-router.post("/:name/signupCircle", (req, res) => {
-    var name = req.params.name
+router.post("/:studentId/signupCircle", (req, res) => {
+    var studentId = req.params.studentId
     
-    userModel.findOne({name}).populate('circles').exec().then((user) => {
-
+    userModel.findOne({studentId}).populate('circles').exec().then((user) => {
         for(var i = 0; i < user.circles.length; i++){
             if(user.circles[i].name === req.body.name)
                 throw new Error();
@@ -166,7 +176,6 @@ router.post("/:name/signupCircle", (req, res) => {
     }).then((user) => {
         user.circles.push(req.body)
         user.save()
-
         res.send(user)
     }).catch((err) => {
         res.send("err")
@@ -174,10 +183,10 @@ router.post("/:name/signupCircle", (req, res) => {
     })
 })
 
-router.post("/:name/reject", (req, res) => {
-    var name = req.params.name //거절 유저 이름
+router.post("/:studentId/reject", (req, res) => {
+    var studentId = req.params.studentId //거절 유저 이름
     
-    userModel.findOne({name}).populate('circles').exec().then((user) => {
+    userModel.findOne({studentId}).populate('circles').exec().then((user) => {
         user.circles.pull({_id: req.body._id})
         user.save()
         console.log("User DB에서 삭제 완료")

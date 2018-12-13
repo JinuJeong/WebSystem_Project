@@ -64,15 +64,18 @@
             }
         },
         created: function(){
-                    this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {
+                    this.userstudentId = this.$session.getAll().userstudentId;
+                    this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
                         this.user = res.data
                     }).then(() => {
                         this.$http.get('http://localhost:8000/circle/find/' + this.circleName).then((res) => {
                             this.circle = res.data
-                            if(this.circle.president.name === this.user.name){
+                            if(this.$session.getAll().admin==true) this.match = true;
+                            else if(this.circle.president.name === this.user.name){
                                 this.president = this.user
                                 this.match = true
                             }
+
                         })
                     })
                     
@@ -95,11 +98,14 @@
                 this.$router.push("/circle/"+this.circleName+"/manage_active/update/"+this.activeId);
             },
             onClear: function(){
+                
                 this.$router.push("/circle/"+this.circleName);
             },
             onDelete: function(){
+                this.recovery['kind'] = "active"
                 this.$http.post("http://localhost:8000/recovery",this.recovery).then(()=>{
                     this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/delete/"+this.activeId).then(()=>{
+                        
                         this.$router.push("/circle/"+this.circleName);
                     })
                 })

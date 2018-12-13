@@ -15,8 +15,9 @@
                                         :rules="emailRules"
                                         ></v-text-field>
                         </v-flex>
-
+                     <v-btn @click="onDup">중복 확인</v-btn>
                     </v-layout>
+                   
                     <v-layout>
                         <v-flex style=" margin-bottom : 3%;">
                             <v-text-field
@@ -34,7 +35,7 @@
                             <v-text-field label="이름" v-model="name" type="text" placeholder="name" ></v-text-field>
                         </v-flex>
                         <v-flex>
-                            <v-text-field label="연락처" v-model="call" type="tel" placeholder="tel"></v-text-field>
+                            <v-text-field     label="학번" v-model="studentId" type="number" placeholder="studentId"></v-text-field>
                         </v-flex>
                     </v-layout>
 
@@ -43,7 +44,7 @@
                             <v-text-field label="별명" v-model="nickname" type="text" placeholder="nickname"></v-text-field>
                         </v-flex>
                         <v-flex>
-                            <v-text-field label="학번" v-model="stuNum" type="number" placeholder="student number"></v-text-field>
+                            <v-text-field label="연락처" v-model="call" type="tel" placeholder="tel"></v-text-field>
                         </v-flex>
                     </v-layout>
 
@@ -136,9 +137,10 @@
             md-title="Check"
             md-content="가입한 이메일을 통해 이메일 인증을 진행해 주세요."
             md-confirm-text="Check"
-            md-cancel-text="Cancle"
-            @md-cancel="onCancel"
-            @md-confirm="onCheck"/>
+            md-cancle-text="Cancle"
+            @md-cancle="onCancle"
+            @md-confirm="onCheck" />
+
         </div>
     </div>
 </template>
@@ -156,12 +158,11 @@
         data : () => ({
             id          : null,
             password    : null,
-            stuNum      : null,
             name        : null,
-            textarea    : null,
             department  : null,
             call        : null,
             nickname    : null,
+            studentId   : null,
             selectedInterest : [],
 
             fail        : false,
@@ -180,15 +181,19 @@
         methods:{
             signup:function(){
                 this.$http.post("http://localhost:8000/user/signup",
-                    {"ID":this.id, "password":this.password, "name":this.name, "department":this.department,
+                    {"ID":this.id, "password":this.password, "name":this.name, "department":this.department,"studentId":this.studentId,
                      "nickname":this.nickname, "call":this.call, "interest": this.selectedInterest, "birth": this.birth}).
                 then((res)=>{
-                        console.log(res);
+                        
+                        if(res.data.errors){
+                            let errors = res.data.errors
 
-                        if(res.data.errmsg){
-                            this.fail = true;
-                            return res.status;
-                }
+                            for(let error in errors){
+                                alert(error+"를 입력해주세요")
+                                return ;
+                            }
+                            return;
+                        }
                         else{
                             this.$router.push('/login');
                         }
@@ -200,6 +205,17 @@
             },
             onCancle: function(){
                 return 0;
+            },
+            onDup: function(){
+                this.$http.get("http://localhost:8000/user/dup/"+this.id).then((data)=>{
+                    console.log(data.data)
+                    if(!data.data){
+                        alert("사용가능한 아이디입니다.")
+                    }
+                    else{
+                        alert("중복된 아이디입니다.")
+                    }
+                })
             }
         }
 
@@ -220,7 +236,7 @@
             width: 100%;
             height : 200%;
             max-width: 1000px;
-            max-height : 1000px;
+            max-height : 1100px;
             position: relative;
 
             .md-field {
