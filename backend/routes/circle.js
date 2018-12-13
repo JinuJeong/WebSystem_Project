@@ -382,23 +382,23 @@ router.post('/:circleName/rejectCircle', (req, res) => { //동아리 신청을 a
     })
 });
 
-router.post("/:circleName/board/:boardName/:postNum/cmtCreate", (req, res, next) => {
+router.post("/:circleName/board/:postType/:postNum/cmtCreate", (req, res, next) => {
     console.log(req.body)
     boardModel.updateOne({ "postNum": req.params.postNum },{$push: { comment : req.body }}).then((data) => {
         res.send("ok");
     })
 })
 
-router.get("/:circleName/board/:boardName/:postNum/cmtLoad", (req, res, next) => {
+router.get("/:circleName/board/:postType/:postNum/cmtLoad", (req, res, next) => {
     console.log(req.params.circleName)
-    console.log(req.params.boardName)
+    console.log(req.params.postType)
     console.log(req.params.postNum)
-    boardModel.findOne({"postType" : req.params.boardName,"circleName":req.params.circleName,"postNum":req.params.postNum}).then((data)=>{
+    boardModel.findOne({"postType" : req.params.postType,"circleName":req.params.circleName,"postNum":req.params.postNum}).then((data)=>{
         res.send(data.comment)
     })
 })
 
-router.post("/:circleName/board/:boardName/:postNum/cmtDelete/:_id", (req, res, next) => {
+router.post("/:circleName/board/:postType/:postNum/cmtDelete/:_id", (req, res, next) => {
     boardModel.findOne({ "postNum": req.params.postNum }).then((data) => {
         console.log(data.comment)
         console.log(req.params._id)
@@ -409,7 +409,7 @@ router.post("/:circleName/board/:boardName/:postNum/cmtDelete/:_id", (req, res, 
     })
 })
 
-router.post("/:circleName/board/:boardName/:postNum/cmtChange/:_id", (req, res, next) => {
+router.post("/:circleName/board/:postType/:postNum/cmtChange/:_id", (req, res, next) => {
     console.log(req.body.cmtContent)
     boardModel.updateOne({ "postNum": req.params.postNum, "comment._id": req.params._id },
     {"comment.$.cmtContent": req.body.cmtContent}).then((data) => {

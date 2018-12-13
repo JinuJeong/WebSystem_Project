@@ -40,6 +40,7 @@
                             disable-initial-sort
                             next-icon="chevron_right"
                             prev-icon ="chevron_left"
+                            no-data-text="등록된 일정이 없습니다."
                             class="elevation-1"
                             :rows-per-page-items="[]"
                         >

@@ -87,7 +87,7 @@ export default {
     },
     created() {
         if(this.$session.getAll().admin==true) this.match=true;
-        this.boardName = this.$route.params.boardName
+        this.postType = this.$route.params.postType
         this.fetchData()
     },
     methods: {

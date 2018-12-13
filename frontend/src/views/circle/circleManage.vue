@@ -2,28 +2,31 @@
     <div>
         <headerBar></headerBar>
         <v-container class="mt-5">
-            <p id="title">{{circleName}} 회원 관리</p>
-
-
-            <v-data-table
-                :headers="headers"
-                :items="members"
-                item-key="_id"
-                class="elevation-1"
-            >
-            <template slot="items" slot-scope="props">
-                <td>{{props.item.user.ID}}</td>
-                <td>{{props.item.user.name}}</td>
-                <td class="text-xs-right">{{props.item.user.department}}</td>
-                <td class="text-xs-right">{{props.item.user.call}}</td>
-                <td class="text-xs-right">{{props.item.user.birth}}</td>
-                <td>
-                <v-btn round color="blue" large v-on:click="userout=props.item.user;reject()">
-                    <p class="circle_button">강퇴</p>
-                </v-btn>
-                </td>
-            </template>
-            </v-data-table>      
+            <v-flex style="width:100%;">
+                <p id="title">{{circleName}} 회원 관리</p>
+                <v-data-table
+                    :headers="headers"
+                    :items="members"
+                    item-key="_id"
+                    next-icon="chevron_right"
+                    prev-icon ="chevron_left"
+                    class="elevation-1"
+                    :rows-per-page-items="[10]"
+                >
+                    <template slot="items" slot-scope="props">
+                        <td>{{props.item.user.ID}}</td>
+                        <td>{{props.item.user.name}}</td>
+                        <td class="text-xs-right">{{props.item.user.department}}</td>
+                        <td class="text-xs-right">{{props.item.user.call}}</td>
+                        <td class="text-xs-right">{{props.item.user.birth}}</td>
+                        <td>
+                        <v-btn round color="blue" large v-on:click="userout=props.item.user;reject()">
+                            <p class="circle_button">강퇴</p>
+                        </v-btn>
+                        </td>
+                    </template>
+                </v-data-table>
+            </v-flex>   
         </v-container>
     </div>
 </template>

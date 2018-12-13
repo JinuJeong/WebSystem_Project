@@ -52,14 +52,14 @@
                 title: "",
                 contents: "",
                 match: false,
-                boardName: this.$route.params.boardName,
+                postType: this.$route.params.postType,
                 userName: this.$session.getAll().username,
             }
         },
         created: function(){
             if(this.title!=undefined){
                 console.log(this.postDate)
-                this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum).then((result)=>{
+                this.$http.get("http://localhost:8000/boards/"+this.postType+"/"+this.postNum).then((result)=>{
                     this.title=result.data.title
                     this.contents=result.data.contents
                     console.log(result.data.author)
@@ -72,9 +72,9 @@
         },
         methods:{
             onModify: function(){       
-                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/update",{"title":this.title,
+                this.$http.post("http://localhost:8000/boards/"+this.postType+"/"+this.postNum+"/update",{"title":this.title,
                 "contents":this.contents,"date":this.date}).then((data)=>{
-                    this.$router.push("/boards/"+this.boardName);
+                    this.$router.push("/boards/"+this.postType);
                 })
             },
             onClear: function(){
@@ -82,15 +82,15 @@
             },
             onDelete: function(){
             
-                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/delete",{"title":this.title,
+                this.$http.post("http://localhost:8000/boards/"+this.postType+"/delete",{"title":this.title,
                 "contents":this.contents,"author":this.userName}).then((data)=>{
-                    this.$router.push("/boards/"+this.boardName);
+                    this.$router.push("/boards/"+this.postType);
                 })
             },
             onSubmit: function(){
-                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/create",{"title":this.title,
-                "contents":this.contents,"author":this.userName,"circleName":"Home", "postType":this.boardName}).then((data)=>{
-                    this.$router.push("/boards/"+this.boardName);
+                this.$http.post("http://localhost:8000/boards/"+this.postType+"/create",{"title":this.title,
+                "contents":this.contents,"author":this.userName,"circleName":"Home", "postType":this.postType}).then((data)=>{
+                    this.$router.push("/boards/"+this.postType);
                 })
             }
         }

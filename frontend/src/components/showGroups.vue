@@ -3,50 +3,51 @@
         <header-bar></header-bar>
         
         <v-container class="container">
-            <button>
-            <i class="material-icons" @click="onBack()">
-            keyboard_backspace
-            </i>
-            </button>
-            <h1 class="text-md-center">{{circleName}} Group</h1>
-                <div class="centered-container">
-                    <v-card color="cyan" class="mt-5">
-                        <v-card-title>
-                            Group
-                            <v-spacer/>
-                            <v-text-field  
-                                v-model="search"
-                                append-icon="search"
-                                label="Search"
-                                single-line
-                                hide-details
-                            />
-                        </v-card-title>
-                        <v-data-table
-                            :headers="headers"
-                            :items="grouplist"
-                            :search="search"
-                            disable-initial-sort
-                            next-icon="chevron_right"
-                            prev-icon ="chevron_left"
-                            class="elevation-1"
-                            :rows-per-page-items="[]"
-                            
-                        >
-                            <template slot="items" slot-scope="props">
-                                <td class="text-xs-center" @click="$router.push('/circle/'+circleName+'/group'+'/show_group/'+props.item.groupId)">{{ props.item.groupId }}</td>
-                                <td class="text-xs-center" @click="$router.push('/circle/'+circleName+'/group'+'/show_group/'+props.item.groupId)">{{ props.item.title }}</td>
-                                <td class="text-xs-center" @click="$router.push('/circle/'+circleName+'/group'+'/show_group/'+props.item.groupId)">{{ props.item.memberNumber }}</td>
-                                <td class="text-xs-center" @click="$router.push('/circle/'+circleName+'/group'+'/show_group/'+props.item.groupId)">{{ props.item.teacher }}</td>
-                                <td class="text-xs-center" @click="$router.push('/circle/'+circleName+'/group'+'/show_group/'+props.item.groupId)">{{ props.item.date }}</td>
-                            </template>
-                            <v-alert slot="no-results" :value="true" color="black--text" icon="warning">
-                                Your search for "{{ search }}" found no results.
-                            </v-alert>
-                        </v-data-table>
-                    </v-card>
-                </div>
-            <v-btn v-if="auth==true" color="blue" @click="$router.push('/circle/'+circleName+'/manage_group/create')">새글작성</v-btn>
+            <v-flex style="width:100%;">
+                <button>
+                <i class="material-icons" @click="onBack()">
+                keyboard_backspace
+                </i>
+                </button>
+                <h1 class="text-md-center">{{circleName}} Group</h1>
+                    <div class="centered-container">
+                        <v-card color="cyan" class="mt-5">
+                            <v-card-title>
+                                Group
+                                <v-spacer/>
+                                <v-text-field  
+                                    v-model="search"
+                                    append-icon="search"
+                                    label="Search"
+                                    single-line
+                                    hide-details
+                                />
+                            </v-card-title>
+                            <v-data-table
+                                :headers="headers"
+                                :items="grouplist"
+                                :search="search"
+                                disable-initial-sort
+                                next-icon="chevron_right"
+                                prev-icon ="chevron_left"
+                                class="elevation-1"
+                                :rows-per-page-items="[10]"
+                            >
+                                <template slot="items" slot-scope="props">
+                                    <td class="text-xs-center" @click="$router.push('/circle/'+circleName+'/group'+'/show_group/'+props.item.groupId)">{{ props.item.groupId }}</td>
+                                    <td class="text-xs-center" @click="$router.push('/circle/'+circleName+'/group'+'/show_group/'+props.item.groupId)">{{ props.item.title }}</td>
+                                    <td class="text-xs-center" @click="$router.push('/circle/'+circleName+'/group'+'/show_group/'+props.item.groupId)">{{ props.item.memberNumber }}</td>
+                                    <td class="text-xs-center" @click="$router.push('/circle/'+circleName+'/group'+'/show_group/'+props.item.groupId)">{{ props.item.teacher }}</td>
+                                    <td class="text-xs-center" @click="$router.push('/circle/'+circleName+'/group'+'/show_group/'+props.item.groupId)">{{ props.item.date }}</td>
+                                </template>
+                                <v-alert slot="no-results" :value="true" color="black--text" icon="warning">
+                                    Your search for "{{ search }}" found no results.
+                                </v-alert>
+                            </v-data-table>
+                        </v-card>
+                    </div>
+                <v-btn v-if="auth==true" color="blue" @click="$router.push('/circle/'+circleName+'/manage_group/create')">새글작성</v-btn>
+            </v-flex>
         </v-container>
         
     </div>
