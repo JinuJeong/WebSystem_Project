@@ -3,7 +3,7 @@
         <header-bar></header-bar>
         
         <v-container class="container">
-            
+            <v-flex style="width:100%;">
             <button>
                 <i class="material-icons" @click="onBack">
                 keyboard_backspace
@@ -12,7 +12,7 @@
             <h1 class="text-md-center">{{circleName}} 일정</h1>
             <div class="my-5">
             <v-layout row wrap>
-                <v-flex xs12 sm6 class="my-3">
+                <v-flex class="my-3">
                     <v-date-picker
                         color="blue"
                         v-model="date"
@@ -20,10 +20,10 @@
                         :events="getDate"
                     ></v-date-picker>
                 </v-flex>
-                <div class="centered-container">
+                <div class="centered-container" style="width:70%;">
                     <v-card color="amber">
                         <v-card-title>
-                            일정
+                            <h2>일정</h2>
                             <v-spacer/>
                             <v-text-field  
                                 v-model="search"
@@ -154,7 +154,7 @@
                 </v-flex>
             </v-layout>
             </div>
-            
+            </v-flex>
         </v-container>
 
             

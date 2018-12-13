@@ -13,7 +13,7 @@
                     <div class="centered-container">
                         <v-card color="cyan" class="mt-5">
                             <v-card-title>
-                                Group
+                                <h2>Group</h2>
                                 <v-spacer/>
                                 <v-text-field  
                                     v-model="search"
@@ -30,6 +30,7 @@
                                 disable-initial-sort
                                 next-icon="chevron_right"
                                 prev-icon ="chevron_left"
+                                no-data-text="등록된 그룹이 없습니다."
                                 class="elevation-1"
                                 :rows-per-page-items="[10]"
                             >
