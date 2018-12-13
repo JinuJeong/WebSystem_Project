@@ -136,11 +136,17 @@ export default {
             this.circle = {name: this.name, party: this.department, memberNumber: this.number
             , concept: this.concept, introduce: this.introduce, president: this.president, professor: this.professor
             , roomExistence: this.roomExistence, othersAccept: this.othersAccept}
-            this.$http.post('http://localhost:8000/circle/register', this.circle) 
+            this.$http.post('http://localhost:8000/circle/register', this.circle)
         },
         onCheck: async function() {
-            await this.register()
-            await this.$router.push('/circles')
+            if(this.presidentin != null){
+                await this.register()
+                await this.$router.push('/circles')
+            }
+            else {
+                alert("회장을 입력해주세요.");
+                onCancle();
+            }
         },
         onCancle: function() {
             this.check = false

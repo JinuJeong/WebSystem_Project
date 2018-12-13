@@ -22,6 +22,13 @@
                     <md-icon style="color:white">person_add</md-icon>
                     </v-badge>
                 </v-btn>
+
+                <v-btn v-if="user.admin==true" @click="showDialog_admin = true" style="background-color: black">
+                    <v-badge color="red">
+                        <span slot="badge">{{pleaseCount}}</span>
+                    <md-icon style="color:white">radio_button_unchecked</md-icon>
+                    </v-badge>
+                </v-btn>
             </v-toolbar-items>
 
             <v-spacer></v-spacer>
@@ -39,7 +46,7 @@
                 <md-list-item>
                     <md-icon>send</md-icon>
                     <p class="md-list-item-text">가입 동아리</p>
-                </md-list-item>                
+                </md-list-item>    
                 <md-list-item v-for="circle in signedCircles" :key="circle.id" v-on:click="circlePage(circle.name)">
                     <md-icon></md-icon>
                     <p class="md-list-item-text" >{{circle.name}}</p>
@@ -60,7 +67,7 @@
         </md-drawer>
 
         <md-dialog :md-active.sync="showDialog">
-            <md-dialog-title>동아리 신청 리스트</md-dialog-title>
+            <md-dialog-title>동아리 가입 신청 리스트</md-dialog-title>
             <md-tabs md-dynamic-height>
                 <md-tab md-label="General">
                     <div class="md-layout md-gutter" v-for="sign in badgeCircle" :key="sign._id">
@@ -77,6 +84,25 @@
             </md-tabs>
         </md-dialog>
 
+        <md-dialog :md-active.sync="showDialog_admin">
+            <md-dialog-title>동아리 신청 리스트</md-dialog-title>
+            <md-tabs md-dynamic-height>
+                <md-tab md-label="General">
+                    <div class="md-layout md-gutter" v-for="circle in pleaseCircles" :key="circle._id">
+                        <p>{{circle.name}}</p>
+                        <p>{{circle.party}}</p>
+                        <v-btn round color="blue" small v-on:click="acceptCircle(circle)">
+                            <p class="circle_button">승인</p>
+                        </v-btn>
+                        <v-btn round color="blue" small v-on:click="rejectCircle(circle)">
+                            <p class="circle_button">거절</p>
+                        </v-btn>
+                    </div>
+                </md-tab>
+            </md-tabs>
+        </md-dialog>
+
+
     </div>
 </template>
 
@@ -87,6 +113,7 @@ export default {
 
   data: () => ({
     showDialog: false,
+    showDialog_admin: false,    
     showNavigation: false,
     showMenu : false,
     showSidepanel: false,
@@ -94,17 +121,23 @@ export default {
     userName: "",
     userDepartment : "",
     circles: [],
-    circleManage: [],//동아리관리자
+    circleManage: [], //동아리관리자
     signedCircles: [],
+    pleaseCircles: [],
     exist: false,
     badgeCount: 0,
-    badgeCircle: []
+    pleaseCount: 0,
+    badgeCircle: [],
+    user: {}
   }),
   created () {
     if (this.$session.exists()) {
       this.beforeLogin = false;
       this.showMenu = true;
       this.userName = this.$session.getAll().username;
+      this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {
+        this.user = res.data
+      })
       this.userDepartment = this.$session.getAll().userDepartment;
       this.$http.get('http://localhost:8000/circle/send').then((res) => {
         this.circles = res.data
@@ -113,6 +146,10 @@ export default {
               if(this.circles[i].president.name === this.userName){
                 this.circleManage.push(this.circles[i])
                 this.exist = true
+              }
+              if(this.circles[i].auth == false){
+                this.pleaseCircles.push(this.circles[i]);
+                this.pleaseCount = this.pleaseCount + 1;
               }
               for(let j = 0; j < this.circles[i].members.length; j++){
                   if(this.circles[i].members[j].user.name === this.userName && this.circles[i].members[j].circleAuth === true)
@@ -162,10 +199,18 @@ export default {
       reject: function(circle, user) {
         this.$http.post('http://localhost:8000/circle/'+circle.name+'/reject', user).then(() => {
         this.$http.post('http://localhost:8000/user/'+user.name+'/reject', circle)
-      }).then(() => {
+        }).then(() => {
         this.$router.go(0)
-      })
+        })
       },
+      acceptCircle: function(circle){
+        this.$http.post('http://localhost:8000/circle/'+circle.name+'/acceptCircle')
+        this.$router.go(0)
+    },
+      rejectCircle: function(circle){
+        this.$http.post('http://localhost:8000/circle/'+circle.name+'/rejectCircle')
+        this.$router.go(0)
+      }
   }
 }
 

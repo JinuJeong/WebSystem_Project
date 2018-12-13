@@ -3,6 +3,7 @@ const circleModel = require('./circle')
 
 //Set User Schema
 const userSchema = mongoose.Schema({
+    admin : {type: Boolean, default: false},
     ID : {type: String, unique: true},
     password : {type :String, required: true},
     call : {type :String},

@@ -2,6 +2,7 @@ const { mongoose, autoIncrement} = require('../mongo')
 const userModel = require('./user')
 
 const circleSchema = mongoose.Schema({
+    auth: {type: Boolean, default: false},
     circleNum: {
         type: Number,
         unique: true
