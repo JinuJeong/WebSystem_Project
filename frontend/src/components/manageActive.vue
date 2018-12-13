@@ -124,7 +124,6 @@ export default{
     },
     created : function(){
         this.$http.get("http://localhost:8000/circle/"+this.circleName+"/active/"+this.activeId).then((data)=>{
-            console.log(data)
             let info=data.data
             this.title=info.title
             this.date1=info.start.substr(0,10)
@@ -154,8 +153,13 @@ export default{
                     this.date1=dates[0]
                     this.date2=dates[0]
                 }else if(this.dates.length==2){
-                    this.date1=dates[0]
-                    this.date2=dates[1]
+                    if(dates[0]<dates[1]){
+                        this.date1=dates[0]
+                        this.date2=dates[1]
+                    }else{
+                        this.date1=dates[1]
+                        this.date2=dates[0]
+                    }
                 }
                 if(this.dates.length>2){
                     this.dates.splice(2,1)
