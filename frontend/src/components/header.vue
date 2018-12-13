@@ -57,6 +57,10 @@
                     <md-icon>move_to_inbox</md-icon>
                     <p class="md-list-item-text">내 정보</p>
                 </md-list-item>
+                <md-list-item v-if="$session.getAll().admin" v-on:click="manageUsers()">
+                    <md-icon>move_to_inbox</md-icon>
+                    <p class="md-list-item-text">유저 관리</p>
+                </md-list-item>
                 <md-list-item v-if="!beforeLogin" v-on:click="logout">
                     <md-icon>cached</md-icon>
                     <p class="md-list-item-text">Logout</p>
@@ -186,6 +190,9 @@ export default {
       },
       mypage: function(){
           this.$router.push('/mypage');
+      },
+      manageUsers: function(){
+          this.$router.push('/manageUsers');
       },
       circlePage: function(name){
           this.$router.push('/circle/' + name)

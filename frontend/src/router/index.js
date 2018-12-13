@@ -26,7 +26,7 @@ import showActive from '../components/showActive'
 import manageActive from '../components/manageActive'
 import showActives from '../components/showActives'
 import personalActive from '../components/personalActive'
-
+import manageUsers from '../views/menu/manageUsers'
 
 import Vuetify from "vuetify";
 
@@ -162,6 +162,10 @@ export default new Router({
         {
             path: '/circle/:circleName/circleManage',
             component: circleManage
+        },
+        {
+            path: '/manageUsers',
+            component: manageUsers
         }
     ]
 })
