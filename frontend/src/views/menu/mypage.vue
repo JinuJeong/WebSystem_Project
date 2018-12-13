@@ -265,7 +265,7 @@ export default {
         },
         changeProfile: function() {
             if(this.name != null && this.nickname != null && this.department != null){
-            this.$http.post('http://localhost:8000/user/' + this.user.name + '/update/profile',
+            this.$http.post('http://localhost:8000/user/' + this.userstudentId + '/update/profile',
             {"name":this.name, "nickname":this.nickname, "department":this.department})
             .then((res) => {
                 this.change1 = false
@@ -280,7 +280,7 @@ export default {
         },
         changeCall: function() {
             if(this.call != null && this.id != null){
-            this.$http.post('http://localhost:8000/user/' + this.user.name + '/update/call',
+            this.$http.post('http://localhost:8000/user/' + this.userstudentId + '/update/call',
             {"call":this.call, "ID":this.id})
             .then((res) => {
                 this.change2 = false
@@ -295,7 +295,7 @@ export default {
         },
         changePassword: function() {
             if(this.passwordCorrect==true){
-                this.$http.post('http://localhost:8000/user/' + this.user.name + '/update/password',
+                this.$http.post('http://localhost:8000/user/' + this.userstudentId + '/update/password',
                 {"password":this.passwordin})
                 .then((res) => {
                     this.change4 = false
