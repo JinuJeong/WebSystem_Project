@@ -183,7 +183,10 @@
                         this.$http.post('http://localhost:8000/circle/' + this.signcircle.name + '/signupCircle/', this.user)
                     }
                     else{
-                        alert("이미 동아리에 가입하셨습니다.")
+                        if(this.$session.exists())
+                            alert("이미 동아리에 가입하셨습니다.")
+                        else
+                            alert("로그인해주세요.")
                     }
                 })
             },

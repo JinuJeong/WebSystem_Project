@@ -172,7 +172,11 @@ router.post('/send/search', (req, res) => {
 router.post('/register', (req, res) => {
    console.log(req.body)
    circleModel.create(req.body).then((circle) => {
+       console.log("동아리 신청 완료")
        res.send(circle)
+   }).catch((err) => {
+       console.log("err")
+       res.send("err")
    })
 });
 

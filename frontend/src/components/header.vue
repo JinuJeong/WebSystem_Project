@@ -60,10 +60,6 @@
                     <md-icon>cached</md-icon>
                     <p class="md-list-item-text">Logout</p>
                 </md-list-item>
-                <md-list-item>
-                    <md-icon>error</md-icon>
-                    <p class="md-list-item-text">오류 신고</p>
-                </md-list-item>
             </md-list>
         </md-drawer>
 
