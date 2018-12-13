@@ -158,7 +158,7 @@ export default {
               }
           }
       }).then(() => {
-        if(this.exist==true){
+        if(this.exist==true){ // 동아리 회장일 때
             for(let i = 0; i < this.circleManage.length; i++){
                 for(let j = 0; j < this.circleManage[i].members.length; j++){
                     if(this.circleManage[i].members[j].circleAuth == false){
