@@ -122,7 +122,7 @@ export default {
     userName: "",
     userDepartment : "",
     circles: [],
-    circleManage: [], //동아리관리자
+    circleManage: [], //동아리회장
     signedCircles: [],
     pleaseCircles: [],
     exist: false,
@@ -144,7 +144,7 @@ export default {
         this.circles = res.data
       }).then(() => {
           for(let i = 0; i < this.circles.length; i++){
-              if(this.circles[i].president.name === this.userName){
+              if(this.circles[i].president.name === this.userName && this.circles[i].auth == true){
                 this.circleManage.push(this.circles[i])
                 this.exist = true
               }

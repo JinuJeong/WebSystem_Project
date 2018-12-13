@@ -114,7 +114,12 @@
         name: 'circles',
         created (){
             this.$http.get('http://localhost:8000/circle/send').then((res) => {
-                this.circles = res.data
+                this.allCircles = res.data
+            }).then(() => {
+                for(var i = 0; i < this.allCircles.length; i++){
+                    if(this.allCircles[i].auth == true)
+                        this.circles.push(this.allCircles[i])
+                }
             })
             this.userName = this.$session.getAll().username
             this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {
@@ -133,6 +138,7 @@
                 search_select : null,
 
                 items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+                allCircles: [],
                 circles: [],
                 signcircle: {},
                 user: {},
