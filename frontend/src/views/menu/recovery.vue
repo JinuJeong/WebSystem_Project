@@ -3,11 +3,14 @@
         <header-bar/>
         <br>
         <v-container class="container">
+
             <button>
-            <i class="material-icons" @click="onBack()">
-            keyboard_backspace
-            </i>
+                <v-icon x-large class="material-icons" @click="$router.push('/')">
+                    keyboard_backspace
+                </v-icon>
+                <p> 홈으로 </p>
             </button>
+
             <h1 class="text-md-center">복구</h1>
             <v-flex style="width:100%;">
                 <div class="mt-5">

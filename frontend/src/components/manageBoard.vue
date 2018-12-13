@@ -2,42 +2,33 @@
     <div class="notice">
         <!--항상 상단에 떠있는 bar-->
         <header-bar></header-bar>
+
         <v-container
         align-center style="padding : 5%">
         <div>
-        <v-form ref="form">
-            <v-text-field
-            v-model="title"
-            label="Title"
-            required
-            ></v-text-field>
+            <v-form ref="form">
+                <v-text-field
+                    v-model="title"
+                    label="Title"
+                    required
+                ></v-text-field>
                  
-            <v-textarea
-            box
-            v-model="contents"
-            label="내용"
-            placeholder="Type.."
-            height="500"
-            required
-            ></v-textarea>
+                <v-textarea
+                    box
+                    v-model="contents"
+                    label="내용"
+                    placeholder="Type.."
+                    height="500"
+                    required
+                ></v-textarea>
             
-            <v-btn v-if="match==true"
-            @click="onModify"
-            >
-            modify
-            </v-btn>
-            <v-btn v-if="match==false"
-            @click="onSubmit"
-            >
-            Submit
-            </v-btn>
-           <v-btn @click="onClear">close</v-btn>
-           <v-btn v-if="match==true" @click="onDelete">delete</v-btn>
-        </v-form>
+                <v-btn v-if="match==true" @click="onModify">modify</v-btn>
+                <v-btn v-if="match==false" @click="onSubmit">Submit</v-btn>
+                <v-btn @click="onClear">close</v-btn>
+                <v-btn v-if="match==true" @click="onDelete">delete</v-btn>
+            </v-form>
         </div>
-
         </v-container>
-
     </div>
 </template>
 

@@ -171,7 +171,7 @@ export default {
                 }
                 else if(this.err == 1){
                     alert("양식을 모두 작성해주세요.")
-                    onCancle();
+                    this.onCancle();
                 }
             })
         },
@@ -182,9 +182,9 @@ export default {
             this.check = false
         },
         find: function () {
-            console.log(this.presidentin)
+            
             this.$http.get('http://localhost:8000/user/findById/' + this.presidentin).then((res) => {
-                console.log(res.data)
+                
                 this.president = res.data
             }).then(() => {
                 if(this.president){

@@ -167,7 +167,7 @@
 
             fail        : false,
             check       : false,
-
+            dup : false,
             passwordRules: [
                 v => !!v || 'Name is required',
                 v => (v && v.length >= 6) || 'password must be less than 10 characters'
@@ -180,6 +180,10 @@
         
         methods:{
             signup:function(){
+                if(this.dup==false){
+                    alert("중복확인 해주세요");
+                    return ;
+                }
                 this.$http.post("http://localhost:8000/user/signup",
                     {"ID":this.id, "password":this.password, "name":this.name, "department":this.department,"studentId":this.studentId,
                      "nickname":this.nickname, "call":this.call, "interest": this.selectedInterest, "birth": this.birth}).
@@ -207,10 +211,11 @@
                 return 0;
             },
             onDup: function(){
-                this.$http.get("http://localhost:8000/user/dup/"+this.id).then((data)=>{
-                    console.log(data.data)
+                this.$http.get("http://localhost:8000/user/dup/" + this.id).then((data)=>{
+                    
                     if(!data.data){
                         alert("사용가능한 아이디입니다.")
+                        this.dup=true
                     }
                     else{
                         alert("중복된 아이디입니다.")

@@ -1,33 +1,29 @@
 <template>
     <div>
-            <header-bar></header-bar>
-            <v-container class="mt-5"
-            align-center>
-            <div>
-                <v-list>
-            <v-subheader>TITLE</v-subheader>
-            <v-list-tile>
-            <v-list-tile-content>
-              <p>{{title}}</p>
-            </v-list-tile-content>
-            </v-list-tile>
-             <v-divider></v-divider>
-            <v-subheader>CONTENTS</v-subheader>
-            <v-list-tile>
-            <v-list-tile-content>
-                <p>{{contents}}</p>
-            </v-list-tile-content>
-            </v-list-tile>
-            
+        <header-bar></header-bar>
+        <v-container class="mt-5" align-center>
+        <div>
+            <v-list>
+                <v-subheader>TITLE</v-subheader>
+                <v-list-tile>
+                    <v-list-tile-content>
+                        <p>{{title}}</p>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-divider></v-divider>
+                <v-subheader>CONTENTS</v-subheader>
+                <v-list-tile>
+                    <v-list-tile-content>
+                        <p>{{contents}}</p>
+                    </v-list-tile-content>
+                </v-list-tile>
             </v-list>
-           <v-btn v-if="match==true"
-            @click="onEdit"
-            >
-            Edit
+
+            <v-btn v-if="match==true" @click="onEdit">
+                Edit
             </v-btn>
-            
-           <v-btn @click="onClear">close</v-btn>
-           <v-btn v-if="match==true" @click="onDelete">delete</v-btn>
+            <v-btn @click="onClear">close</v-btn>
+            <v-btn v-if="match==true" @click="onDelete">delete</v-btn>
         </div>
         </v-container>
     </div>

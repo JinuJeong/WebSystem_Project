@@ -23,7 +23,6 @@
                     <md-icon style="color:white">person_add</md-icon>
                     </v-badge>
                 </v-btn>
-
                 <v-btn v-if="user.admin==true" @click="showDialog_admin = true" style="background-color: black">
                     <v-badge color="red">
                         <span slot="badge">{{pleaseCount}}</span>
@@ -34,6 +33,7 @@
 
             <v-spacer></v-spacer>
             <search/>
+
             <v-btn flat v-if="beforeLogin" to="/login"><p class="item-p">Login</p></v-btn>
             <p class="item-p" v-if="!beforeLogin">{{userName}} 님</p>
         </v-toolbar>
@@ -99,8 +99,6 @@
                 </md-tab>
             </md-tabs>
         </md-dialog>
-
-
     </div>
 </template>
 
@@ -144,6 +142,7 @@ export default {
         this.circles = res.data
       }).then(() => {
           for(let i = 0; i < this.circles.length; i++){
+              
               if(this.circles[i].president.name === this.userName && this.circles[i].auth == true){
                 this.circleManage.push(this.circles[i])
                 this.exist = true
@@ -158,7 +157,7 @@ export default {
               }
           }
       }).then(() => {
-        if(this.exist==true){
+        if(this.exist == true){ // 동아리 회장일 때
             for(let i = 0; i < this.circleManage.length; i++){
                 for(let j = 0; j < this.circleManage[i].members.length; j++){
                     if(this.circleManage[i].members[j].circleAuth == false){

@@ -2,49 +2,85 @@
     <div>
         <header-bar/>
         <v-container class="container">
-        <div>
-            <v-list>
-                <v-subheader>TITLE</v-subheader>
-                <v-list-tile>
-                    <v-list-tile-content>
-                        <p>{{title}}</p>
-                    </v-list-tile-content>
-                </v-list-tile>
+
+            <div style="padding : 3%;">
+                <button>
+                    <v-icon x-large class="material-icons" @click="onClear">
+                        keyboard_backspace
+                    </v-icon>
+                    <p> 뒤로가기 </p>
+                </button>
+
+                <v-list class="md-elevation-3" style="min-height : 70px; margin-bottom : 1%;">
+                    <v-list-tile>
+                        <v-list-tile-content><h1>공지사항</h1></v-list-tile-content>
+                    </v-list-tile>
+                </v-list>
                 <v-divider/>
-                <v-subheader>CONTENTS</v-subheader>
-                <v-list-tile>
-                    <v-list-tile-content>
-                        <p id="content">{{contents}}</p>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-btn v-if="match==true" @click="onEdit">Edit</v-btn>
-                <v-btn @click="onClear">close</v-btn>
-                <v-btn v-if="match==true" @click="onDelete">delete</v-btn>    
-            </v-list>
-            <v-divider/>
-            <div v-for="cmt in cmts" v-bind:key="cmt._id">
+                <v-list class="md-elevation-4">
+                    <v-list-tile style="min-height : 70px;">
+                        <v-list-tile-content><h2 class="jg">{{title}}</h2></v-list-tile-content>
+                    </v-list-tile>
+                    <v-list-tile style="min-height : 10px;">
+                        <v-list-tile-content><p class="jg"> {{author}}</p></v-list-tile-content>
+                        <v-list-tile-content class="align-end"><p class="jg">{{date.substr(0,10)}} {{date.substr(10,10).substr(1,8)}}</p></v-list-tile-content>
+                    </v-list-tile>
+                    <v-divider/>
+
+                    <v-list-tile style="min-height : 500px; padding:3%;">
+                        <v-list-tile-content><p id="content">{{contents}}</p></v-list-tile-content>
+                    </v-list-tile>
+
+                    <v-btn v-if="match==true" @click="onEdit">Edit</v-btn>
+                    <v-btn v-if="match==true" @click="onDelete">delete</v-btn>
+                </v-list>
+
+                <v-divider style="margin-bottom : 5%;"/>
+
+                <div v-for="cmt in cmts" v-bind:key="cmt._id" style="margin-bottom : 5%;">
+                    <div v-if="isCmtChanging!=cmt._id">
+                        <v-textarea
+                            box
+                            readonly
+                            auto-grow
+                            background-color="white"
+                            :label="cmt.author"
+                            v-model="cmt.cmtContent"
+                            class="textarea"
+                            rows="1"
+                            style="margin-bottom : 0.1%;"
+                        />
+                        <v-btn flat small color="inherit" class="button" @click="_id=cmt._id; setIsCmtChanging();"><p style="font-size : 20px;">댓글 수정</p></v-btn>
+                        <v-btn flat small color="inherit" class="button" @click="_id=cmt._id; onCmtDelete();"><p style="font-size : 20px;">댓글 삭제</p></v-btn>
+                    </div>
+                    <div v-else style="margin-bottom : 5%;" class="ng" >
+                        <v-textarea
+                            auto-grow
+                            background-color="light-blue lighten-5"
+                            :label="cmt.author"
+                            v-model="cmt.cmtContent"
+                            color="blue"
+                            class="textarea"
+                            rows="1"
+                            style="margin-bottom : 0.1%; "
+                            height="100"
+                        />
+                        <v-btn flat small color="inherit" class="button" @click="_id=cmt._id; cmtContent=cmt.cmtContent; onCmtChange();"><p style="font-size : 20px;">수정 완료</p></v-btn>
+                        <v-btn flat small color="inherit" class="button" @click="_id=cmt._id; cmtChangeCancel();"><p style="font-size : 20px;">취소</p></v-btn>
+                    </div>
+                </div>
+
                 <v-textarea
-                    readonly
-                    auto-grow
                     box
-                    :label="cmt.author"
-                    v-model="cmt.cmtContent"
+                    auto-grow
+                    v-model="cmtContent"
                     class="textarea"
                     rows="1"
+                    placeholder="댓글을 입력해주세요."
+                    style="margin-bottom : 0.1%;"
                 />
-                <v-btn flat small color="inherit" class="button" @click="_id=cmt._id; onCmtDelete();">댓글 삭제</v-btn>
+                <v-btn flat small color="inherit" :disabled="cmtContent==''" @click="onCmtSubmit"><p style="font-size : 20px;">댓글 작성</p></v-btn>
             </div>
-            <v-textarea
-                outline
-                auto-grow
-                v-model="cmtContent"
-                counter="10"
-                class="textarea"
-                rows="1"
-                placeholder="새 댓글 작성"
-            />
-            <v-btn flat small color="inherit" :disabled="cmtContent==''" @click="onCmtSubmit">댓글 작성</v-btn>            
-        </div>
         </v-container>
     </div>
 </template>
@@ -57,16 +93,22 @@
         data(){
             return{
                 postNum: this.$route.params.postNum,
-                title: "",
-                contents: "",
-                match: false,
-                cmtMatch: false,
-                cmtContent: "",
-                boardName: this.$route.params.boardName,
-                userName: this.$session.getAll().username,
-                recovery: "",
-                cmts: [],
-                _id: ""
+                title           : "",
+                contents        : "",
+                author          : "",
+                date            : "",
+
+                match           : false,
+
+                cmts            : [],
+                cmtMatch        : false,
+                cmtContent      : "",
+                boardName       : this.$route.params.boardName,
+                userName        : this.$session.getAll().username,
+
+                _id             : "",
+                isCmtChanging   : "",
+                recovery        : "",
             }
         },
         created: function(){
@@ -75,9 +117,13 @@
                 this.title = result.data.title
                 this.contents = result.data.contents
                 this.cmts = result.data.comment
-                console.log(this.contents)
+                this.author = result.data.author
+                this.date = result.data.date
                 this.recovery=result.data
-                if(this.$session.getAll().admin==true) this.match=true;
+                // console.log(this.contents)
+
+                if(this.$session.getAll().admin==true)
+                    this.match=true;
             })
         },
         components: {
@@ -115,6 +161,27 @@
                         this.cmts = result.data;
                         this.cmtContent = '';
                     })
+                })
+            },
+            setIsCmtChanging: function(){
+                this.isCmtChanging = this._id;
+            },
+            onCmtChange: function(){
+                console.log(this.cmtContent)
+                this.isCmtChanging = '';
+                this.$http.post("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtChange/"+this._id,
+                {"cmtContent":this.cmtContent}).then((data)=>{
+                    this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtLoad").then((result)=>{
+                        this.cmts = result.data;
+                        this.cmtContent = '';
+                    })
+                })
+            },
+            cmtChangeCancel: function(){
+                this.isCmtChanging = '';
+                this.$http.get("http://localhost:8000/boards/"+this.boardName+"/"+this.postNum+"/cmtLoad").then((result)=>{
+                    this.cmts = result.data;
+                    this.cmtContent = '';
                 })
             }
         }

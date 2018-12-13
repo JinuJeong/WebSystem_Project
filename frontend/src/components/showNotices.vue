@@ -4,7 +4,7 @@
         
         <v-container class="container">
             <button>
-            <i class="material-icons" @click="onBack()">
+            <i class="material-icons" @click="onBack()" >
             keyboard_backspace
             </i>
             </button>

@@ -4,10 +4,12 @@
         
         <v-container class="container">
             <button>
-            <i class="material-icons" @click="$router.push('/')">
-            keyboard_backspace
-            </i>
+                <v-icon x-large class="material-icons" @click="$router.push('/')">
+                    keyboard_backspace
+                </v-icon>
+                <p> 홈으로 </p>
             </button>
+
             <h1 class="text-md-center">{{circleName}} Active</h1>
             
             <v-layout row wrap>

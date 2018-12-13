@@ -3,16 +3,18 @@
         <header-bar></header-bar>
         
         <v-container class="container">
-            
             <button>
-                <i class="material-icons" @click="$router.push('/')">
+                <v-icon x-large class="material-icons" @click="$router.push('/')">
                 keyboard_backspace
-                </i>
+                </v-icon>
+                <p> 홈으로 </p>
             </button>
-            <h1 class="text-md-center">{{circleName}} 일정</h1>
+
+            <h1 class="jg ajou-title"> {{circleName}} 학사 일정 </h1>
+
             <div class="my-5">
             <v-layout row wrap>
-                <v-flex xs12 sm6 class="my-3">
+                <v-flex shrink class="my-3" style="margin-right : 3%;">
                     <v-date-picker
                         color="blue"
                         v-model="date"
@@ -21,10 +23,9 @@
                     ></v-date-picker>
                 </v-flex>
             
-                <div class="centered-container">
+                <v-flex>
                     <v-card color="amber">
                         <v-card-title>
-                            일정
                             <v-spacer/>
                             <v-text-field  
                                 v-model="search"
@@ -64,8 +65,7 @@
                             </v-alert>
                         </v-data-table>
                     </v-card>
-                    </div>
-                
+                </v-flex>
             </v-layout>
             <v-btn v-if="plus==false && match==true" color="blue" @click="plus=true">일정 추가</v-btn>
             </div>
@@ -284,8 +284,16 @@
 </script>
 
 <style lang="scss" scoped>
-.container{
-    margin-top: 100px
-}
+
+    .ajou-title{
+        margin-bottom : 2%;
+        font-size : 40px;
+        position : relative;
+        text-align : center;
+    }
+
+    .container{
+        margin-top: 100px
+    }
 
 </style>

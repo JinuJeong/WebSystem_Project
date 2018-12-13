@@ -1,11 +1,21 @@
 <template>
-    <div class="circles">
+    <div class="circles")>
         <!--항상 상단에 떠있는 bar-->
         <header-bar class="mb-5"></header-bar>
 
 
         <!--바탕이 되는 container-->
+
+        <v-container style="padding : 3%;">
+            <button>
+                <v-icon x-large class="material-icons" @click="$router.push('/')">
+                    keyboard_backspace
+                </v-icon>
+                <p> 홈으로 </p>
+            </button>
+
         <div class="centered-container">
+
             <h1 class="jg ajou-title"> 동아리/소학회 정보 </h1>
 
             <!--그 위에 올려지는 하얀 container (elevation : 10)-->
@@ -102,6 +112,7 @@
         <div>
             <footer-bar style="margin-top:17%"></footer-bar>
         </div>
+        </v-container>
     </div>
 </template>
 
@@ -115,7 +126,7 @@
             this.$http.get('http://localhost:8000/circle/send').then((res) => {
                 this.allCircles = res.data
             }).then(() => {
-                console.log(this.allCircles)
+                
                 for(var i = 0; i < this.allCircles.length; i++){
                     if(this.allCircles[i].auth == true)
                         this.circles.push(this.allCircles[i])

@@ -4,11 +4,13 @@
         <br>
         <v-container class="container">
             <v-flex style="width:100%;">
-            <button>
-            <i class="material-icons" @click="onBack()">
-            keyboard_backspace
-            </i>
-            </button>
+
+             <button>
+               <v-icon x-large class="material-icons" @click="$router.push('/')">
+                  keyboard_backspace
+                </v-icon>
+                 <p> 홈으로 </p>
+             </button>
             <h1 class="text-md-center">A-dong {{kind_head}}</h1>
                 <div class="mt-5">
                     <v-card color="amber">
@@ -48,7 +50,8 @@
                     </v-card>
                 </div>
                 <div class="text-xs-right">
-                    <v-btn v-if="match==true"  @click="$router.push('/boards/'+boardName+'/manage_notice/create')">새 글 작성</v-btn>
+                    <v-btn v-if="boardName == 'notice'&&match==true" dark @click="$router.push('/boards/'+boardName+'/manage_notice/create')">새 글 작성</v-btn>
+                    <v-btn v-if="boardName == 'board'" dark @click="$router.push('/boards/'+boardName+'/manage_notice/create')">새 글 작성</v-btn>
                 </div>
             </v-flex>
         </v-container>
@@ -67,7 +70,7 @@ export default {
         widgets: false,
         checkbox: true,
         search: '',
-        math: false,
+        match: false,
         boardName: this.$route.params.boardName,
         headers: [
           { text: '번호', value: 'postNum', align: 'center' /*,sortable: false*/ },
@@ -85,11 +88,7 @@ export default {
     },
     created() {
         
-        if(this.boardName == 'notice') this.kind_head="공지사항"
-        else this.kind_head="게시판"
-
-        if(this.$session.getAll().admin==true) this.match=true;
-        this.boardName = this.$route.params.boardName
+        
         this.fetchData()
     },
     beforeRouteUpdate(to, from, next) {
@@ -111,6 +110,12 @@ export default {
                     }
                 }         
             })
+            if(this.boardName == 'notice') this.kind_head="공지사항"
+            else this.kind_head="게시판"
+            this.match=false
+            if(this.$session.getAll().admin==true) this.match=true;
+            else if(this.$session.exists() && this.boardName=="board") this.match=true;
+
         },
         onBack: function(){
             this.$router.push('/')

@@ -20,17 +20,16 @@
                 <v-btn @click="removeImage">Remove image</v-btn>
             </div>
 
-
             <v-layout row wrap class ='mt-5'>
                 <v-flex xs12 sm6>
-                <v-date-picker
-                    color="green"
-                    :events="allowDate"
-                    v-model="dates"
-                    multiple
-                ></v-date-picker>
+                    <v-date-picker
+                        color="green"
+                        :events="allowDate"
+                        v-model="dates"
+                        multiple
+                    ></v-date-picker>
                 </v-flex>
-            <v-flex xs12 sm6>
+                <v-flex xs12 sm6>
                     <v-combobox
                     slot="activator"
                     v-model="date1"
@@ -49,40 +48,33 @@
                     readonly
                     ></v-combobox>
 
-                   
                    <v-textarea
                     outline
                     name="contents"
                     label="활동 내용"
                     v-model="contents"
                     ></v-textarea>
-                <v-btn color="blue" @click="onSubmit()">활동 추가</v-btn>
-                <v-btn color="blue" @click="onBack()">취소</v-btn>
+
+                    <v-btn color="blue" @click="onSubmit()">활동 추가</v-btn>
+                    <v-btn color="blue" @click="onBack()">취소</v-btn>
                 </v-flex>
             </v-layout>
 
 
-            <v-data-table
-                v-model="selected"
-                :headers="headers"
-                :items="users"
-                item-key="_id"
-                select-all
-                class="elevation-1"
-            >
-            <template slot="items" slot-scope="props">
-                <td>
-                    <v-checkbox
-                     v-model="props.selected"
-                     primary
-                     color="blue"
-                     off-icon="clear"
-                     on-icon="lens"
-                     hide-details
-                    ></v-checkbox>
-                </td>
-                <td>{{props.item.name}}</td>
-                <td class="text-xs-right">{{props.item.ID}}</td>
+            <v-data-table v-model="selected" :headers="headers" :items="users" item-key="_id" select-all class="elevation-1">
+                <template slot="items" slot-scope="props">
+                    <td>
+                        <v-checkbox
+                        v-model="props.selected"
+                        primary
+                        color="blue"
+                        off-icon="clear"
+                        on-icon="lens"
+                        hide-details
+                        ></v-checkbox>
+                    </td>
+                    <td>{{props.item.name}}</td>
+                    <td class="text-xs-right">{{props.item.ID}}</td>
             </template>
             </v-data-table>
             

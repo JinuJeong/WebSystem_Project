@@ -137,14 +137,14 @@ router.post("/:circleName/board/:postType/:postNum/update",(req,res,next)=>{
 
 router.get('/send', (req, res) => {
     circleModel.find().populate('president').populate('members.user').exec((err, data) => {
-        console.log(data)
+        console.log("동아리 정보 전송")
         res.send(data)
 })
 });
 
 router.get('/send/title', (req, res) => {
 
-    circleModel.find().limit(5).then((data)=>{
+    circleModel.find({"auth" : true}).limit(5).then((data)=>{
         res.send(data)
     })
 });
@@ -168,9 +168,9 @@ router.post('/send/search', (req, res) => {
     }
 });
 
-router.post('/register', (req, res) => {
+router.post('/register', (req, res) => { // 회장 될 분이 admind에게 동아리 가입 신청
    let data = req.body
-   data['members']=[{"user":req.body.president}]
+   //data['members']=[{"user":req.body.president}]
    circleModel.create(data).then((circle) => {
        console.log("동아리 신청 완료")
        res.send(circle)
@@ -306,14 +306,14 @@ router.post('/:name/signupCircle', (req, res) => {
         for(var i = 0; i < circle.members.length; i++){
             if(circle.members[i].user.studentId === req.body.studentId)
                 throw new Error();
-            console.log(circle.members[i].user.name)
         }
         
         return circle
     }).then((circle) => {
         circle.members.push({user: req.body})
         circle.save()
-        //console.log(circle)
+        console.log("동아리 가입 신청")
+
         res.send(circle)
     }).catch((err) => {
         res.send("err")
@@ -326,8 +326,7 @@ router.post('/:name/accept', (req, res) => { //동아리 가입 승인
 
     circleModel.findOne({name}).populate('members.user').exec().then((circle) => {
         for(var i = 0; i < circle.members.length; i++){
-            //console.log(circle.members[i].user.name)
-            //console.log(req.body)
+
             if(circle.members[i].user.name === req.body.name)
                 circle.members[i].circleAuth = true
         }
@@ -335,7 +334,9 @@ router.post('/:name/accept', (req, res) => { //동아리 가입 승인
         return circle
     }).then((circle) => {
         circle.save()
-        //console.log(circle)
+
+    }).then(() => {
+        console.log("동아리 가입 승인 완료")
         res.end()
     })
 });
@@ -360,7 +361,7 @@ router.post('/:name/reject', (req, res) => {
     })
 })
 
-router.post('/:circleName/acceptCircle', (req, res) => {
+router.post('/:circleName/acceptCircle', (req, res) => { //동아리 신청을 admin이 승인한다.
     var circleName = req.params.circleName
 
     circleModel.findOne({"name": circleName}).then((circle) => {
@@ -372,7 +373,7 @@ router.post('/:circleName/acceptCircle', (req, res) => {
     })
 });
 
-router.post('/:circleName/rejectCircle', (req, res) => {
+router.post('/:circleName/rejectCircle', (req, res) => { //동아리 신청을 admin이 거절한다.
     var circleName = req.params.circleName
     
     circleModel.deleteOne({"name": circleName}).then(() => {

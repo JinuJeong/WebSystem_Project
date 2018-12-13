@@ -4,14 +4,11 @@
         <header-bar></header-bar>
         
 
-        <v-container
-          fluid
-          grid-list-md
-          style="padding : 5%"
-        >
-        <div id='title'>
-           <span class="md-display-3">{{circleName}}</span>
-        </div><br/>
+        <v-container fluid grid-list-md style="padding : 5%">
+
+        <v-layout row wrap>
+            <v-flex style="text-align :center;"> <p class="md-display-3" style="color : black">{{circleName}}</p></v-flex>
+        </v-layout>
         <v-layout row wrap>
           <v-flex 
               xs4
@@ -195,7 +192,7 @@
           }  
         },
         created: function(){
-          console.log(this.$session.getAll())
+          
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/notice").then((data)=>{
               for(let i =0; i<5 && i<data.data.length;i++) this.noticelists.push(data.data[i])
           })

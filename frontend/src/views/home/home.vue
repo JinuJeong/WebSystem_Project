@@ -3,7 +3,7 @@
         <!--항상 상단에 떠있는 bar-->
         <header-bar></header-bar>
 
-        <v-container style="margin-top : 2%; height : 1300px;">
+        <v-container style="margin-top : 2%; height : 1300px; padding : 2%;">
             <v-layout style=" height : 300px;">
                 <v-flex style=" max-width : 23%; height : 90%;">
                     <v-card dark color="white"  class="left-side-content"  v-if="beforeLogin">
@@ -28,11 +28,12 @@
 
                 <v-flex>
                     <v-carousel style="height : 90%;">
-                        <v-carousel-item
-                                v-for="(item,i) in items"
+                        <v-carousel-item width="100%" auto-height
+                                         v-for="(item,i) in items"
                                 :key="i"
                                 :src="item.src"
-                        ></v-carousel-item>
+                        >
+                        </v-carousel-item>
                     </v-carousel>
                 </v-flex>
             </v-layout>
@@ -116,7 +117,7 @@
                         <v-card-title class="home-content-title"><router-link to="/circles" style="width : 50%;">추천 동아리</router-link></v-card-title>
                         <v-divider></v-divider>
                         <v-list dense>
-                            <p>당신의 관심사 : {{user.interest}}</p>
+                            <v-list-tile-content class="rank-text jg">당신의 관심사 : {{user.interest}}</v-list-tile-content>
                             <v-list-tile v-for="circle in recommendCircles" :key="circle._id">
                                 <v-list-tile-content class="rank-text jg">{{circle.name}}</v-list-tile-content>
                                 <v-list-tile-content class="align-end time-text">{{circle.concept}}</v-list-tile-content>
@@ -151,7 +152,6 @@
                     this.userInterest = this.user.interest.split(',')
                 })
             }
-            
 
             this.$http.get('http://localhost:8000/boards/home/notice').then((res) => {
                 this.noticeList = res.data
@@ -213,8 +213,8 @@
                 user: {},
                 items: [
                     {
-                        src: "http://www.ajou.ac.kr/_resources/main/img/intro/UI/slogan_img01.png"
-                    }
+                        src: "http://www.ajou.ac.kr/_resources/main/img/intro/UI/slogan_img01.png",
+                    },
                 ],
                 maps: [
                     {
