@@ -200,7 +200,7 @@
           if(this.auth==true){
             this.headers.push({text: '수정', align: 'center'},{text: '삭제', align: 'center'})
           }
-          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/schedule").then((data)=>{
+          this.$http.get("http://adong.cf:8000/circle/"+this.circleName+"/schedule").then((data)=>{
                     
                     for(let i=0;i<data.data.length;i++){
                         let date ={"start": data.data[i].start.substr(0,10)
@@ -231,7 +231,7 @@
                 history.back()
             },
             onSubmit:function(){
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/schedule/create",
+                this.$http.post("http://adong.cf:8000/circle/"+this.circleName+"/schedule/create",
                 {"start":this.date1,"end":this.date2,"circle":this.circleName,"content":this.content}).then((data)=>{
                     alert(this.date1+" ~ "+this.date2 +" "+this.content+" 일정이 추가됐습니다.")
                     window.location.reload()
@@ -239,7 +239,7 @@
                 })
             },
             onUpdate:function(scheduleId){
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/schedule/update",
+                this.$http.post("http://adong.cf:8000/circle/"+this.circleName+"/schedule/update",
                 {"start":this.data1,"end":this.date2,"content":this.content,"scheduleId":this.scheduleId})
                 .then((data)=>{
                     window.location.reload()
@@ -254,10 +254,10 @@
                 this.scheduleId=scheduleId;
             },
             onDelete:function(scheduleId){
-                this.$http.get("http://localhost:8000/circle/"+this.circleName+"/schedule/"+scheduleId).then((data)=>{
+                this.$http.get("http://adong.cf:8000/circle/"+this.circleName+"/schedule/"+scheduleId).then((data)=>{
                     data.data["kind"] = "schedule"
-                    this.$http.post("http://localhost:8000/recovery",data.data).then(()=>{
-                        this.$http.post("http://localhost:8000/circle/"+this.circleName+"/schedule/delete",{"scheduleId":scheduleId})
+                    this.$http.post("http://adong.cf:8000/recovery",data.data).then(()=>{
+                        this.$http.post("http://adong.cf:8000/circle/"+this.circleName+"/schedule/delete",{"scheduleId":scheduleId})
                         .then(()=>{
                             window.location.reload()
                             return;

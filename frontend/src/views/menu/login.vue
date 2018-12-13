@@ -75,7 +75,7 @@
         methods: {
             auth: function() {
                 
-                this.$http.post("http://localhost:8000/user/signin",{"ID":this.login.ID,"password":this.login.password}).then((res)=>{
+                this.$http.post("http://adong.cf:8000/user/signin",{"ID":this.login.ID,"password":this.login.password}).then((res)=>{
                     if(res.data.ID==null){
                         this.active=true
                         return;
@@ -93,7 +93,7 @@
                     this.$session.set('userDepartment', res.data.department)
                     this.$session.set('userstudentId', res.data.studentId)
                     let circles=new Array();
-                    this.$http.get("http://localhost:8000/user/find/user/"+this.login.ID).then((data)=>{
+                    this.$http.get("http://adong.cf:8000/user/find/user/"+this.login.ID).then((data)=>{
                         let user = data.data
                         console.log(user)
                         for(let i =0; i<user.circles.length;i++){

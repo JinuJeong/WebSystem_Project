@@ -196,21 +196,21 @@
         },
         created: function(){
           
-          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/notice").then((data)=>{
+          this.$http.get("http://adong.cf:8000/circle/"+this.circleName+"/board/notice").then((data)=>{
               for(let i =0; i<5 && i<data.data.length;i++) this.noticelists.push(data.data[i])
           })
-          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/schedule").then((data)=>{
+          this.$http.get("http://adong.cf:8000/circle/"+this.circleName+"/schedule").then((data)=>{
               for(let i=0;i<data.data.length && i<5;i++) this.schedulelists.push(data.data[i])
                     
           })
-          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/board").then((data)=>{
+          this.$http.get("http://adong.cf:8000/circle/"+this.circleName+"/board/board").then((data)=>{
               for(let i =0; i<5 && i<data.data.length;i++) this.boardlists.push(data.data[i])
           })
-          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/group").then((data)=>{
+          this.$http.get("http://adong.cf:8000/circle/"+this.circleName+"/group").then((data)=>{
               for(let i=0;i<data.data.length && i<5;i++) this.grouplists.push(data.data[i])
           })
           
-          this.$http.get("http://localhost:8000/circle/"+this.circleName+"/active").then((data)=>{
+          this.$http.get("http://adong.cf:8000/circle/"+this.circleName+"/active").then((data)=>{
               
               for(let i=0;i<data.data.length && i<5;i++){
                 this.images.push(data.data[i].image)
@@ -221,10 +221,10 @@
           
           this.userName = this.$session.getAll().username
           this.userstudentId = this.$session.getAll().userstudentId;
-          this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
+          this.$http.get('http://adong.cf:8000/user/findById/' + this.userstudentId).then((res) => {
             this.user = res.data
           }).then(() => {
-            this.$http.get('http://localhost:8000/circle/find/' + this.circleName).then((res) => {
+            this.$http.get('http://adong.cf:8000/circle/find/' + this.circleName).then((res) => {
                 this.circle = res.data
                 if(this.circle.president.name === this.user.name){
                   this.president = this.user
@@ -239,12 +239,12 @@
         },
         methods: {
           accept: function() {
-            this.$http.post('http://localhost:8000/circle/'+this.circleName+'/accept', this.userin)
+            this.$http.post('http://adong.cf:8000/circle/'+this.circleName+'/accept', this.userin)
             this.$router.go(0)          
           },
           reject: function() {
-            this.$http.post('http://localhost:8000/circle/'+this.circleName+'/reject', this.userin).then(() => {
-              this.$http.post('http://localhost:8000/user/'+this.userstudentId+'/reject', this.circle)
+            this.$http.post('http://adong.cf:8000/circle/'+this.circleName+'/reject', this.userin).then(() => {
+              this.$http.post('http://adong.cf:8000/user/'+this.userstudentId+'/reject', this.circle)
             }).then(() => {
               this.$router.go(0)
             })

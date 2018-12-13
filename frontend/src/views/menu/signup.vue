@@ -194,7 +194,7 @@
                     alert("중복확인 해주세요");
                     return ;
                 }
-                this.$http.post("http://localhost:8000/user/signup",
+                this.$http.post("http://adong.cf:8000/user/signup",
                     {"ID":this.id, "password":this.password, "name":this.name, "department":this.department,"studentId":this.studentId,
                      "nickname":this.nickname, "call":this.call, "interest": this.selectedInterest, "birth": this.birth}).
                 then((res)=>{
@@ -220,7 +220,7 @@
                 return 0;
             },
             onDup: function(){
-                this.$http.get("http://localhost:8000/user/dup/"+this.id).then((data)=>{
+                this.$http.get("http://adong.cf:8000/user/dup/"+this.id).then((data)=>{
                     
                     if(!data.data){
                         alert("사용가능한 아이디입니다.")

@@ -113,7 +113,7 @@
     export default {
         name: 'circles',
         created (){
-            this.$http.get('http://localhost:8000/circle/send').then((res) => {
+            this.$http.get('http://adong.cf:8000/circle/send').then((res) => {
                 this.allCircles = res.data
             }).then(() => {
                 
@@ -124,7 +124,7 @@
             })
             this.userName = this.$session.getAll().username
             this.userstudentId = this.$session.getAll().userstudentId;
-            this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
+            this.$http.get('http://adong.cf:8000/user/findById/' + this.userstudentId).then((res) => {
                 this.user = res.data
             })
 
@@ -179,11 +179,11 @@
                 this.check = false
             },
             userSignup: function() {
-                this.$http.post('http://localhost:8000/user/' + this.userstudentId + '/signupCircle', this.signcircle)
+                this.$http.post('http://adong.cf:8000/user/' + this.userstudentId + '/signupCircle', this.signcircle)
                 .then((res) => {
 
                     if(res.data !== "err"){
-                        this.$http.post('http://localhost:8000/circle/' + this.signcircle.name + '/signupCircle/', this.user)
+                        this.$http.post('http://adong.cf:8000/circle/' + this.signcircle.name + '/signupCircle/', this.user)
                     }
                     else{
                         if(this.$session.exists())
@@ -194,7 +194,7 @@
                 })
             },
             search: function() {
-                this.$http.post('http://localhost:8000/circle/send/search',
+                this.$http.post('http://adong.cf:8000/circle/send/search',
                     {"search_value": this.search_value, "search_select" : this.search_select})
                 .then((res) => {
                     this.circles = res.data

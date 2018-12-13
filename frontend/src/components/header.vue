@@ -139,12 +139,12 @@ export default {
       this.showMenu = true;
       this.userName = this.$session.getAll().username;
       this.userstudentId = this.$session.getAll().userstudentId;
-      this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
+      this.$http.get('http://adong.cf:8000/user/findById/' + this.userstudentId).then((res) => {
         this.user = res.data
       })
 
       this.userDepartment = this.$session.getAll().userDepartment;
-      this.$http.get('http://localhost:8000/circle/send').then((res) => {
+      this.$http.get('http://adong.cf:8000/circle/send').then((res) => {
         this.circles = res.data
       }).then(() => {
           for(let i = 0; i < this.circles.length; i++){
@@ -202,23 +202,23 @@ export default {
        this.$router.go(0);   
       },
       accept: function(circle, user) {
-        this.$http.post('http://localhost:8000/circle/'+circle.name+'/accept', user)
+        this.$http.post('http://adong.cf:8000/circle/'+circle.name+'/accept', user)
         this.$router.go(0)
       },
       reject: function(circle, user) {
-        this.$http.post('http://localhost:8000/circle/'+circle.name+'/reject', user).then(() => {
-        this.$http.post('http://localhost:8000/user/'+user.studentId+'/reject', circle)
+        this.$http.post('http://adong.cf:8000/circle/'+circle.name+'/reject', user).then(() => {
+        this.$http.post('http://adong.cf:8000/user/'+user.studentId+'/reject', circle)
         }).then(() => {
         this.$router.go(0)
         })
       },
       acceptCircle: function(circle){
-        this.$http.post('http://localhost:8000/circle/'+circle.name+'/acceptCircle').then(()=>{
+        this.$http.post('http://adong.cf:8000/circle/'+circle.name+'/acceptCircle').then(()=>{
             this.$router.go(0)
         })
     },
       rejectCircle: function(circle){
-        this.$http.post('http://localhost:8000/circle/'+circle.name+'/rejectCircle').then(()=>{
+        this.$http.post('http://adong.cf:8000/circle/'+circle.name+'/rejectCircle').then(()=>{
             this.$router.go(0)
         })
         

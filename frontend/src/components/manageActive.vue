@@ -126,7 +126,7 @@ export default{
         }
     },
     created : function(){
-        this.$http.get("http://localhost:8000/circle/"+this.circleName+"/active/"+this.activeId).then((data)=>{
+        this.$http.get("http://adong.cf:8000/circle/"+this.circleName+"/active/"+this.activeId).then((data)=>{
             let info=data.data
             this.pastMembers=data.data.members
             this.title=info.title
@@ -136,7 +136,7 @@ export default{
             this.contents=info.contents
             if(this.userName==data.data.author) this.match=true;
         }).then(()=>{
-        this.$http.get("http://localhost:8000/circle/find/" + this.circleName).then((res) => {
+        this.$http.get("http://adong.cf:8000/circle/find/" + this.circleName).then((res) => {
             for(let i = 0; i < res.data.members.length; i++){
                 if(res.data.members[i].circleAuth == true) // 동아리 등록된 회원들만 come in
                     this.members.push(res.data.members[i])
@@ -186,7 +186,7 @@ export default{
                         this.selected[i].value = true                        
                     }
                     // 새로 만드는 거 if(this.activeId != this.$route.params.activeId)
-                    this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/create",
+                    this.$http.post("http://adong.cf:8000/circle/"+this.circleName+"/active/create",
                     {"title":this.title,"contents":this.contents,"circleName":this.circleName,"start":this.date1,"end":this.date2
                     ,"image":this.image, "members":this.selected})
                     .then((data)=>{
@@ -195,7 +195,7 @@ export default{
                     })
                 }
                 else{ // 수정
-                    this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/update/"+this.activeId,
+                    this.$http.post("http://adong.cf:8000/circle/"+this.circleName+"/active/update/"+this.activeId,
                     {"title":this.title,"contents":this.contents,"circleName":this.circleName,"start":this.date1,"end":this.date2
                     ,"image":this.image, "activeId":this.activeId, "members":this.selected})
                     .then((data)=>{

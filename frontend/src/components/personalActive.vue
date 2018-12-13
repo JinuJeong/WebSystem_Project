@@ -110,11 +110,11 @@ export default {
     },
     created: function() {
         this.userstudentId = this.$session.getAll().userstudentId;
-        this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
+        this.$http.get('http://adong.cf:8000/user/findById/' + this.userstudentId).then((res) => {
             this.user = res.data
         })
 
-        this.$http.get("http://localhost:8000/circle/"+this.circleName+"/active").then((res)=>{
+        this.$http.get("http://adong.cf:8000/circle/"+this.circleName+"/active").then((res)=>{
             this.actives = res.data
         }).then(() => {
             for(var i = 0; i < this.actives.length; i++){

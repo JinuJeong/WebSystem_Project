@@ -96,7 +96,7 @@ export default {
     },
     methods: {
         fetchData() {
-            this.$http.get("http://localhost:8000/boards/"+this.postType).then((result)=>{
+            this.$http.get("http://adong.cf:8000/boards/"+this.postType).then((result)=>{
                 for(let i=0;i<result.data.length;i++){
                     if(this.postType == result.data[i].postType){
                         let date = result.data[i].date.split('T')[0]

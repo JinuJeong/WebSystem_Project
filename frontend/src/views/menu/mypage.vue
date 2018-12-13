@@ -243,7 +243,7 @@ export default {
     created () {//혹시 안 되면 서버 껐다 켜봐라
         this.userName = this.$session.getAll().username
         this.userstudentId = this.$session.getAll().userstudentId;
-        this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
+        this.$http.get('http://adong.cf:8000/user/findById/' + this.userstudentId).then((res) => {
             this.user = res.data
         })
 
@@ -265,7 +265,7 @@ export default {
         },
         changeProfile: function() {
             if(this.name != null && this.nickname != null && this.department != null){
-            this.$http.post('http://localhost:8000/user/' + this.userstudentId + '/update/profile',
+            this.$http.post('http://adong.cf:8000/user/' + this.userstudentId + '/update/profile',
             {"name":this.name, "nickname":this.nickname, "department":this.department})
             .then((res) => {
                 this.change1 = false
@@ -280,7 +280,7 @@ export default {
         },
         changeCall: function() {
             if(this.call != null && this.id != null){
-            this.$http.post('http://localhost:8000/user/' + this.userstudentId + '/update/call',
+            this.$http.post('http://adong.cf:8000/user/' + this.userstudentId + '/update/call',
             {"call":this.call, "ID":this.id})
             .then((res) => {
                 this.change2 = false
@@ -295,7 +295,7 @@ export default {
         },
         changePassword: function() {
             if(this.passwordCorrect==true){
-                this.$http.post('http://localhost:8000/user/' + this.userstudentId + '/update/password',
+                this.$http.post('http://adong.cf:8000/user/' + this.userstudentId + '/update/password',
                 {"password":this.passwordin})
                 .then((res) => {
                     this.change4 = false
@@ -309,7 +309,7 @@ export default {
         },
         deleteUser: function() {
             if(this.passwordCorrect==true){
-                this.$http.delete('http://localhost:8000/user/' + this.userstudentId + '/delete')
+                this.$http.delete('http://adong.cf:8000/user/' + this.userstudentId + '/delete')
                 .then((res) => {
                     this.$session.destroy();
                     this.$router.push('/');
@@ -318,8 +318,8 @@ export default {
             }
         },
         giveupCircle: function(){
-            this.$http.post('http://localhost:8000/circle/'+this.circleout.name+'/reject', this.user).then(() => {
-                this.$http.post('http://localhost:8000/user/'+this.userstudentId+'/reject', this.circleout)
+            this.$http.post('http://adong.cf:8000/circle/'+this.circleout.name+'/reject', this.user).then(() => {
+                this.$http.post('http://adong.cf:8000/user/'+this.userstudentId+'/reject', this.circleout)
             }).then(() => {
                 this.$router.go(0)
             })

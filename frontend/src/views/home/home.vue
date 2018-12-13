@@ -131,7 +131,7 @@
                 this.userName = this.$session.getAll().username;
                 this.userDepartment = this.$session.getAll().userDepartment;
                 this.userstudentId = this.$session.getAll().userstudentId;
-                this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
+                this.$http.get('http://adong.cf:8000/user/findById/' + this.userstudentId).then((res) => {
                     this.user = res.data
                 }).then(() => {
                     this.userInterest = this.user.interest.split(',')
@@ -139,21 +139,21 @@
             }
             
 
-            this.$http.get('http://localhost:8000/boards/home/notice').then((res) => {
+            this.$http.get('http://adong.cf:8000/boards/home/notice').then((res) => {
                 this.noticeList = res.data
             })
-            this.$http.get('http://localhost:8000/boards/home/board').then((res) => {
+            this.$http.get('http://adong.cf:8000/boards/home/board').then((res) => {
                 this.boardList = res.data
             })
-            this.$http.get('http://localhost:8000/circle/Home/schedule').then((res)=>{
+            this.$http.get('http://adong.cf:8000/circle/Home/schedule').then((res)=>{
                 this.scheduleList = res.data
                 
             })
-            var circle = await this.$http.get('http://localhost:8000/circle/send/title').then((res) => {
+            var circle = await this.$http.get('http://adong.cf:8000/circle/send/title').then((res) => {
                 this.CircleList = res.data
             })
 
-            this.$http.get('http://localhost:8000/circle/send').then((res) => {
+            this.$http.get('http://adong.cf:8000/circle/send').then((res) => {
                 this.allCircles = res.data
             }).then(() => {
                 for(var i = 0; i < this.allCircles.length; i++){

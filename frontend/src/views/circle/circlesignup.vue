@@ -146,7 +146,7 @@ export default {
             this.circle = {name: this.name, party: this.department, memberNumber: this.number
             , concept: this.concept, introduce: this.introduce, president: this.president, professor: this.professor
             , roomExistence: this.roomExistence, othersAccept: this.othersAccept}
-            this.$http.post('http://localhost:8000/circle/register', this.circle).then((res) => {
+            this.$http.post('http://adong.cf:8000/circle/register', this.circle).then((res) => {
                 if(res.data === "err")
                     this.err = 1
                 else
@@ -173,7 +173,7 @@ export default {
         },
         find: function () {
             
-            this.$http.get('http://localhost:8000/user/findById/' + this.presidentin).then((res) => {
+            this.$http.get('http://adong.cf:8000/user/findById/' + this.presidentin).then((res) => {
                 
                 this.president = res.data
             }).then(() => {

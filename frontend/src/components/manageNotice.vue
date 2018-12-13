@@ -60,7 +60,7 @@
         created: function(){
                 if(this.postNum!=undefined){
                     
-                    this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/"
+                    this.$http.get("http://adong.cf:8000/circle/"+this.circleName+"/board/"+this.postType+"/"
                     +this.postNum).then((data)=>{
                         this.title=data.data.title;
                         this.contents=data.data.contents
@@ -75,7 +75,7 @@
         methods:{
             onModify: function(){
                 
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/"+this.postNum+"/update",{"title":this.title,
+                this.$http.post("http://adong.cf:8000/circle/"+this.circleName+"/board/"+this.postType+"/"+this.postNum+"/update",{"title":this.title,
                 "contents":this.contents,"date":this.date}).then((data)=>{
                     console.log(this.title)
                     this.$router.push("/circle/"+this.circleName);
@@ -89,7 +89,7 @@
                     alert("로그인이 필요합니다")
                     return;
                 }
-                this.$http.post("http://localhost:8000/circle/"+this.circleName+"/board/"+this.postType+"/create",{"title":this.title,
+                this.$http.post("http://adong.cf:8000/circle/"+this.circleName+"/board/"+this.postType+"/create",{"title":this.title,
                     "contents":this.contents,"author":this.userName}).then((data)=>{
                         alert("게시글이 업로드 됐습니다.")
                         this.$router.push("/circle/"+this.circleName);
