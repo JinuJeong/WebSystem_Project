@@ -242,9 +242,11 @@ export default {
     },
     created () {//혹시 안 되면 서버 껐다 켜봐라
         this.userName = this.$session.getAll().username
-        this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {
+        this.userstudentId = this.$session.getAll().userstudentId;
+        this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
             this.user = res.data
         })
+
     },
     name: 'mypage',
     components: {

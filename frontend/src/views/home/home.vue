@@ -142,7 +142,8 @@
                 this.showMenu = true;
                 this.userName = this.$session.getAll().username;
                 this.userDepartment = this.$session.getAll().userDepartment;
-                this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {
+                this.userstudentId = this.$session.getAll().userstudentId;
+                this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
                     this.user = res.data
                 }).then(() => {
                     this.userInterest = this.user.interest.split(',')

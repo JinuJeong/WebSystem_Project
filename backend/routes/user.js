@@ -22,6 +22,14 @@ router.get('/find/:name', (req, res) => {
    })
 });
 
+router.get('/findById/:studentId', (req, res) => {
+    var studentId = req.params.studentId
+
+    userModel.findOne({studentId}).populate('circles').exec().then((user) => {
+        res.send(user)
+    })
+})
+
 router.get('/find/user/:userId',(req,res)=>{
     console.log(req.params.userId)
     userModel.findOne({"ID":req.params.userId}).populate({
