@@ -106,6 +106,19 @@
                                 <v-list-tile-content class="rank-text jg">{{circle.name}}</v-list-tile-content>
                                 <v-list-tile-content class="align-end time-text"></v-list-tile-content>
                             </v-list-tile>
+                        </v-list> 
+                    </v-card>
+                </v-flex>
+                <v-flex style="height : 85%; width:25%;" >
+                    <v-card class="md-transparent" style="width : 100%; height:85%;">
+                        <v-card-title class="home-content-title"><router-link to="/circles" style="width : 50%;">추천 동아리</router-link></v-card-title>
+                        <v-divider></v-divider>
+                        <v-list dense>
+                            <p>당신의 관심사 : {{user.interest}}</p>
+                            <v-list-tile v-for="circle in recommendCircles" :key="circle._id">
+                                <v-list-tile-content class="rank-text jg">{{circle.name}}</v-list-tile-content>
+                                <v-list-tile-content class="align-end time-text">{{circle.concept}}</v-list-tile-content>
+                            </v-list-tile>
                         </v-list>
                     </v-card>
                 </v-flex>
@@ -129,6 +142,11 @@
                 this.showMenu = true;
                 this.userName = this.$session.getAll().username;
                 this.userDepartment = this.$session.getAll().userDepartment;
+                this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {
+                    this.user = res.data
+                }).then(() => {
+                    this.userInterest = this.user.interest.split(',')
+                })
             }
             
 
@@ -145,6 +163,35 @@
             var circle = await this.$http.get('http://localhost:8000/circle/send/title').then((res) => {
                 this.CircleList = res.data
             })
+
+            this.$http.get('http://localhost:8000/circle/send').then((res) => {
+                this.allCircles = res.data
+            }).then(() => {
+                for(var i = 0; i < this.allCircles.length; i++){
+                    if(this.allCircles[i].auth == true)
+                        this.circles.push(this.allCircles[i])
+                }
+            }).then(() => {
+                var out
+
+                for(var i = 0; i < this.circles.length; i++){
+                    this.circleInterest = this.circles[i].concept.split(',')
+                    for(var j = 0; j < this.circleInterest.length; j++){
+                       for(var k = 0; k < this.userInterest.length; k++){
+                           if(this.circleInterest[j] == this.userInterest[k]){
+                              this.recommendCircles.push(this.circles[i])
+                              out = 1
+                              break;
+                           }
+                        }
+                        if(out == 1){
+                            out = 0;
+                            break;
+                        }
+                    }
+                }
+            })
+
         },
         data () {
             return {
@@ -152,10 +199,15 @@
                 boardList : [],
                 CircleList : [],
                 scheduleList : [],
-
+                allCircles: [],
+                circles: [],
                 beforeLogin : true,
                 userName : "",
                 userDepartment : "",
+                userInterest: [],
+                circleInterest: [],
+                recommendCircles: [],
+                user: {},
                 items: [
                     {
                         src: "http://www.ajou.ac.kr/_resources/main/img/intro/UI/slogan_img01.png"
