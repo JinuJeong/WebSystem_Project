@@ -191,7 +191,7 @@ router.get('/find/:name', (req, res) => {
 
 // Schedule Part
 router.get('/:circleName/schedule',(req,res)=>{
-    scheduleModel.find({'circle':req.params.circleName}).sort('-scheduleId').then((data)=>{
+    scheduleModel.find({'circle':req.params.circleName}).sort('start').then((data)=>{
         res.send(data)
     })
 })

@@ -33,12 +33,12 @@
                         class="textarea"
                         rows="1"
                     />
-                    <v-btn flat small color="inherit" class="button" @click="_id=cmt._id; setIsCmtChanging();">댓글 수정</v-btn>
+                    <v-btn v-if="match==true" flat small color="inherit" class="button" @click="_id=cmt._id; setIsCmtChanging();">댓글 수정</v-btn>
                     <v-dialog
                         v-model="dialog"
                         width="500"
                     >
-                    <v-btn flat small slot="activator" color="inherit" class="button" @click="_id=cmt._id;">댓글 삭제</v-btn>
+                    <v-btn v-if="match==true" flat small slot="activator" color="inherit" class="button" @click="_id=cmt._id;">댓글 삭제</v-btn>
                     <v-card>
                         <v-card-title
                             class="headline blue lighten-2"

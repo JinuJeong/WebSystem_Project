@@ -98,7 +98,7 @@ router.get('/auth/:email',(req,res)=>{
     let email = req.params.email;
     console.log(email);
     userModel.update({"ID":email},{"auth":true}).then((data)=>{
-        res.send("인증 완료")
+        res.redirect("http://adong.cf:8080/");
     })
 })
 

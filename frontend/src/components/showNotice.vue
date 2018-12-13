@@ -33,8 +33,8 @@
                         class="textarea"
                         rows="1"
                     />
-                    <v-btn flat small color="inherit" class="button" @click="_id=cmt._id; setIsCmtChanging();">댓글 수정</v-btn>
-                    <v-btn flat small color="inherit" class="button" @click="_id=cmt._id; onCmtDelete();">댓글 삭제</v-btn>
+                    <v-btn v-if="match==true" flat small color="inherit" class="button" @click="_id=cmt._id; setIsCmtChanging();">댓글 수정</v-btn>
+                    <v-btn v-if="match==true" flat small color="inherit" class="button" @click="_id=cmt._id; onCmtDelete();">댓글 삭제</v-btn>
                 </div>
                 <div v-else>
                     <v-textarea

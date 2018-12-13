@@ -125,7 +125,8 @@ export default{
             pastMembers: []
         }
     },
-    created : function(){
+    created : async function(){
+	if(this.activeId!=undefined){
         this.$http.get("http://adong.cf:8000/circle/"+this.circleName+"/active/"+this.activeId).then((data)=>{
             let info=data.data
             this.pastMembers=data.data.members
@@ -135,8 +136,8 @@ export default{
             this.image=info.image
             this.contents=info.contents
             if(this.userName==data.data.author) this.match=true;
-        }).then(()=>{
-        this.$http.get("http://adong.cf:8000/circle/find/" + this.circleName).then((res) => {
+        })}
+        await this.$http.get("http://adong.cf:8000/circle/find/" + this.circleName).then((res) => {
             for(let i = 0; i < res.data.members.length; i++){
                 if(res.data.members[i].circleAuth == true) // 동아리 등록된 회원들만 come in
                     this.members.push(res.data.members[i])
@@ -154,7 +155,7 @@ export default{
                 }
             }
         })
-        });
+        
     },
     methods:{
         // 데이트 설정 갯수 제안
