@@ -13,6 +13,12 @@ router.get('/send', (req, res) => {
         res.send(user)
     })
 });
+
+router.post('/update/:studentId',(req,res)=>{
+    userModel.update({"studentId":req.params.studentId},req.body).then(()=>{
+        res.send("ok");
+    })
+})
 /*
 router.get('/find/:name', (req, res) => {
    var name = req.params.name
@@ -48,7 +54,6 @@ router.get('/dup/:userId',(req,res)=>{
 })
 
 router.post('/signin',(req,res)=>{
-    var session
     
     userModel.findOne(req.body).then((user)=>{
         res.send(user)
