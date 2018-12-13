@@ -13,7 +13,8 @@
                 <div class="mt-5">
                     <v-card color="amber">
                         <v-card-title>
-                            게시판
+                            <h2 v-if="boardName == 'notice'">공지사항</h2>
+                            <h2 v-else-if="boardName == 'board'">자유 게시판</h2>
                             <v-spacer/>
                             <v-text-field  
                                 v-model="search"

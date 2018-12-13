@@ -2,7 +2,7 @@ const { mongoose, autoIncrement } = require('../mongo')
 
 const commentSchema = mongoose.Schema({
     cmtContent: {type: String, required: true},
-    author: {type: String, required: true},
+    author: {type: String},
     date: {type: Date, default: Date.now},
     postType: {type: String}, //true: Board, false: Notice
     circleName: {type: String}
