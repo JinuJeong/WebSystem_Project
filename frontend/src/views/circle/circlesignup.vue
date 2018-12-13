@@ -61,7 +61,7 @@
                     </md-field> 
                     <md-field>
                         <label>회장</label>
-                        <md-input v-model="presidentin" placeholder="회장 이름"></md-input>
+                        <md-input v-model="presidentin" placeholder="회장 학번"></md-input>
                     </md-field>                    
                     <md-button class="md-raised md-primary md-alignment-center" v-on:click="find()">회장찾기</md-button> 
                 </form>
@@ -100,7 +100,7 @@
                         <md-button class="md-raised md-primary md-alignment-center" v-on:click="check=true">등록</md-button>
                         <md-button class="md-raised md-primary" href="/">홈으로</md-button>
                     </div>
-            {{err}}
+          
             </md-content>
         </div>
         <md-dialog-confirm
@@ -173,7 +173,7 @@ export default {
         },
         find: function () {
             console.log(this.presidentin)
-            this.$http.get('http://localhost:8000/user/find/' + this.presidentin).then((res) => {
+            this.$http.get('http://localhost:8000/user/findById/' + this.presidentin).then((res) => {
                 console.log(res.data)
                 this.president = res.data
             }).then(() => {

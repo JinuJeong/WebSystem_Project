@@ -138,6 +138,7 @@ router.post("/:circleName/board/:postType/:postNum/update",(req,res,next)=>{
 
 router.get('/send', (req, res) => {
     circleModel.find().populate('president').populate('members.user').exec((err, data) => {
+        console.log(data)
         res.send(data)
 })
 });
@@ -310,7 +311,7 @@ router.post('/:name/signupCircle', (req, res) => {
                 throw new Error();
             console.log(circle.members[i].user.name)
         }
-
+        
         return circle
     }).then((circle) => {
         circle.members.push({user: req.body})

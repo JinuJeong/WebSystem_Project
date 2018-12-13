@@ -126,6 +126,7 @@ export default {
     badgeCount: 0,
     pleaseCount: 0,
     badgeCircle: [],
+    userstudentId: "",
     user: {}
   }),
   created () {
@@ -204,12 +205,15 @@ export default {
         })
       },
       acceptCircle: function(circle){
-        this.$http.post('http://localhost:8000/circle/'+circle.name+'/acceptCircle')
-        this.$router.go(0)
+        this.$http.post('http://localhost:8000/circle/'+circle.name+'/acceptCircle').then(()=>{
+            this.$router.go(0)
+        })
     },
       rejectCircle: function(circle){
-        this.$http.post('http://localhost:8000/circle/'+circle.name+'/rejectCircle')
-        this.$router.go(0)
+        this.$http.post('http://localhost:8000/circle/'+circle.name+'/rejectCircle').then(()=>{
+            this.$router.go(0)
+        })
+        
       }
   }
 }

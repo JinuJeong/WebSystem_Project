@@ -72,8 +72,8 @@
                         md-title="사전 공지"
                         md-content="동아리 회장의 승인 후 이용 가능합니다."
                         md-confirm-text="Check"
-                        md-cancel-text="Cancle"
-                        @md-cancel="onCancel"
+                        md-cancle-text="Cancle"
+                        @md-cancle="onCancle"
                         @md-confirm="onCheck" />
                 </md-card>
                 </div>
@@ -83,7 +83,7 @@
                 md-content="정말 동아리에 가입하시겠습니까?"
                 md-confirm-text="Check"
                 md-cancel-text="Cancle"
-                @md-cancel="onCancel"
+                @md-cancel="onCancle"
                 @md-confirm="onCheck" />
 
                 <div class="content-end container-two" style="display : flex; justify-items : center; flex-direction : column">
@@ -116,6 +116,7 @@
             this.$http.get('http://localhost:8000/circle/send').then((res) => {
                 this.allCircles = res.data
             }).then(() => {
+                console.log(this.allCircles)
                 for(var i = 0; i < this.allCircles.length; i++){
                     if(this.allCircles[i].auth == true)
                         this.circles.push(this.allCircles[i])
@@ -178,7 +179,7 @@
                 this.check = false
             },
             userSignup: function() {
-                this.$http.post('http://localhost:8000/user/' + this.user.name + '/signupCircle', this.signcircle)
+                this.$http.post('http://localhost:8000/user/' + this.user.studentId + '/signupCircle', this.signcircle)
                 .then((res) => {
 
                     if(res.data !== "err"){

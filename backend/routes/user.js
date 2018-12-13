@@ -163,9 +163,9 @@ router.delete("/:name/delete", (req, res) => {
 })
 
 router.post("/:name/signupCircle", (req, res) => {
-    var name = req.params.name
+    var name = req.params.name  //student Id
     
-    userModel.findOne({name}).populate('circles').exec().then((user) => {
+    userModel.findOne({"studentId":studentId}).populate('circles').exec().then((user) => {
 
         for(var i = 0; i < user.circles.length; i++){
             if(user.circles[i].name === req.body.name)
