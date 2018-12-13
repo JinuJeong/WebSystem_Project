@@ -301,6 +301,12 @@ router.post('/:circleName/active/update/:activeId',(req,res)=>{
     })
 })
 
+router.get('/active/get',(req,res)=>{
+    activeModel.find().populate('members').exec().then((data)=>{
+        res.send(data);
+    })
+})
+
 router.post('/:name/signupCircle', (req, res) => {
     var name =  req.params.name // 동아리이름 
                                 // req.body user 정보

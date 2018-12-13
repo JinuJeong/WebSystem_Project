@@ -27,6 +27,7 @@ import manageActive from '../components/manageActive'
 import showActives from '../components/showActives'
 import personalActive from '../components/personalActive'
 import manageUsers from '../views/menu/manageUsers'
+import bestCircle from '../views/menu/bestCircle'
 
 import Vuetify from "vuetify";
 
@@ -166,6 +167,10 @@ export default new Router({
         {
             path: '/manageUsers',
             component: manageUsers
+        },
+        {
+            path: '/bestCircle',
+            component: bestCircle
         }
     ]
 })
