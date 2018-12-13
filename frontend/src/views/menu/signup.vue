@@ -39,6 +39,7 @@
                                     placeholder="studentId"
                             ></v-text-field>
                         </v-flex>
+                        <v-btn @click="onDupStudentId">중복 확인</v-btn>
                     </v-layout>
                     <v-layout>
                         <v-flex style="margin-right : 3%;">
@@ -190,7 +191,7 @@
         
         methods:{
             signup:function(){
-                if(this.dup==false){
+                if(this.dup==false || this.dup2==false){
                     alert("중복확인 해주세요");
                     return ;
                 }
@@ -228,6 +229,19 @@
                     }
                     else{
                         alert("중복된 아이디입니다.")
+                    }
+                })
+            },
+            onDupStudentId: function(){
+                console.log(this.studentId)
+                this.$http.get("http://adong.cf:8000/user/dup/studentId/"+this.studentId).then((data)=>{
+                    
+                    if(!data.data){
+                        alert("사용가능한 학번입니다.")
+                        this.dup2=true
+                    }
+                    else{
+                        alert("중복된 학번입니다.")
                     }
                 })
             }

@@ -51,6 +51,11 @@ router.get('/dup/:userId',(req,res)=>{
         res.send(data)
     })
 })
+router.get('/dup/studentId/:stdudentId',(req,res)=>{
+    userModel.findOne({"studentId":req.params.studentId}).then((data)=>{
+        res.send(data)
+    })
+});
 
 router.post('/signin',(req,res)=>{
     
