@@ -262,7 +262,7 @@ export default {
                         }
                         else{
                             alert("수정 완료")
-                            this.$router.push('/manageUsers');
+                            window.location.reload()
                         }
                      })
             

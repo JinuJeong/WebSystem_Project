@@ -7,6 +7,7 @@ const boardModel = require('../db/models/board')
 const groupModel = require('../db/models/group')
 const activeModel = require('../db/models/active')
 const nodemailer = require('nodemailer');
+const date_utils = require('date-utils');
 
 let circleName
 let postType
@@ -301,7 +302,17 @@ router.post('/:circleName/active/update/:activeId',(req,res)=>{
 })
 
 router.get('/active/get',(req,res)=>{
-    activeModel.find().populate('members').exec().then((data)=>{
+    let newDate = new Date()
+    let year1 = newDate.toFormat('YYYY');
+    let month1 = newDate.toFormat('MM')-1;
+    let year2 = year1;
+    let month2 = month1+1;
+    if(month1==0){
+	year1 -=1;
+	month1 =12;
+    } 
+    activeModel.find({"start":{"$gte": new Date(year1,month1),
+	"$lt": new Date(year2,month2)}}).populate('members').exec().then((data)=>{
         res.send(data);
     })
 })

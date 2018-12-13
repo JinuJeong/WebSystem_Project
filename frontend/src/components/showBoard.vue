@@ -12,8 +12,8 @@
                 </v-list-tile>
                 <v-divider/>
                 <v-subheader>CONTENTS</v-subheader>
-                <v-list-tile>
-                    <v-list-tile-content>
+                <v-list-tile style="min-height:300px;">
+                    <v-list-tile-content style="min-height:300px; margin-top:4%">
                         <p id="content">{{contents}}</p>
                     </v-list-tile-content>
                 </v-list-tile>
