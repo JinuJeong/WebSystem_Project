@@ -122,9 +122,11 @@
                 }
             })
             this.userName = this.$session.getAll().username
-            this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {
+            this.userstudentId = this.$session.getAll().userstudentId;
+            this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
                 this.user = res.data
             })
+
         },
         data() {
             return {

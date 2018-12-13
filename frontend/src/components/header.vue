@@ -41,6 +41,7 @@
         <md-drawer :md-active.sync="showNavigation" >
             <md-toolbar class="md-transparent" md-elevation="0">
                 <p class="md-title">{{userDepartment}} {{userName}}님</p>
+                <p class="md-title">{{userstudentId}}</p>
             </md-toolbar>
 
             <md-list>
@@ -132,9 +133,11 @@ export default {
       this.beforeLogin = false;
       this.showMenu = true;
       this.userName = this.$session.getAll().username;
-      this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {
+      this.userstudentId = this.$session.getAll().userstudentId;
+      this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
         this.user = res.data
       })
+
       this.userDepartment = this.$session.getAll().userDepartment;
       this.$http.get('http://localhost:8000/circle/send').then((res) => {
         this.circles = res.data

@@ -91,6 +91,7 @@
                         this.$session.set('admin',false)
                     this.$session.set('username', res.data.name)
                     this.$session.set('userDepartment', res.data.department)
+                    this.$session.set('userstudentId', res.data.studentId)
                     let circles=new Array();
                     this.$http.get("http://localhost:8000/user/find/user/"+this.login.ID).then((data)=>{
                         let user = data.data
