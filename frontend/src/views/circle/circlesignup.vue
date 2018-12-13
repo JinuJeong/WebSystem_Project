@@ -44,7 +44,7 @@
                     <div class="md-layout-item">
                         <md-field>
                             <label>소속 학과</label>
-                                <md-select v-model="department" name="department" id="department">
+                            <md-select v-model="department" name="department" id="department">
                                 <md-optgroup label="정보통신대학">
                                     <md-option value="소프트웨어학과">소프트웨어학과</md-option>
                                     <md-option value="사이버보안학과">사이버보안학과</md-option>
@@ -83,7 +83,7 @@
                                 <md-optgroup label="약학대학">
                                     <md-option value="Pharmacy">약학과</md-option>
                                 </md-optgroup>
-                                </md-select>
+                            </md-select>
                         </md-field>
 
                         <md-field>
@@ -106,111 +106,108 @@
                 </form>
 
                 <div class="actions md-layout md-alignment-center">
-                    <v-btn raised class="action-button jg" color="blue-grey lighten-1" v-on:click="check=true">등록</v-btn>
+                    <v-btn raised class="action-button jg" color="blue-grey lighten-1" v-on:click="check=true" style="color :white;">등록</v-btn>
                     <v-btn raised class="action-button jg" color="blue-grey lighten-1" to="/" style="color : white;">홈으로</v-btn>
                 </div>
             </md-content>
         </div>
 
         <md-dialog-confirm
-        :md-active.sync="check"
-        md-title="Check"
-        md-content="동아리는 관리자의 승인 후 웹페이지에 등록됩니다."
-        md-confirm-text="Check"
-        md-cancle-text="Cancle"
-        @md-cancle="onCancle"
-        @md-confirm="onCheck" />
+                :md-active.sync="check"
+                md-title="Check"
+                md-content="동아리는 관리자의 승인 후 웹페이지에 등록됩니다."
+                md-confirm-text="Check"
+                md-cancle-text="Cancle"
+                @md-cancle="onCancle"
+                @md-confirm="onCheck" />
     </div>
 </template>
 
 <script>
-import headerBar from '../../components/header'
-    
-export default {
-    name: 'circlesignup',
-    data () {
-        return {
-            circle: {},
-            president: {},
-            exist: "",
-            exist_num: 0,
-            name: null,
-            autogrow: null,
-            check: false,
-            concept: [],
-            err: Number,
-            introduce: "",
-            othersAccept: false,
-            roomExistence: false,
-            number: "",
-            presidentin: "",
-            professor: "",
-            department: "",
-        }
-    },
-    components: {
-        headerBar
-    },
-    methods: {
-        register: function () {
-            this.circle = {name: this.name, party: this.department, memberNumber: this.number
-            , concept: this.concept, introduce: this.introduce, president: this.president, professor: this.professor
-            , roomExistence: this.roomExistence, othersAccept: this.othersAccept}
-            this.$http.post('http://adong.cf:8000/circle/register', this.circle).then((res) => {
-                if(res.data === "err")
-                    this.err = 1
-                else
-                    this.err = 0
-            }).then(() => {
-                if(this.err == 0)
-                    this.$router.push('/circles')
-                
-                if(this.exist_num == 0){
-                    alert("회장을 입력해주세요.")
-                    this.onCancle()
-                }
-                else if(this.err == 1){
-                    alert("양식을 모두 작성해주세요.")
-                    this.onCancle();
-                }
-            })
+    import headerBar from '../../components/header'
+
+    export default {
+        name: 'circlesignup',
+        data () {
+            return {
+                circle: {},
+                president: {},
+                exist: "",
+                exist_num: 0,
+                name: null,
+                autogrow: null,
+                check: false,
+                concept: [],
+                err: Number,
+                introduce: "",
+                othersAccept: false,
+                roomExistence: false,
+                number: "",
+                presidentin: "",
+                professor: "",
+                department: "",
+            }
         },
-        onCheck: function() {
+        components: {
+            headerBar
+        },
+        methods: {
+            register: function () {
+                this.circle = {name: this.name, party: this.department, memberNumber: this.number
+                    , concept: this.concept, introduce: this.introduce, president: this.president, professor: this.professor
+                    , roomExistence: this.roomExistence, othersAccept: this.othersAccept}
+                this.$http.post('http://adong.cf:8000/circle/register', this.circle).then((res) => {
+                    if(res.data === "err")
+                        this.err = 1
+                    else
+                        this.err = 0
+                }).then(() => {
+                    if(this.err == 0)
+                        this.$router.push('/circles')
+
+                    if(this.exist_num == 0){
+                        alert("회장을 입력해주세요.")
+                        this.onCancle()
+                    }
+                    else if(this.err == 1){
+                        alert("양식을 모두 작성해주세요.")
+                        this.onCancle();
+                    }
+                })
+            },
+            onCheck: function() {
                 this.register()
-        },
-        onCancle: function() {
-            this.check = false
-        },
-        find: function () {
-            
-            this.$http.get('http://adong.cf:8000/user/findById/' + this.presidentin).then((res) => {
-                
-                this.president = res.data
-            }).then(() => {
-                if(this.president){
-                    this.exist = "위 아이디로 회원이 등록되어 있습니다."
-                    this.exist_num = 1
-                }
-                else{
-                    this.exist = "해당하는 아이디가 존재하지 않습니다."
-                    this.exist_num = 0
-                }
-            })
+            },
+            onCancle: function() {
+                this.check = false
+            },
+            find: function () {
+
+                this.$http.get('http://adong.cf:8000/user/findById/' + this.presidentin).then((res) => {
+
+                    this.president = res.data
+                }).then(() => {
+                    if(this.president){
+                        this.exist = "위 아이디로 회원이 등록되어 있습니다."
+                        this.exist_num = 1
+                    }
+                    else{
+                        this.exist = "해당하는 아이디가 존재하지 않습니다."
+                        this.exist_num = 0
+                    }
+                })
+            }
         }
     }
-}
 </script>
 
 <style lang="scss" scoped>
-
     .centered-container {
-
         display : flex;
         align-items: center;
         justify-content: center;
         position: relative;
         height: 120vh;
-
         .md-content {
             z-index: 0;
             padding: 150px;
@@ -219,12 +216,9 @@ export default {
             max-width: 1000px;
             max-height : 1000px;
             position: relative;
-
             .actions {
                 margin-top : 100px;
             }
         }
     }
-
-
 </style>

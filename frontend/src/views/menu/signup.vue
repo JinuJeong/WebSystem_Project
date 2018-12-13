@@ -213,7 +213,7 @@
             onDup: function(){
 
                 this.$http.get("http://adong.cf:8000/user/dup/"+this.id).then((data)=>{
-                    
+
                     if(!data.data){
                         alert("사용가능한 아이디입니다.")
                         this.dup=true
