@@ -165,7 +165,7 @@ router.post("/:studentId/signupCircle", (req, res) => {
     var studentId = req.params.studentId
     
     userModel.findOne({studentId}).populate('circles').exec().then((user) => {
-        for(var i = 0; i < user.circles.length; i++){
+        for(var i = 0; i < user.circles.length; i++){           //이미 가입 처리
             if(user.circles[i].name === req.body.name)
                 throw new Error();
         }
