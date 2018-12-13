@@ -67,7 +67,7 @@ export default {
         widgets: false,
         checkbox: true,
         search: '',
-        math: false,
+        match: false,
         boardName: this.$route.params.boardName,
         headers: [
           { text: '번호', value: 'postNum', align: 'center' /*,sortable: false*/ },
@@ -85,11 +85,7 @@ export default {
     },
     created() {
         
-        if(this.boardName == 'notice') this.kind_head="공지사항"
-        else this.kind_head="게시판"
-
-        if(this.$session.getAll().admin==true) this.match=true;
-        this.boardName = this.$route.params.boardName
+        
         this.fetchData()
     },
     beforeRouteUpdate(to, from, next) {
@@ -111,6 +107,13 @@ export default {
                     }
                 }         
             })
+            if(this.boardName == 'notice') this.kind_head="공지사항"
+            else this.kind_head="게시판"
+            this.match=false
+            if(this.$session.getAll().admin==true) this.match=true;
+            else if(this.$session.exists() && this.boardName=="board") this.match=true;
+            
+            this.boardName = this.$route.params.boardName
         },
         onBack: function(){
             this.$router.push('/')

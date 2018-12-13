@@ -195,7 +195,7 @@
           }  
         },
         created: function(){
-          console.log(this.$session.getAll())
+          
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/notice").then((data)=>{
               for(let i =0; i<5 && i<data.data.length;i++) this.noticelists.push(data.data[i])
           })

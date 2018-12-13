@@ -144,6 +144,7 @@ export default {
         this.circles = res.data
       }).then(() => {
           for(let i = 0; i < this.circles.length; i++){
+              
               if(this.circles[i].president.name === this.userName && this.circles[i].auth == true){
                 this.circleManage.push(this.circles[i])
                 this.exist = true

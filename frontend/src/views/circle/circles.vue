@@ -116,7 +116,7 @@
             this.$http.get('http://localhost:8000/circle/send').then((res) => {
                 this.allCircles = res.data
             }).then(() => {
-                console.log(this.allCircles)
+                
                 for(var i = 0; i < this.allCircles.length; i++){
                     if(this.allCircles[i].auth == true)
                         this.circles.push(this.allCircles[i])
