@@ -35,7 +35,7 @@
                     item-key="_id"
                     prev-icon="chevron_left"
                     next-icon="chevron_right"
-                    :rows-per-page-items="[20]"
+                    :rows-per-page-items="[100]"
                     class="elevation-1"
                 >
                 <template slot="items" slot-scope="props">

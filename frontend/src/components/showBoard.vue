@@ -59,7 +59,7 @@
                 rows="1"
                 placeholder="새 댓글 작성"
             />
-            <v-btn flat small color="inherit" :disabled="cmtContent==''" @click="onCmtSubmit">댓글 작성</v-btn>            
+            <v-btn flat small color="inherit" :disabled="cmtContent==''" @click="onCmtSubmit">댓글 작성</v-btn>      
         </div>
         </v-container>
     </div>
