@@ -170,9 +170,9 @@ router.post('/send/search', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-   console.log(req.body)
-   circleModel.create(req.body).then((circle) => {
-       userModel.update({"ID":req.body.president})
+   let data = req.body
+   data['members']=[{"user":req.body.president}]
+   circleModel.create(data).then((circle) => {
        console.log("동아리 신청 완료")
        res.send(circle)
    }).catch((err) => {
