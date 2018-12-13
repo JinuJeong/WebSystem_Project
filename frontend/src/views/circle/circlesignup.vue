@@ -105,7 +105,7 @@
         <md-dialog-confirm
         :md-active.sync="check"
         md-title="Check"
-        md-content="정말 동아리를 등록하시겠습니까?"
+        md-content="동아리는 관리자의 승인 후 웹페이지에 등록됩니다."
         md-confirm-text="Check"
         md-cancel-text="Cancle"
         @md-cancel="onCancel"
