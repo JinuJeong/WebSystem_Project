@@ -13,10 +13,8 @@
 
 <script>
     import headerBar from '../../components/header'
-
     export default {
         name: 'notice',
-
         components: {
             headerBar
         },
@@ -24,5 +22,4 @@
 </script>
 
 <style lang="scss" scoped>
-
 </style>

@@ -3,7 +3,7 @@
         <header-bar></header-bar>
         
         <v-container class="container">
-            
+            <v-flex style="width:100%;">
             <button>
                 <i class="material-icons" @click="onBack">
                 keyboard_backspace
@@ -12,7 +12,7 @@
             <h1 class="text-md-center">{{circleName}} 일정</h1>
             <div class="my-5">
             <v-layout row wrap>
-                <v-flex xs12 sm6 class="my-3">
+                <v-flex class="my-3">
                     <v-date-picker
                         color="blue"
                         v-model="date"
@@ -20,10 +20,10 @@
                         :events="getDate"
                     ></v-date-picker>
                 </v-flex>
-                <div class="centered-container">
+                <div class="centered-container" style="width:70%;">
                     <v-card color="amber">
                         <v-card-title>
-                            일정
+                            <h2>일정</h2>
                             <v-spacer/>
                             <v-text-field  
                                 v-model="search"
@@ -40,6 +40,7 @@
                             disable-initial-sort
                             next-icon="chevron_right"
                             prev-icon ="chevron_left"
+                            no-data-text="등록된 일정이 없습니다."
                             class="elevation-1"
                             :rows-per-page-items="[]"
                         >
@@ -153,7 +154,7 @@
                 </v-flex>
             </v-layout>
             </div>
-            
+            </v-flex>
         </v-container>
 
             
@@ -274,8 +275,13 @@
                     this.date1=dates[0]
                     this.date2=dates[0]
                 }else if(this.dates.length==2){
-                    this.date1=dates[0]
-                    this.date2=dates[1]
+                     if(dates[0]<dates[1]){
+                        this.date1=dates[0]
+                        this.date2=dates[1]
+                    }else{
+                        this.date1=dates[1]
+                        this.date2=dates[0]
+                    }
                 }
                 if(this.dates.length>2){
                     this.dates.splice(2,1)

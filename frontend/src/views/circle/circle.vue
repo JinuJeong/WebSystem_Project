@@ -84,7 +84,7 @@
               xs4
               d-flex>
             <v-card>
-                <v-card-title class="subheading font-weight-bold">스터디</v-card-title>
+                <v-card-title class="subheading font-weight-bold">그룹</v-card-title>
                 <v-divider></v-divider>
                 <v-list v-for="group in grouplists" :key="group.groupId">
                   <v-list-tile
@@ -195,7 +195,7 @@
           }  
         },
         created: function(){
-          console.log(this.$session.getAll())
+          
           this.$http.get("http://localhost:8000/circle/"+this.circleName+"/board/notice").then((data)=>{
               for(let i =0; i<5 && i<data.data.length;i++) this.noticelists.push(data.data[i])
           })

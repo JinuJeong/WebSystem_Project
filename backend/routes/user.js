@@ -12,6 +12,12 @@ router.get('/send', (req, res) => {
         res.send(user)
     })
 });
+
+router.post('/update/:studentId',(req,res)=>{
+    userModel.update({"studentId":req.params.studentId},req.body).then(()=>{
+        res.send("ok");
+    })
+})
 /*
 router.get('/find/:name', (req, res) => {
    var name = req.params.name
@@ -47,7 +53,6 @@ router.get('/dup/:userId',(req,res)=>{
 })
 
 router.post('/signin',(req,res)=>{
-    var session
     
     userModel.findOne(req.body).then((user)=>{
         res.send(user)
@@ -161,7 +166,7 @@ router.post("/:studentId/signupCircle", (req, res) => {
     var studentId = req.params.studentId
     
     userModel.findOne({studentId}).populate('circles').exec().then((user) => {
-        for(var i = 0; i < user.circles.length; i++){
+        for(var i = 0; i < user.circles.length; i++){           //이미 가입 처리
             if(user.circles[i].name === req.body.name)
                 throw new Error();
         }

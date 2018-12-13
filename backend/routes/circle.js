@@ -300,7 +300,13 @@ router.post('/:circleName/active/update/:activeId',(req,res)=>{
     })
 })
 
-router.post('/:name/signupCircle', (req, res) => { // 세션 유저가 동아리 가입 신청
+router.get('/active/get',(req,res)=>{
+    activeModel.find().populate('members').exec().then((data)=>{
+        res.send(data);
+    })
+})
+
+router.post('/:name/signupCircle', (req, res) => {
     var name =  req.params.name // 동아리이름 
                                 // req.body user 정보
     circleModel.findOne({name}).populate('members.user').exec().then((circle) => {
@@ -380,6 +386,41 @@ router.post('/:circleName/rejectCircle', (req, res) => { //동아리 신청을 a
         res.end()
     })
 });
+
+router.post("/:circleName/board/:postType/:postNum/cmtCreate", (req, res, next) => {
+    console.log(req.body)
+    boardModel.updateOne({ "postNum": req.params.postNum },{$push: { comment : req.body }}).then((data) => {
+        res.send("ok");
+    })
+})
+
+router.get("/:circleName/board/:postType/:postNum/cmtLoad", (req, res, next) => {
+    console.log(req.params.circleName)
+    console.log(req.params.postType)
+    console.log(req.params.postNum)
+    boardModel.findOne({"postType" : req.params.postType,"circleName":req.params.circleName,"postNum":req.params.postNum}).then((data)=>{
+        res.send(data.comment)
+    })
+})
+
+router.post("/:circleName/board/:postType/:postNum/cmtDelete/:_id", (req, res, next) => {
+    boardModel.findOne({ "postNum": req.params.postNum }).then((data) => {
+        console.log(data.comment)
+        console.log(req.params._id)
+        data.comment.pull({_id:req.params._id})
+        data.save()
+    }).then(() => {
+        res.send("ok");
+    })
+})
+
+router.post("/:circleName/board/:postType/:postNum/cmtChange/:_id", (req, res, next) => {
+    console.log(req.body.cmtContent)
+    boardModel.updateOne({ "postNum": req.params.postNum, "comment._id": req.params._id },
+    {"comment.$.cmtContent": req.body.cmtContent}).then((data) => {
+        res.send("ok");
+    })
+})
 
 
 module.exports = router;

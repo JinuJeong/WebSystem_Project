@@ -8,7 +8,7 @@
                 <v-btn class="toolbar-item" flat to="/circles" ><p class="item-p">동아리 정보</p></v-btn>
                 <v-btn class="toolbar-item" flat to="/boards/board"><p class="item-p">자유 게시판</p></v-btn>
                 <v-btn class="toolbar-item" flat to="/schedules"><p class="item-p">학사 일정</p></v-btn>
-                <v-btn class="toolbar-item" flat><p class="item-p">이달의 동아리</p></v-btn>
+                <v-btn class="toolbar-item" flat to="/bestCircle"><p class="item-p">이달의 동아리</p></v-btn>
                 <v-btn class="toolbar-item" flat to="/timeline"><p class="item-p">최근 활동 내역</p></v-btn>
                 <v-btn class="toolbar-item" flat href="https://mportal.ajou.ac.kr/main.do"><p class="item-p">아주 Portal</p></v-btn>
                 <v-btn v-if="$session.getAll().admin==true" class="toolbar-item" flat to="/recovery"><p class="item-p">복구</p></v-btn>
@@ -56,6 +56,10 @@
                 <md-list-item v-on:click="mypage()">
                     <md-icon>move_to_inbox</md-icon>
                     <p class="md-list-item-text">내 정보</p>
+                </md-list-item>
+                <md-list-item v-if="$session.getAll().admin" v-on:click="manageUsers()">
+                    <md-icon>move_to_inbox</md-icon>
+                    <p class="md-list-item-text">유저 관리</p>
                 </md-list-item>
                 <md-list-item v-if="!beforeLogin" v-on:click="logout">
                     <md-icon>cached</md-icon>
@@ -144,6 +148,7 @@ export default {
         this.circles = res.data
       }).then(() => {
           for(let i = 0; i < this.circles.length; i++){
+              
               if(this.circles[i].president.name === this.userName && this.circles[i].auth == true){
                 this.circleManage.push(this.circles[i])
                 this.exist = true
@@ -185,6 +190,9 @@ export default {
       },
       mypage: function(){
           this.$router.push('/mypage');
+      },
+      manageUsers: function(){
+          this.$router.push('/manageUsers');
       },
       circlePage: function(name){
           this.$router.push('/circle/' + name)
