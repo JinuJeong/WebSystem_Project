@@ -102,7 +102,10 @@
                         <v-card-title class="home-content-title"><router-link to="/circles" style="width : 50%;">추천 동아리</router-link></v-card-title>
                         <v-divider></v-divider>
                         <v-list dense>
-                            <p>당신의 관심사 : {{user.interest}}</p>
+                            <v-list-tile>
+                            <v-list-tile-content class="rank-text jg"> 당신의 관심사 : {{user.interest}}</v-list-tile-content>
+                            </v-list-tile>
+                            <v-divider></v-divider>
                             <v-list-tile v-for="circle in recommendCircles" :key="circle._id">
                                 <v-list-tile-content class="rank-text jg">{{circle.name}}</v-list-tile-content>
                                 <v-list-tile-content class="align-end time-text">{{circle.concept}}</v-list-tile-content>

@@ -13,42 +13,42 @@
                         <label>소속 학과</label>
                             <md-select v-model="department" name="department" id="department">
                             <md-optgroup label="정보통신대학">
-                                <md-option value="software">소프트웨어학과</md-option>
-                                <md-option value="security">사이버보안학과</md-option>
-                                <md-option value="electric">전자공학과</md-option>
-                                <md-option value="media">미디어학과</md-option>
-                                <md-option value="Defense_digital">국방디지털융합학과</md-option>
+                                <md-option value="소프트웨어학과">소프트웨어학과</md-option>
+                                <md-option value="사이버보안학과">사이버보안학과</md-option>
+                                <md-option value="전자공학과">전자공학과</md-option>
+                                <md-option value="미디어학과">미디어학과</md-option>
+                                <md-option value="국방디지털학과">국방디지털융합학과</md-option>
                             </md-optgroup>
                             <md-optgroup label="공과대학">
-                                <md-option value="mechanical">기계공학과</md-option>
-                                <md-option value="Chemical">화학공학과</md-option>
-                                <md-option value="environmental">환경공학과</md-option>
-                                <md-option value="Advanced_Materials">신소재공학과</md-option>
+                                <md-option value="기계공학과">기계공학과</md-option>
+                                <md-option value="화학공학과">화학공학과</md-option>
+                                <md-option value="환경공학과">환경공학과</md-option>
+                                <md-option value="신소재공학과">신소재공학과</md-option>
                             </md-optgroup>
                             <md-optgroup label="자연과학대학">
-                                <md-option value="mathematical">수학과</md-option>
-                                <md-option value="Physics">물리학과</md-option>
+                                <md-option value="수학과">수학과</md-option>
+                                <md-option value="물리학과">물리학과</md-option>
                             </md-optgroup>
                             <md-optgroup label="경영대학">
-                                <md-option value="business">경영학과</md-option>
-                                <md-option value="e-business">e-business 학과</md-option>
+                                <md-option value="경영학과">경영학과</md-option>
+                                <md-option value="e-business 학과">e-business 학과</md-option>
                             </md-optgroup>
                             <md-optgroup label="인문대학">
-                                <md-option value="korean">국어국문학과</md-option>
-                                <md-option value="english">영어영문학과</md-option>
+                                <md-option value="국어국문학과">국어국문학과</md-option>
+                                <md-option value="영어영문학과">영어영문학과</md-option>
                             </md-optgroup>
                             <md-optgroup label="사회과학대학">
-                                <md-option value="Psychology">심리학과</md-option>
-                                <md-option value="Economics">경제학과</md-option>
+                                <md-option value="심리학과">심리학과</md-option>
+                                <md-option value="경제학과">경제학과</md-option>
                             </md-optgroup>
                             <md-optgroup label="의과대학">
-                                <md-option value="medicine">의예과</md-option>
+                                <md-option value="의예과">의예과</md-option>
                             </md-optgroup>
                             <md-optgroup label="간호대학">
-                                <md-option value="nursing">간호학과</md-option>
+                                <md-option value="간호학과">간호학과</md-option>
                             </md-optgroup>
                             <md-optgroup label="약학대학">
-                                <md-option value="Pharmacy">약학과</md-option>
+                                <md-option value="약학과">약학과</md-option>
                             </md-optgroup>
                         </md-select>
                     </md-field>

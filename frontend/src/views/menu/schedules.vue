@@ -1,163 +1,163 @@
 <template>
     <div>
         <header-bar></header-bar>
-        
+
         <v-container class="container">
-            
             <button>
-                <i class="material-icons" @click="$router.push('/')">
-                keyboard_backspace
-                </i>
+                <v-icon x-large class="material-icons" @click="$router.push('/')">
+                    keyboard_backspace
+                </v-icon>
+                <p> 홈으로 </p>
             </button>
-            <h1 class="text-md-center">{{circleName}} 일정</h1>
+
+            <h1 class="jg ajou-title"> {{circleName}} 학사 일정 </h1>
+
             <div class="my-5">
-            <v-layout row wrap>
-                <v-flex xs12 sm6 class="my-3">
-                    <v-date-picker
-                        color="blue"
-                        v-model="date"
-                        :event-color="date => 'red'"
-                        :events="getDate"
-                    ></v-date-picker>
-                </v-flex>
-            
-                <div class="centered-container">
-                    <v-card color="amber">
-                        <v-card-title>
-                            일정
-                            <v-spacer/>
-                            <v-text-field  
-                                v-model="search"
-                                append-icon="search"
-                                label="Search"
-                                single-line
-                                hide-details
-                            />
-                        </v-card-title>
-                        <v-data-table
-                            :headers="headers"
-                            :items="schedulelists"
-                            :search="search"
-                            disable-initial-sort
-                            next-icon="chevron_right"
-                            prev-icon ="chevron_left"
-                            class="elevation-1"
-                            :rows-per-page-items="[]"
-                        >
-                            <template slot="items" slot-scope="props">
-                                <td class="text-xs-center" >{{ props.item.start }}</td>
-                                <td class="text-xs-center" >{{ props.item.end }}</td>
-                                <td class="text-xs-center" >{{ props.item.content }}</td>
-                                <td v-if="match==true" class="text-xs-center"  @click="onModify(props.item.start,props.item.end,props.item.content,props.item.scheduleId)">
-                                    <md-button class="md-icon-button">
-                                        <md-icon>edit</md-icon>
-                                    </md-button>
-                                </td>
-                                <td v-if="match==true" class="text-xs-center" @click="onDelete(props.item.scheduleId)">
-                                    <md-button class="md-icon-button">
-                                        <md-icon>clear</md-icon>
-                                    </md-button>
-                                </td>
-                            </template>
-                            <v-alert slot="no-results" :value="true" color="black--text" icon="warning">
-                                Your search for "{{ search }}" found no results.
-                            </v-alert>
-                        </v-data-table>
-                    </v-card>
-                    </div>
-                
-            </v-layout>
-            <v-btn v-if="plus==false && match==true" color="blue" @click="plus=true">일정 추가</v-btn>
+                <v-layout row wrap>
+                    <v-flex shrink class="my-3" style="margin-right : 3%;">
+                        <v-date-picker
+                                color="blue"
+                                v-model="date"
+                                :event-color="date => 'red'"
+                                :events="getDate"
+                        ></v-date-picker>
+                    </v-flex>
+
+                    <v-flex>
+                        <v-card color="amber">
+                            <v-card-title>
+                                <v-spacer/>
+                                <v-text-field
+                                        v-model="search"
+                                        append-icon="search"
+                                        label="Search"
+                                        single-line
+                                        hide-details
+                                />
+                            </v-card-title>
+                            <v-data-table
+                                    :headers="headers"
+                                    :items="schedulelists"
+                                    :search="search"
+                                    disable-initial-sort
+                                    next-icon="chevron_right"
+                                    prev-icon ="chevron_left"
+                                    class="elevation-1"
+                                    :rows-per-page-items="[]"
+                            >
+                                <template slot="items" slot-scope="props">
+                                    <td class="text-xs-center" >{{ props.item.start }}</td>
+                                    <td class="text-xs-center" >{{ props.item.end }}</td>
+                                    <td class="text-xs-center" >{{ props.item.content }}</td>
+                                    <td v-if="match==true" class="text-xs-center"  @click="onModify(props.item.start,props.item.end,props.item.content,props.item.scheduleId)">
+                                        <md-button class="md-icon-button">
+                                            <md-icon>edit</md-icon>
+                                        </md-button>
+                                    </td>
+                                    <td v-if="match==true" class="text-xs-center" @click="onDelete(props.item.scheduleId)">
+                                        <md-button class="md-icon-button">
+                                            <md-icon>clear</md-icon>
+                                        </md-button>
+                                    </td>
+                                </template>
+                                <v-alert slot="no-results" :value="true" color="black--text" icon="warning">
+                                    Your search for "{{ search }}" found no results.
+                                </v-alert>
+                            </v-data-table>
+                        </v-card>
+                    </v-flex>
+                </v-layout>
+                <v-btn v-if="plus==false && match==true" color="blue" @click="plus=true">일정 추가</v-btn>
             </div>
             <v-divider></v-divider>
-            
+
             <!-- 일정 추가 -->
             <div v-if="plus==true" class="mt-5">
                 <h1 class="text-md-center">일정 추가</h1>
-              <v-layout row wrap>
-                <v-flex xs12 sm6>
-                <v-date-picker
-                    color="green"
-                    :events="allowDate"
-                    v-model="dates"
-                    multiple
-                ></v-date-picker>
-                </v-flex>
-                <v-flex xs12 sm6>
-                    <v-combobox
-                    slot="activator"
-                    v-model="date1"
-                    small-chips
-                    label="시작 일정"
-                    prepend-icon="event"
-                    readonly
-                    ></v-combobox>
+                <v-layout row wrap>
+                    <v-flex xs12 sm6>
+                        <v-date-picker
+                                color="green"
+                                :events="allowDate"
+                                v-model="dates"
+                                multiple
+                        ></v-date-picker>
+                    </v-flex>
+                    <v-flex xs12 sm6>
+                        <v-combobox
+                                slot="activator"
+                                v-model="date1"
+                                small-chips
+                                label="시작 일정"
+                                prepend-icon="event"
+                                readonly
+                        ></v-combobox>
 
-                    <v-combobox
-                    slot="activator"
-                    v-model="date2"
-                    small-chips
-                    label="마감 일정"
-                    prepend-icon="event"
-                    readonly
-                    ></v-combobox>
+                        <v-combobox
+                                slot="activator"
+                                v-model="date2"
+                                small-chips
+                                label="마감 일정"
+                                prepend-icon="event"
+                                readonly
+                        ></v-combobox>
 
-                   
-                    <v-text-field
-                    label="일정 내용"
-                    v-model="content"
-                    ></v-text-field>
-                <v-btn color="blue" @click="onSubmit()">일정 추가</v-btn>
-                <v-btn color="blue" @click="plus=false">취소</v-btn>
-                </v-flex>
-            </v-layout>
+
+                        <v-text-field
+                                label="일정 내용"
+                                v-model="content"
+                        ></v-text-field>
+                        <v-btn color="blue" @click="onSubmit()">일정 추가</v-btn>
+                        <v-btn color="blue" @click="plus=false">취소</v-btn>
+                    </v-flex>
+                </v-layout>
             </div>
 
             <!-- 일정 수정 -->
             <div v-if="modify==true" class="mt-5">
                 <h1 class="text-md-center">일정 수정</h1>
-              <v-layout row wrap>
-                <v-flex xs12 sm6>
-                <v-date-picker
-                    color="green"
-                    :events="allowDate"
-                    v-model="dates"
-                    multiple
-                ></v-date-picker>
-                </v-flex>
-                <v-flex xs12 sm6>
-                    <v-combobox
-                    slot="activator"
-                    v-model="date1"
-                    small-chips
-                    label="시작 일정"
-                    prepend-icon="event"
-                    readonly
-                    ></v-combobox>
+                <v-layout row wrap>
+                    <v-flex xs12 sm6>
+                        <v-date-picker
+                                color="green"
+                                :events="allowDate"
+                                v-model="dates"
+                                multiple
+                        ></v-date-picker>
+                    </v-flex>
+                    <v-flex xs12 sm6>
+                        <v-combobox
+                                slot="activator"
+                                v-model="date1"
+                                small-chips
+                                label="시작 일정"
+                                prepend-icon="event"
+                                readonly
+                        ></v-combobox>
 
-                    <v-combobox
-                    slot="activator"
-                    v-model="date2"
-                    small-chips
-                    label="마감 일정"
-                    prepend-icon="event"
-                    readonly
-                    ></v-combobox>
+                        <v-combobox
+                                slot="activator"
+                                v-model="date2"
+                                small-chips
+                                label="마감 일정"
+                                prepend-icon="event"
+                                readonly
+                        ></v-combobox>
 
-                   
-                    <v-text-field
-                    label="일정 내용"
-                    v-model="content"
-                    ></v-text-field>
-                <v-btn color="blue" @click="onUpdate(scheduleId)">일정 수정</v-btn>
-                <v-btn color="blue" @click="plus=false">취소</v-btn>
-                </v-flex>
-            </v-layout>
+
+                        <v-text-field
+                                label="일정 내용"
+                                v-model="content"
+                        ></v-text-field>
+                        <v-btn color="blue" @click="onUpdate(scheduleId)">일정 수정</v-btn>
+                        <v-btn color="blue" @click="plus=false">취소</v-btn>
+                    </v-flex>
+                </v-layout>
             </div>
-            
+
         </v-container>
 
-            
+
     </div>
 </template>
 <script>
@@ -291,6 +291,13 @@
 <style lang="scss" scoped>
 .container{
     margin-top: 100px
+}
+
+.ajou-title{
+    margin-bottom : 2%;
+    font-size : 40px;
+    position : relative;
+    text-align : center;
 }
 
 </style>

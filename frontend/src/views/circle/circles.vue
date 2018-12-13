@@ -20,7 +20,6 @@
                             <md-select v-model="search_select" name="search" id="search">
                                 <md-option value="name">동아리이름</md-option>
                                 <md-option value="professor">지도교수님</md-option>
-                                <md-option value="president">회장</md-option>
                                 <md-option value="subject">학과</md-option>
                             </md-select>
                         </md-field>
@@ -56,7 +55,8 @@
                         <p class="content-circle">동아리(소학회) 규모 : {{circle.memberNumber}}</p>
                         <p class="content-circle">지도 교수님 :  {{circle.professor}}</p>
                         <p class="content-circle">동아리 컨셉 : {{circle.concept}}</p>
-                        <p class="content-circle">한줄 소개 : {{circle.introduce}}</p>
+                        <p class="content-circle" v-if="circle.introduce.length > 91">한줄 소개 : {{circle.introduce.substr(0,90)}}...</p>
+                        <p class="content-circle" v-if="circle.introduce.length <= 91">한줄 소개 : {{circle.introduce.substr(0,90)}}</p>
                     </md-card-content>
 
                     <v-card-actions>
