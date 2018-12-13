@@ -138,7 +138,6 @@ router.post("/:circleName/board/:postType/:postNum/update",(req,res,next)=>{
 
 router.get('/send', (req, res) => {
     circleModel.find().populate('president').populate('members.user').exec((err, data) => {
-        console.log("동아리 정보 전송")
         res.send(data)
 })
 });
@@ -170,11 +169,11 @@ router.post('/send/search', (req, res) => {
     }
 });
 
-router.post('/register', (req, res) => { // 회장 될 분이 admind에게 동아리 가입 신청
+router.post('/register', (req, res) => { //admin에게 동아리 가입 신청
    let data = req.body
    //data['members']=[{"user":req.body.president}]
    circleModel.create(data).then((circle) => {
-       console.log("동아리 신청 완료")
+       console.log(circle.name + "동아리 신청 완료")
        res.send(circle)
    }).catch((err) => {
        console.log("err")
@@ -301,7 +300,7 @@ router.post('/:circleName/active/update/:activeId',(req,res)=>{
     })
 })
 
-router.post('/:name/signupCircle', (req, res) => {
+router.post('/:name/signupCircle', (req, res) => { // 세션 유저가 동아리 가입 신청
     var name =  req.params.name // 동아리이름 
                                 // req.body user 정보
     circleModel.findOne({name}).populate('members.user').exec().then((circle) => {
@@ -314,7 +313,7 @@ router.post('/:name/signupCircle', (req, res) => {
     }).then((circle) => {
         circle.members.push({user: req.body})
         circle.save()
-        console.log("동아리 가입 신청")
+        console.log(circle.name + "동아리 가입 신청")
         res.send(circle)
     }).catch((err) => {
         res.send("err")
@@ -322,7 +321,7 @@ router.post('/:name/signupCircle', (req, res) => {
     })
 })
 
-router.post('/:name/accept', (req, res) => { //동아리 가입 승인
+router.post('/:name/accept', (req, res) => { //회장이 한 유저 동아리 가입 승인
     var name = req.params.name // 동아리 이름
 
     circleModel.findOne({name}).populate('members.user').exec().then((circle) => {
@@ -335,12 +334,12 @@ router.post('/:name/accept', (req, res) => { //동아리 가입 승인
     }).then((circle) => {
         circle.save()
     }).then(() => {
-        console.log("동아리 가입 승인 완료")
+        console.log(circle.name + "동아리 가입 승인 완료")
         res.end()
     })
 });
 
-router.post('/:name/reject', (req, res) => {
+router.post('/:name/reject', (req, res) => { // circle Schema에 있는 해당하는 member 삭제
     var name = req.params.name // 동아리 이름
     var user                 // req.body user 정보
     var id
@@ -354,7 +353,7 @@ router.post('/:name/reject', (req, res) => {
     }).then((circle) => {
         circle.members.pull({_id: id})
         circle.save()
-        console.log("동아리DB에서 삭제 완료")        
+        console.log(circle.name + "동아리DB에서 삭제 완료")
     }).then(() => {
         res.end()
     })
@@ -376,7 +375,7 @@ router.post('/:circleName/rejectCircle', (req, res) => { //동아리 신청을 a
     var circleName = req.params.circleName
     
     circleModel.deleteOne({"name": circleName}).then(() => {
-        console.log("동아리 DB에서 삭제완료")
+        console.log("동아리 DB에서 동아리 삭제완료")
     }).then(() => {
         res.end()
     })

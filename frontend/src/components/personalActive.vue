@@ -11,6 +11,9 @@
                 :headers="headers"
                 :items="realActives"
                 item-key="_id"
+                prev-icon="chevron_left"
+                next-icon="chevron_right"
+                :rows-per-page-items="[3]"
                 class="elevation-1"
             >
             <template slot="items" slot-scope="props">

@@ -80,7 +80,7 @@ export default{
     methods: {
         reject: function() {
             this.$http.post('http://localhost:8000/circle/'+this.circleName+'/reject', this.userout).then(() => {
-                this.$http.post('http://localhost:8000/user/'+this.userout.name+'/reject', this.circle)
+                this.$http.post('http://localhost:8000/user/'+this.userout.studentId+'/reject', this.circle)
             }).then(() => {
             this.$router.go(0)
             })
