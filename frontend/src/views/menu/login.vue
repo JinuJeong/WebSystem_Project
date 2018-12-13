@@ -84,6 +84,10 @@
                         return;
                     }
                     this.$session.start()
+                    if (res.data.admin==true)
+                        this.$session.set('admin',true)
+                    else 
+                        this.$session.set('admin',false)
                     this.$session.set('username', res.data.name)
                     this.$session.set('userDepartment', res.data.department)
                     let circles=new Array();

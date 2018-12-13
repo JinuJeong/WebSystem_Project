@@ -89,8 +89,50 @@ router.post("/:circleName/board/:postType/:postNum/delete",(req,res,next)=>{
 })
 
 router.post("/:circleName/board/:postType/:postNum/update",(req,res,next)=>{
+    let value=req.body;
+    value["circleName"]=req.params.circleName
+    value["postType"]=postType
     boardModel.updateOne({"postNum":req.params.postNum},{"title":req.body.title,"contents":req.body.contents}).then((data)=>{
-        res.send("ok");
+        if(value['postType']=='notice'){
+            circleModel.findOne({"name":value["circleName"]}).populate("members.user").exec().then((data)=>{
+                
+                let maillist=new Array()
+
+                for(let i =0;i<data.members.length;i++){
+                    maillist.push(data.members[i].user.ID)
+                }
+                 
+                let transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'ajoudong@gmail.com',  // gmail 계정 아이디를 입력
+                        pass: 'adong123'          // gmail 계정의 비밀번호를 입력
+                    }
+                });
+            
+                let mailOptions = {
+                    from: 'ajoudong@gmail.com',    // 발송 메일 주소 (위에서 작성한 gmail 계정 아이디)
+                    to: maillist ,                     // 수신 메일 주소
+                    subject: '안녕하세요, '+value['circleName']+'입니다. 공지 수정 : '+req.body.title,   // 제목
+                    html: '<p>'+ req.body.contents +'</p>',
+                  
+                };
+        
+                transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                        console.log(error);
+                    }
+                    else {
+                        console.log('Email sent: ' + info.response);
+                        
+                    }
+                });
+                res.send("ok")
+            })
+            
+    }else{
+        res.send("ok")
+    }
     })
 })
 
@@ -103,7 +145,6 @@ router.get('/send', (req, res) => {
 router.get('/send/title', (req, res) => {
 
     console.log("/send/title!")
-
     circleModel.find().limit(5).then((data)=>{
         res.send(data)
     })
@@ -224,9 +265,15 @@ router.post('/:circleName/active/create',(req,res)=>{
 })
 
 router.get('/:circleName/active',(req,res)=>{
-    activeModel.find({"circleName":req.params.circleName}).populate('members').sort('-activeId').then((data)=>{
-          res.send(data)
-    })
+    if(req.params.circleName=="Home"){
+        activeModel.find().populate('members').sort('-activeId').then((data)=>{
+            res.send(data)
+      })
+    }else{
+        activeModel.find({"circleName":req.params.circleName}).populate('members').sort('-activeId').then((data)=>{
+            res.send(data)
+        })
+    }
 })
 
 router.get('/:circleName/active/:activeId',(req,res)=>{

@@ -43,12 +43,12 @@
             <v-layout style=" height : 400px;">
                 <v-flex style="max-width : 400px; height : 85%;">
                     <v-card color="white" style=" width:95%; height:85%;" >
-                        <v-card-title class="home-content-title"><router-link to="/boards/notice">학사일정</router-link></v-card-title>
+                        <v-card-title class="home-content-title"><router-link to="/schedules">학사일정</router-link></v-card-title>
                         <v-divider></v-divider>
                         <v-list dense>
                             <v-list-tile v-for="schedule in scheduleList" :key="schedule._id">
                                 <v-list-tile-content class="rank-text jg">{{schedule.content}}</v-list-tile-content>
-                                <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
+                                <v-list-tile-content class="align-end time-text">{{schedule.start.substr(0,10)}} ~ {{schedule.end.substr(0,10)}}</v-list-tile-content>
                             </v-list-tile>
                         </v-list>
                     </v-card>
@@ -61,7 +61,7 @@
                         <v-list dense>
                             <v-list-tile v-for="notice in noticeList" :key="notice._id">
                                 <v-list-tile-content v-on:click="pageOn(notice.postNum)" class="rank-text jg">{{notice.title}}</v-list-tile-content>
-                                <v-list-tile-content class="align-end time-text">1분전</v-list-tile-content>
+                                <v-list-tile-content class="align-end time-text">{{notice.date.substr(0,10)}}</v-list-tile-content>
                             </v-list-tile>
                         </v-list>
                     </v-card>
@@ -73,7 +73,7 @@
                         <v-list dense>
                             <v-list-tile v-for="board in boardList" :key="board._id">
                                 <v-list-tile-content v-on:click="pageOn(board.postNum)" class="rank-text jg">{{board.title}}</v-list-tile-content>
-                                <v-list-tile-content class="align-end time-text">2분전</v-list-tile-content>
+                                <v-list-tile-content class="align-end time-text">{{board.date.substr(0,10)}}</v-list-tile-content>
                             </v-list-tile>
                         </v-list>
                     </v-card>
@@ -92,7 +92,7 @@
                         <v-list dense>
                             <v-list-tile v-for="circle in CircleList" :key="circle._id">
                                 <v-list-tile-content class="rank-text jg">{{circle.name}}</v-list-tile-content>
-                                <v-list-tile-content class="align-end time-text">3분전</v-list-tile-content>
+                                <v-list-tile-content class="align-end time-text"></v-list-tile-content>
                             </v-list-tile>
                         </v-list>
                     </v-card>
@@ -104,7 +104,7 @@
                         <v-list dense>
                             <v-list-tile v-for="circle in CircleList" :key="circle._id">
                                 <v-list-tile-content class="rank-text jg">{{circle.name}}</v-list-tile-content>
-                                <v-list-tile-content class="align-end time-text">4분전</v-list-tile-content>
+                                <v-list-tile-content class="align-end time-text"></v-list-tile-content>
                             </v-list-tile>
                         </v-list>
                     </v-card>
@@ -140,6 +140,7 @@
             })
             this.$http.get('http://localhost:8000/circle/Home/schedule').then((res)=>{
                 this.scheduleList = res.data
+                
             })
             var circle = await this.$http.get('http://localhost:8000/circle/send/title').then((res) => {
                 this.CircleList = res.data

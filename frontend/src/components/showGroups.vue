@@ -72,7 +72,8 @@
           }  
         },
         created: function(){
-          if(this.$session.getAll().president==this.circleName) this.auth =true;
+          if(this.$session.getAll().admin==true) this.auth=true;
+          else if(this.$session.getAll().president==this.circleName) this.auth =true;
           else if(this.postType=="board" && this.$session.getAll().circles.indexOf(this.circleName)>-1) this.auth = true;
 
 
