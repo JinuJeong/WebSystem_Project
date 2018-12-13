@@ -64,7 +64,8 @@
             }
         },
         created: function(){
-                    this.$http.get('http://localhost:8000/user/find/' + this.userName).then((res) => {
+                    this.userstudentId = this.$session.getAll().userstudentId;
+                    this.$http.get('http://localhost:8000/user/findById/' + this.userstudentId).then((res) => {
                         this.user = res.data
                     }).then(() => {
                         this.$http.get('http://localhost:8000/circle/find/' + this.circleName).then((res) => {

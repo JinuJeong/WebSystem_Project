@@ -199,7 +199,7 @@ export default {
       },
       reject: function(circle, user) {
         this.$http.post('http://localhost:8000/circle/'+circle.name+'/reject', user).then(() => {
-        this.$http.post('http://localhost:8000/user/'+user.name+'/reject', circle)
+        this.$http.post('http://localhost:8000/user/'+user.studentId+'/reject', circle)
         }).then(() => {
         this.$router.go(0)
         })

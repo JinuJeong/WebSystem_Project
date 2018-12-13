@@ -13,7 +13,7 @@ router.get('/send', (req, res) => {
         res.send(user)
     })
 });
-
+/*
 router.get('/find/:name', (req, res) => {
    var name = req.params.name
 
@@ -22,7 +22,7 @@ router.get('/find/:name', (req, res) => {
        res.send(user)
    })
 });
-
+*/
 router.get('/findById/:studentId', (req, res) => {
     var studentId = req.params.studentId
 
@@ -153,20 +153,18 @@ userModel.findOne({name}).then((user) => {
     })
 })
 
-router.delete("/:name/delete", (req, res) => {
-    var name = req.params.name
-    var _id
+router.delete("/:studentId/delete", (req, res) => {
+    var studentId = req.params.studentId
 
-    userModel.deleteOne({name}).then(() => {
+    userModel.deleteOne({studentId}).then(() => {
         res.end()
     })
 })
 
-router.post("/:name/signupCircle", (req, res) => {
-    var name = req.params.name  //student Id
+router.post("/:studentId/signupCircle", (req, res) => {
+    var studentId = req.params.studentId
     
-    userModel.findOne({"studentId":studentId}).populate('circles').exec().then((user) => {
-
+    userModel.findOne({studentId}).populate('circles').exec().then((user) => {
         for(var i = 0; i < user.circles.length; i++){
             if(user.circles[i].name === req.body.name)
                 throw new Error();
@@ -176,7 +174,6 @@ router.post("/:name/signupCircle", (req, res) => {
     }).then((user) => {
         user.circles.push(req.body)
         user.save()
-
         res.send(user)
     }).catch((err) => {
         res.send("err")
@@ -184,10 +181,10 @@ router.post("/:name/signupCircle", (req, res) => {
     })
 })
 
-router.post("/:name/reject", (req, res) => {
-    var name = req.params.name //거절 유저 이름
+router.post("/:studentId/reject", (req, res) => {
+    var studentId = req.params.studentId //거절 유저 이름
     
-    userModel.findOne({name}).populate('circles').exec().then((user) => {
+    userModel.findOne({studentId}).populate('circles').exec().then((user) => {
         user.circles.pull({_id: req.body._id})
         user.save()
         console.log("User DB에서 삭제 완료")

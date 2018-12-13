@@ -244,7 +244,7 @@
           },
           reject: function() {
             this.$http.post('http://localhost:8000/circle/'+this.circleName+'/reject', this.userin).then(() => {
-              this.$http.post('http://localhost:8000/user/'+this.userin.name+'/reject', this.circle)
+              this.$http.post('http://localhost:8000/user/'+this.userstudentId+'/reject', this.circle)
             }).then(() => {
               this.$router.go(0)
             })

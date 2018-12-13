@@ -264,6 +264,7 @@ export default {
 
         },
         changeProfile: function() {
+            if(this.name != null && this.nickname != null && this.department != null){
             this.$http.post('http://localhost:8000/user/' + this.user.name + '/update/profile',
             {"name":this.name, "nickname":this.nickname, "department":this.department})
             .then((res) => {
@@ -272,10 +273,13 @@ export default {
                 this.$session.set('username', res.data.name)
                 this.$session.set('userDepartment', res.data.department)
                 this.user = res.data
-                this.$router.go(0)     
             })
+            } else {
+                alert("모두 입력해주세요.")
+            }
         },
         changeCall: function() {
+            if(this.call != null && this.id != null){
             this.$http.post('http://localhost:8000/user/' + this.user.name + '/update/call',
             {"call":this.call, "ID":this.id})
             .then((res) => {
@@ -283,9 +287,11 @@ export default {
                 this.$session.start()
                 this.$session.set('username', res.data.name)
                 this.$session.set('userDepartment', res.data.department)
-                this.user = res.data
-                this.$router.go(0)     
-            })            
+                this.user = res.data  
+            })
+            } else {
+                alert("모두 입력해주세요.")
+            }
         },
         changePassword: function() {
             if(this.passwordCorrect==true){
@@ -303,7 +309,7 @@ export default {
         },
         deleteUser: function() {
             if(this.passwordCorrect==true){
-                this.$http.delete('http://localhost:8000/user/' + this.user.name + '/delete')
+                this.$http.delete('http://localhost:8000/user/' + this.userstudentId + '/delete')
                 .then((res) => {
                     this.$session.destroy();
                     this.$router.push('/');
@@ -313,7 +319,7 @@ export default {
         },
         giveupCircle: function(){
             this.$http.post('http://localhost:8000/circle/'+this.circleout.name+'/reject', this.user).then(() => {
-                this.$http.post('http://localhost:8000/user/'+this.user.name+'/reject', this.circleout)
+                this.$http.post('http://localhost:8000/user/'+this.userstudentId+'/reject', this.circleout)
             }).then(() => {
                 this.$router.go(0)
             })
