@@ -2,7 +2,6 @@
     <div>
         <headerBar></headerBar>
         <v-container class="mt-5">
-
             <p id="title">{{circleName}} 개인별 활동보고서</p>
             <p class="user">이름 : {{user.name}}</p>
             <p class="user">ID : {{user.ID}}</p>
@@ -11,16 +10,42 @@
                 :headers="headers"
                 :items="realActives"
                 item-key="_id"
+                prev-icon="chevron_left"
+                next-icon="chevron_right"
+                :rows-per-page-items="[3]"
                 class="elevation-1"
             >
-            <template slot="items" slot-scope="props">
-                <v-img :src="props.item.image" aspect-ratio="1" contain></v-img>
-                <td>{{props.item.start.substr(0, 10)}}</td>
-                <td>{{props.item.end.substr(0, 10)}}</td>
-                <td class="text-xs-right">{{props.item.title}}</td>
-                <td class="text-xs-right">{{props.item.contents}}</td>
-            </template>
+                <template slot="items" slot-scope="props">
+                    <v-img :src="props.item.image" aspect-ratio="1" contain></v-img>
+                    <td>{{props.item.start.substr(0, 10)}}</td>
+                    <td>{{props.item.end.substr(0, 10)}}</td>
+                    <td class="text-xs-right">{{props.item.title}}</td>
+                    <td class="text-xs-right">{{props.item.contents}}</td>
+                </template>
             </v-data-table>
+            <v-btn dark @click="onPrint">프린트</v-btn>
+            <div id='print'>
+                <p id="title">{{circleName}} 개인별 활동보고서</p>
+                <p class="user">이름 : {{user.name}}</p>
+                <p class="user">ID : {{user.ID}}</p>
+                <p class="user">학과 : {{user.department}}</p>
+                <v-data-table
+                    :headers="printHeader"
+                    :items="realActives"
+                    item-key="_id"
+                    prev-icon="chevron_left"
+                    next-icon="chevron_right"
+                    :rows-per-page-items="[100]"
+                    class="elevation-1"
+                >
+                <template slot="items" slot-scope="props">
+                    <td>{{props.item.start.substr(0, 10)}}</td>
+                    <td>{{props.item.end.substr(0, 10)}}</td>
+                    <td class="text-xs-right">{{props.item.title}}</td>
+                    <td class="text-xs-right">{{props.item.contents}}</td>
+                </template>
+                </v-data-table>
+            </div>
         </v-container>
     </div>
 </template>
@@ -60,8 +85,27 @@ export default {
                 text: 'contents',
                 align: 'right'
             }
-            ],        
-        
+            ],
+            printHeader: [
+            {
+                text: '시작날짜',
+                align: 'left',
+                sortable: false
+            },
+            {
+                text: '종료날짜',
+                align: 'left',
+                sortable: false
+            },
+            {
+                text: 'title',
+                align: 'right'
+            },
+            {
+                text: 'contents',
+                align: 'right'
+            }
+            ],
         }
     },
     created: function() {
@@ -83,7 +127,21 @@ export default {
     },
     components: {
         headerBar
-    },    
+    },   
+    methods: {
+        onPrint: function() {
+            const html = document.querySelector('html');
+            const printContents = document.querySelector('#print').innerHTML;
+            const printDiv = document.createElement("DIV");
+            printDiv.className = "print-div";        
+            html.appendChild(printDiv);
+            printDiv.innerHTML = printContents;
+            document.body.style.display = 'none';
+            window.print();
+            document.body.style.display = 'block';
+            printDiv.style.display = 'none';
+        }
+    } 
 }    
 </script>
 
@@ -96,5 +154,8 @@ export default {
 }
 .user{
     font-size: 20px;
+}
+#print{
+    display: none
 }
 </style>

@@ -81,7 +81,7 @@
               xs4
               d-flex>
             <v-card>
-                <v-card-title class="subheading font-weight-bold">스터디</v-card-title>
+                <v-card-title class="subheading font-weight-bold">그룹</v-card-title>
                 <v-divider></v-divider>
                 <v-list v-for="group in grouplists" :key="group.groupId">
                   <v-list-tile

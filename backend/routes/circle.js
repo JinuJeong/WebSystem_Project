@@ -137,7 +137,6 @@ router.post("/:circleName/board/:postType/:postNum/update",(req,res,next)=>{
 
 router.get('/send', (req, res) => {
     circleModel.find().populate('president').populate('members.user').exec((err, data) => {
-        console.log("동아리 정보 전송")
         res.send(data)
 })
 });
@@ -168,11 +167,11 @@ router.post('/send/search', (req, res) => {
     }
 });
 
-router.post('/register', (req, res) => { // 회장 될 분이 admind에게 동아리 가입 신청
+router.post('/register', (req, res) => { //admin에게 동아리 가입 신청
    let data = req.body
    //data['members']=[{"user":req.body.president}]
    circleModel.create(data).then((circle) => {
-       console.log("동아리 신청 완료")
+       console.log(circle.name + "동아리 신청 완료")
        res.send(circle)
    }).catch((err) => {
        console.log("err")
@@ -299,6 +298,12 @@ router.post('/:circleName/active/update/:activeId',(req,res)=>{
     })
 })
 
+router.get('/active/get',(req,res)=>{
+    activeModel.find().populate('members').exec().then((data)=>{
+        res.send(data);
+    })
+})
+
 router.post('/:name/signupCircle', (req, res) => {
     var name =  req.params.name // 동아리이름 
                                 // req.body user 정보
@@ -312,8 +317,7 @@ router.post('/:name/signupCircle', (req, res) => {
     }).then((circle) => {
         circle.members.push({user: req.body})
         circle.save()
-        console.log("동아리 가입 신청")
-
+        console.log(circle.name + "동아리 가입 신청")
         res.send(circle)
     }).catch((err) => {
         res.send("err")
@@ -321,7 +325,7 @@ router.post('/:name/signupCircle', (req, res) => {
     })
 })
 
-router.post('/:name/accept', (req, res) => { //동아리 가입 승인
+router.post('/:name/accept', (req, res) => { //회장이 한 유저 동아리 가입 승인
     var name = req.params.name // 동아리 이름
 
     circleModel.findOne({name}).populate('members.user').exec().then((circle) => {
@@ -336,12 +340,12 @@ router.post('/:name/accept', (req, res) => { //동아리 가입 승인
         circle.save()
 
     }).then(() => {
-        console.log("동아리 가입 승인 완료")
+        console.log(circle.name + "동아리 가입 승인 완료")
         res.end()
     })
 });
 
-router.post('/:name/reject', (req, res) => {
+router.post('/:name/reject', (req, res) => { // circle Schema에 있는 해당하는 member 삭제
     var name = req.params.name // 동아리 이름
     var user                 // req.body user 정보
     var id
@@ -355,7 +359,7 @@ router.post('/:name/reject', (req, res) => {
     }).then((circle) => {
         circle.members.pull({_id: id})
         circle.save()
-        console.log("동아리DB에서 삭제 완료")        
+        console.log(circle.name + "동아리DB에서 삭제 완료")
     }).then(() => {
         res.end()
     })
@@ -377,11 +381,46 @@ router.post('/:circleName/rejectCircle', (req, res) => { //동아리 신청을 a
     var circleName = req.params.circleName
     
     circleModel.deleteOne({"name": circleName}).then(() => {
-        console.log("동아리 DB에서 삭제완료")
+        console.log("동아리 DB에서 동아리 삭제완료")
     }).then(() => {
         res.end()
     })
 });
+
+router.post("/:circleName/board/:postType/:postNum/cmtCreate", (req, res, next) => {
+    console.log(req.body)
+    boardModel.updateOne({ "postNum": req.params.postNum },{$push: { comment : req.body }}).then((data) => {
+        res.send("ok");
+    })
+})
+
+router.get("/:circleName/board/:postType/:postNum/cmtLoad", (req, res, next) => {
+    console.log(req.params.circleName)
+    console.log(req.params.postType)
+    console.log(req.params.postNum)
+    boardModel.findOne({"postType" : req.params.postType,"circleName":req.params.circleName,"postNum":req.params.postNum}).then((data)=>{
+        res.send(data.comment)
+    })
+})
+
+router.post("/:circleName/board/:postType/:postNum/cmtDelete/:_id", (req, res, next) => {
+    boardModel.findOne({ "postNum": req.params.postNum }).then((data) => {
+        console.log(data.comment)
+        console.log(req.params._id)
+        data.comment.pull({_id:req.params._id})
+        data.save()
+    }).then(() => {
+        res.send("ok");
+    })
+})
+
+router.post("/:circleName/board/:postType/:postNum/cmtChange/:_id", (req, res, next) => {
+    console.log(req.body.cmtContent)
+    boardModel.updateOne({ "postNum": req.params.postNum, "comment._id": req.params._id },
+    {"comment.$.cmtContent": req.body.cmtContent}).then((data) => {
+        res.send("ok");
+    })
+})
 
 
 module.exports = router;

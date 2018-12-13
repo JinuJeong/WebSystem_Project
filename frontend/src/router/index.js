@@ -26,7 +26,8 @@ import showActive from '../components/showActive'
 import manageActive from '../components/manageActive'
 import showActives from '../components/showActives'
 import personalActive from '../components/personalActive'
-
+import manageUsers from '../views/menu/manageUsers'
+import bestCircle from '../views/menu/bestCircle'
 
 import Vuetify from "vuetify";
 
@@ -72,7 +73,7 @@ export default new Router({
             component: Schedules
         },
         {
-            path: '/boards/:boardName',
+            path: '/boards/:postType',
             component: Boards
         },
         {
@@ -116,11 +117,11 @@ export default new Router({
             component: mypage
         },
         {
-            path: '/boards/:boardName/manage_notice/:postNum',
+            path: '/boards/:postType/manage_notice/:postNum',
             component: manageBoard
         },
         {
-            path: '/boards/:boardName/show_notice/:postNum',
+            path: '/boards/:postType/show_notice/:postNum',
             component: showBoard
         },
         {
@@ -162,6 +163,14 @@ export default new Router({
         {
             path: '/circle/:circleName/circleManage',
             component: circleManage
+        },
+        {
+            path: '/manageUsers',
+            component: manageUsers
+        },
+        {
+            path: '/bestCircle',
+            component: bestCircle
         }
     ]
 })

@@ -5,7 +5,6 @@ const circleModel = require('../db/models/circle')
 const nodemailer = require('nodemailer');
 
 router.use('/',(req, res, next)=>{
-    console.log("user start")
     next()
 })
 
@@ -15,6 +14,11 @@ router.get('/send', (req, res) => {
     })
 });
 
+router.post('/update/:studentId',(req,res)=>{
+    userModel.update({"studentId":req.params.studentId},req.body).then(()=>{
+        res.send("ok");
+    })
+})
 /*
 router.get('/find/:name', (req, res) => {
    var name = req.params.name
@@ -50,7 +54,6 @@ router.get('/dup/:userId',(req,res)=>{
 })
 
 router.post('/signin',(req,res)=>{
-    var session
     
     userModel.findOne(req.body).then((user)=>{
         res.send(user)
@@ -109,9 +112,8 @@ router.post("/:studentId/update/profile",(req, res)=>{
     }).then(() => {
         userModel.findByIdAndUpdate({_id}, {"name": req.body.name, "nickname": req.body.nickname, "department": req.body.department})
         .then((user) => {
-            console.log(user)//바뀌기 전의 유저
             userModel.findById({_id}).then((user) => {
-                console.log(user) //바뀐 유저
+                console.log("mypage 프로필 수정 완료")
                 res.send(user)
             })
         })
@@ -127,9 +129,8 @@ userModel.findOne({studentId}).then((user) => {
     }).then(() => {
         userModel.findByIdAndUpdate({_id}, {"call": req.body.call, "ID": req.body.ID})
         .then((user) => {
-            console.log(user)//바뀌기 전의 유저
             userModel.findById({_id}).then((user) => {
-                console.log(user) //바뀐 유저
+                console.log("mypage 연락처 수정 완료")
                 res.send(user)
             })
         })
@@ -146,9 +147,8 @@ router.post("/:studentId/update/password",(req, res)=>{
     }).then(() => {
         userModel.findByIdAndUpdate({_id}, {"password": req.body.password})
         .then((user) => {
-            console.log(user)//바뀌기 전의 유저
             userModel.findById({_id}).then((user) => {
-                console.log(user) //바뀐 유저
+                console.log("mypage 비밀번호 수정 완료")
                 res.send(user)
             })
         })

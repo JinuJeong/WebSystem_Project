@@ -15,8 +15,8 @@
                 <div class="mt-5">
                     <v-card color="amber">
                         <v-card-title>
-                            <h2 v-if="boardName == 'notice'">공지사항</h2>
-                            <h2 v-else-if="boardName == 'board'">자유 게시판</h2>
+                            <h2 v-if="postType == 'notice'">공지사항</h2>
+                            <h2 v-else-if="postType == 'board'">자유 게시판</h2>
                             <v-spacer/>
                             <v-text-field  
                                 v-model="search"
@@ -38,10 +38,10 @@
                             :rows-per-page-items="[10]"
                         >
                             <template slot="items" slot-scope="props">
-                                <td class="text-xs-center" @click="$router.push('/boards/'+boardName+'/show_notice/'+props.item.postNum)">{{ props.item.postNum }}</td>
-                                <td class="text-xs-center" @click="$router.push('/boards/'+boardName+'/show_notice/'+props.item.postNum)">{{ props.item.title }}</td>
-                                <td class="text-xs-center" @click="$router.push('/boards/'+boardName+'/show_notice/'+props.item.postNum)">{{ props.item.author }}</td>
-                                <td class="text-xs-center" @click="$router.push('/boards/'+boardName+'/show_notice/'+props.item.postNum)">{{ props.item.date }}</td>
+                                <td class="text-xs-center" @click="$router.push('/boards/'+postType+'/show_notice/'+props.item.postNum)">{{ props.item.postNum }}</td>
+                                <td class="text-xs-center" @click="$router.push('/boards/'+postType+'/show_notice/'+props.item.postNum)">{{ props.item.title }}</td>
+                                <td class="text-xs-center" @click="$router.push('/boards/'+postType+'/show_notice/'+props.item.postNum)">{{ props.item.author }}</td>
+                                <td class="text-xs-center" @click="$router.push('/boards/'+postType+'/show_notice/'+props.item.postNum)">{{ props.item.date }}</td>
                             </template>
                             <v-alert slot="no-results" :value="true" color="black--text" icon="warning">
                                 Your search for "{{ search }}" found no results.
@@ -50,8 +50,8 @@
                     </v-card>
                 </div>
                 <div class="text-xs-right">
-                    <v-btn v-if="boardName == 'notice'&&match==true" dark @click="$router.push('/boards/'+boardName+'/manage_notice/create')">새 글 작성</v-btn>
-                    <v-btn v-if="boardName == 'board'" dark @click="$router.push('/boards/'+boardName+'/manage_notice/create')">새 글 작성</v-btn>
+                    <v-btn v-if="postType == 'notice'&&match==true" dark @click="$router.push('/boards/'+postType+'/manage_notice/create')">새 글 작성</v-btn>
+                    <v-btn v-if="postType == 'board'" dark @click="$router.push('/boards/'+postType+'/manage_notice/create')">새 글 작성</v-btn>
                 </div>
             </v-flex>
         </v-container>
@@ -60,7 +60,6 @@
 
 <script>
 import headerBar from '../../components/header'
-
 export default {
     data () {
       return {
@@ -71,7 +70,7 @@ export default {
         checkbox: true,
         search: '',
         match: false,
-        boardName: this.$route.params.boardName,
+        postType: this.$route.params.postType,
         headers: [
           { text: '번호', value: 'postNum', align: 'center' /*,sortable: false*/ },
           { text: '제목', value: 'title', align: 'center' },
@@ -87,22 +86,21 @@ export default {
         headerBar
     },
     created() {
-        
-        
+        this.postType = this.$route.params.postType
         this.fetchData()
     },
     beforeRouteUpdate(to, from, next) {
         this.boards = []
-        this.boardName = to.params.boardName
+        this.postType = to.params.postType
         this.search = ''
         this.fetchData()
         next()
     },
     methods: {
         fetchData() {
-            this.$http.get("http://localhost:8000/boards/"+this.boardName).then((result)=>{
+            this.$http.get("http://localhost:8000/boards/"+this.postType).then((result)=>{
                 for(let i=0;i<result.data.length;i++){
-                    if(this.boardName == result.data[i].postType){
+                    if(this.postType == result.data[i].postType){
                         let date = result.data[i].date.split('T')[0]
                         let board={"postNum":result.data[i].postNum, "title":result.data[i].title,"author":result.data[i].author,"contents":result.data[i].contents,
                         "date":date,"full_date":result.data[i].date}
@@ -110,12 +108,11 @@ export default {
                     }
                 }         
             })
-            if(this.boardName == 'notice') this.kind_head="공지사항"
+            if(this.postType == 'notice') this.kind_head="공지사항"
             else this.kind_head="게시판"
             this.match=false
             if(this.$session.getAll().admin==true) this.match=true;
-            else if(this.$session.exists() && this.boardName=="board") this.match=true;
-
+            else if(this.$session.exists() && this.postType=="board") this.match=true;    
         },
         onBack: function(){
             this.$router.push('/')
@@ -125,7 +122,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .container {
     margin-top : 50px
 }

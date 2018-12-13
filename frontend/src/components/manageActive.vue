@@ -59,25 +59,33 @@
                     <v-btn color="blue" @click="onBack()">취소</v-btn>
                 </v-flex>
             </v-layout>
+            <v-data-table
+                v-model="selected"
+                :headers="headers"
+                :items="users"
+                item-key="_id"
+                select-all
+                prev-icon="chevron_left"
+                next-icon="chevron_right"
+                :rows-per-page-items="[5]"
+                class="elevation-1"
+            >
+            <template slot="items" slot-scope="props">
+                <td :active="props.selected" @click="props.selected = !props.selected">
+                    <v-checkbox
+                     :input-value="props.item.value"
+                     primary
+                     color="blue"
+                     off-icon="clear"
+                     on-icon="lens"
+                     hide-details
+                    ></v-checkbox>
+                </td>
+                <td>{{props.item.name}}</td>
+                <td class="text-xs-right">{{props.item.studentId}}</td>
 
-
-            <v-data-table v-model="selected" :headers="headers" :items="users" item-key="_id" select-all class="elevation-1">
-                <template slot="items" slot-scope="props">
-                    <td>
-                        <v-checkbox
-                        v-model="props.selected"
-                        primary
-                        color="blue"
-                        off-icon="clear"
-                        on-icon="lens"
-                        hide-details
-                        ></v-checkbox>
-                    </td>
-                    <td>{{props.item.name}}</td>
-                    <td class="text-xs-right">{{props.item.ID}}</td>
             </template>
             </v-data-table>
-            
         </v-container>
     </div>
 </template>
@@ -94,11 +102,13 @@ export default{
                 sortable: false
             },
             {
-                text: 'ID',
-                value: 'ID',
+                text: '학번',
+                value: 'studentId',
                 align: 'right'
             }
             ],
+            bol: 0,
+            num: 0,
             title : "",
             circleName: this.$route.params.circleName,
             date1 : Date,
@@ -112,28 +122,39 @@ export default{
             circle: {},
             members: [],
             users: [],
+            pastMembers: []
         }
     },
     created : function(){
         this.$http.get("http://localhost:8000/circle/"+this.circleName+"/active/"+this.activeId).then((data)=>{
-            console.log(data)
             let info=data.data
+            this.pastMembers=data.data.members
             this.title=info.title
             this.date1=info.start.substr(0,10)
             this.date2=info.end.substr(0,10)
             this.image=info.image
             this.contents=info.contents
             if(this.userName==data.data.author) this.match=true;
-        }),
+        }).then(()=>{
         this.$http.get("http://localhost:8000/circle/find/" + this.circleName).then((res) => {
-            for(var i = 0; i < res.data.members.length; i++){
+            for(let i = 0; i < res.data.members.length; i++){
                 if(res.data.members[i].circleAuth == true) // 동아리 등록된 회원들만 come in
                     this.members.push(res.data.members[i])
             }
-            for(var i = 0; i < this.members.length; i++){
+            for(let i = 0; i < this.members.length; i++){
                 this.users.push(this.members[i].user)
             }
+        }).then(() =>{
+            for(let i = 0; i < this.users.length; i++){
+                for(let j = 0; j < this.pastMembers.length; j++){
+                    if(this.pastMembers[j].studentId == this.users[i].studentId){
+                        this.users[i].value = true
+                        this.selected.push(this.users[i])
+                    }
+                }
+            }
         })
+        });
     },
     methods:{
         // 데이트 설정 갯수 제안
@@ -146,8 +167,13 @@ export default{
                     this.date1=dates[0]
                     this.date2=dates[0]
                 }else if(this.dates.length==2){
-                    this.date1=dates[0]
-                    this.date2=dates[1]
+                    if(dates[0]<dates[1]){
+                        this.date1=dates[0]
+                        this.date2=dates[1]
+                    }else{
+                        this.date1=dates[1]
+                        this.date2=dates[0]
+                    }
                 }
                 if(this.dates.length>2){
                     this.dates.splice(2,1)
@@ -155,7 +181,10 @@ export default{
             },
             onSubmit: function(){
                 
-                if(this.activeId == undefined){ 
+                if(this.activeId == undefined){
+                    for(var i = 0; i < this.selected.length; i++){
+                        this.selected[i].value = true                        
+                    }
                     // 새로 만드는 거 if(this.activeId != this.$route.params.activeId)
                     this.$http.post("http://localhost:8000/circle/"+this.circleName+"/active/create",
                     {"title":this.title,"contents":this.contents,"circleName":this.circleName,"start":this.date1,"end":this.date2

@@ -10,13 +10,13 @@
                 :items="members"
                 item-key="_id"
                 class="elevation-1"
+                :rows-per-page-items="[]"
             >
             <template slot="items" slot-scope="props">
                 <td>{{props.item.user.ID}}</td>
                 <td>{{props.item.user.name}}</td>
                 <td class="text-xs-right">{{props.item.user.department}}</td>
                 <td class="text-xs-right">{{props.item.user.call}}</td>
-                <td class="text-xs-right">{{props.item.user.birth}}</td>
                 <td>
                 <v-btn round color="blue" large v-on:click="userout=props.item.user;reject()">
                     <p class="circle_button">강퇴</p>
@@ -55,8 +55,8 @@ export default{
                 align: 'right'
             },
             {
-                text: '생일',
-                align: 'right'
+                text: '강퇴',
+                align: 'center'
             }
             ],        
             circle: {},
@@ -80,7 +80,7 @@ export default{
     methods: {
         reject: function() {
             this.$http.post('http://localhost:8000/circle/'+this.circleName+'/reject', this.userout).then(() => {
-                this.$http.post('http://localhost:8000/user/'+this.userout.name+'/reject', this.circle)
+                this.$http.post('http://localhost:8000/user/'+this.userout.studentId+'/reject', this.circle)
             }).then(() => {
             this.$router.go(0)
             })

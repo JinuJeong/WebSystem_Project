@@ -102,18 +102,6 @@
                 </v-flex>
                 <v-flex style="height : 85%; width:25%;" >
                     <v-card class="md-transparent" style="width : 100%; height:85%;">
-                        <v-card-title class="home-content-title"><router-link to="/circles" style="width : 50%;">이달의 동아리</router-link></v-card-title>
-                        <v-divider></v-divider>
-                        <v-list dense>
-                            <v-list-tile v-for="circle in CircleList" :key="circle._id">
-                                <v-list-tile-content class="rank-text jg">{{circle.name}}</v-list-tile-content>
-                                <v-list-tile-content class="align-end time-text"></v-list-tile-content>
-                            </v-list-tile>
-                        </v-list> 
-                    </v-card>
-                </v-flex>
-                <v-flex style="height : 85%; width:25%;" >
-                    <v-card class="md-transparent" style="width : 100%; height:85%;" v-if="!beforeLogin">
                         <v-card-title class="home-content-title"><router-link to="/circles" style="width : 50%;">추천 동아리</router-link></v-card-title>
                         <v-divider></v-divider>
                         <v-list dense>
