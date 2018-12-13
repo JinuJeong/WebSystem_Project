@@ -9,7 +9,14 @@
             </i>
             </button>
             <h1 class="text-md-center">이달의 동아리</h1>
-            
+            <div style="display:flex; align-items:center; justify-content:center;">
+            <v-progress-circular v-if="progress==true"
+                :size="350"
+                :width="30"
+                color="blue"
+                indeterminate
+            />
+            </div>
             <v-layout row wrap>
             <v-flex xs12 sm12 v-for="active in activelist" v-bind:key="active['num_members']" class ='ma-3'>
             <v-card>
@@ -38,6 +45,7 @@
                 activelist: [],
                 images: [],
                 auth: false,
+                progress: true,
           }  
         },
         created: function(){
@@ -66,6 +74,8 @@
               }
               
               
+          }).then((data)=>{
+              this.progress = false;
           })
         },
         components:{
@@ -78,5 +88,9 @@
 .container{
     margin-top: 100px
 }
-
+.v-progress-circular{
+    margin: 1rem;
+    margin-top: 100px;
+    align-items: center;
+}
 </style>

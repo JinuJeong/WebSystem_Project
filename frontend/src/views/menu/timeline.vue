@@ -9,7 +9,14 @@
             </i>
             </button>
             <h1 class="text-md-center">{{circleName}} Active</h1>
-            
+            <div style="display:flex; align-items:center; justify-content:center;">
+            <v-progress-circular v-if="progress==true"
+                :size="350"
+                :width="30"
+                color="red"
+                indeterminate
+            />
+            </div>
             <v-layout row wrap>
             <v-flex xs12 sm3 v-for="active in activelist" :key="active.activeId" class ='ma-3'>
             <v-card @click="$router.push('/circle/'+active.circleName+'/active/show_active/'+active.activeId)">
@@ -38,6 +45,7 @@
                 activelist: [],
                 images: [],
                 auth: false,
+                progress: true
           }  
         },
         created: function(){
@@ -57,6 +65,8 @@
                 this.activelist.push(active)
                 console.log(active)
               }
+          }).then((data)=>{
+              this.progress = false;
           })
         },
         components:{
@@ -69,5 +79,9 @@
 .container{
     margin-top: 100px
 }
-
+.v-progress-circular{
+    margin: 1rem;
+    margin-top: 100px;
+    align-items: center;
+}
 </style>
