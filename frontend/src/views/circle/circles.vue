@@ -178,7 +178,7 @@
                 this.check = false
             },
             userSignup: function() {
-                this.$http.post('http://localhost:8000/user/' + this.user.name + '/signupCircle', this.signcircle)
+                this.$http.post('http://localhost:8000/user/' + this.userstudentId + '/signupCircle', this.signcircle)
                 .then((res) => {
 
                     if(res.data !== "err"){

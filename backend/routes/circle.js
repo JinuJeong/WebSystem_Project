@@ -302,11 +302,10 @@ router.post('/:circleName/active/update/:activeId',(req,res)=>{
 
 router.post('/:name/signupCircle', (req, res) => {
     var name =  req.params.name // 동아리이름 
-    //console.log(circle.members.length)                            // req.body user 정보
+                                // req.body user 정보
     circleModel.findOne({name}).populate('members.user').exec().then((circle) => {
-        console.log(circle.members.length)
         for(var i = 0; i < circle.members.length; i++){
-            if(circle.members[i].user.name === req.body.name)
+            if(circle.members[i].user.studentId === req.body.studentId)
                 throw new Error();
             console.log(circle.members[i].user.name)
         }
