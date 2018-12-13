@@ -18,6 +18,7 @@ router.get('/find/:name', (req, res) => {
    var name = req.params.name
 
    userModel.findOne({name}).populate('circles').exec().then((user) => {
+       console.log(user);
        res.send(user)
    })
 });

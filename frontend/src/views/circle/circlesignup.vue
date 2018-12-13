@@ -172,6 +172,7 @@ export default {
             this.check = false
         },
         find: function () {
+            console.log(this.presidentin)
             this.$http.get('http://localhost:8000/user/find/' + this.presidentin).then((res) => {
                 console.log(res.data)
                 this.president = res.data
